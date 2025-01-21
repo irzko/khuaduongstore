@@ -1,7 +1,6 @@
 import CartList from "@/components/ui/cart-list";
 import { getGSheet } from "@/lib/getGSheet";
 import { Product } from "@/models/product";
-import { ClientOnly } from "@chakra-ui/react";
 import { unstable_cache } from "next/cache";
 
 const getProducts = unstable_cache(
@@ -27,9 +26,5 @@ const getProducts = unstable_cache(
 export default async function CartPage() {
   const products = await getProducts();
 
-  return (
-    <ClientOnly>
-      <CartList products={products} />
-    </ClientOnly>
-  );
+  return <CartList products={products} />;
 }
