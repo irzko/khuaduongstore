@@ -6,7 +6,10 @@ import SideBar from "@/components/sidebar";
 import { Passion_One } from "next/font/google";
 import CartButton from "@/components/ui/cart-button";
 
-const passionOne = Passion_One({ weight: ["400", "700", "900"] });
+const passionOne = Passion_One({
+  weight: ["400", "700", "900"],
+  subsets: ["latin"],
+});
 
 export default function Layout({
   children,
