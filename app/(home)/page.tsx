@@ -12,23 +12,13 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 import slugify from "slugify";
 import { getGSheet } from "@/lib/getGSheet";
-import { Product } from "@/models/product";
 
 const getProducts = unstable_cache(
   async () => {
-    const data = await getGSheet(
+    return (await getGSheet(
       "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
       "0"
-    );
-    return data.map((product) =>
-      Product.fromJson({
-        id: product["id"],
-        name: product["name"],
-        price: product["price"],
-        image: product["image"],
-        description: product["description"],
-      })
-    );
+    )) as unknown as IProduct[];
   },
   ["products"],
   { tags: ["products"] }

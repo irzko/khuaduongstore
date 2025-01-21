@@ -14,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 // import { BreadcrumbLink, BreadcrumbRoot } from "@/components/ui/breadcrumb";
 import { getGSheet } from "@/lib/getGSheet";
-import { Product } from "@/models/product";
 import Image from "next/image";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Button } from "@/components/ui/button";
@@ -22,19 +21,10 @@ import AddToCartButton from "@/components/ui/add-to-cart-button";
 
 const getProducts = unstable_cache(
   async (id: string) => {
-    const data = await getGSheet(
+    const products = (await getGSheet(
       "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
       "0"
-    );
-    const products = data.map((product) =>
-      Product.fromJson({
-        id: product["id"],
-        name: product["name"],
-        price: product["price"],
-        image: product["image"],
-        description: product["description"],
-      })
-    );
+    )) as unknown as IProduct[];
 
     return products.find((p) => p.id === id);
   },
@@ -43,19 +33,10 @@ const getProducts = unstable_cache(
 );
 
 export async function generateStaticParams() {
-  const data = await getGSheet(
+  const products = (await getGSheet(
     "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
     "0"
-  );
-  const products = data.map((product) =>
-    Product.fromJson({
-      id: product["id"],
-      name: product["name"],
-      price: product["price"],
-      image: product["image"],
-      description: product["description"],
-    })
-  );
+  )) as unknown as IProduct[];
   return products.map((product) => ({
     slug:
       slugify(product.name, {
@@ -78,19 +59,12 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  // read route params
   const slug = (await params).slug;
-
-  // fetch data
   const id = slug.split(".")[0].split("-").pop() || "";
-
   const post = await getProducts(id);
 
   return {
     title: post ? post.name : "No Name",
-    // openGraph: {
-    //   images: ["/some-specific-page-image.jpg", ...previousImages],
-    // },
   };
 }
 
