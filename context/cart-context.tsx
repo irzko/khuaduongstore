@@ -1,4 +1,3 @@
-"use client";
 import { createContext, Dispatch, SetStateAction } from "react";
 
 const CartContext = createContext<{

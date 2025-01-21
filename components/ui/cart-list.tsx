@@ -8,15 +8,37 @@ import { LuShoppingCart } from "react-icons/lu";
 import DeleteFromCartButton from "./delete-from-cart-button";
 import NextLink from "next/link";
 import slugify from "slugify";
+import { getGSheet } from "@/lib/getGSheet";
 
-export default function CartList({ products }: { products: Product[] }) {
+export default function CartList() {
   const [productsInCart, setProductsInCart] = useState<Product[]>([]);
+  // const [products, setProducts] = useState<Product[]>([]);
   const { carts } = useContext(CartContext);
   useEffect(() => {
-    setProductsInCart(
-      products.filter((product) => carts.some((cart) => cart.id === product.id))
-    );
-  }, [carts, products]);
+    const getProducts = async () => {
+      const data = await getGSheet(
+        "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
+        "0"
+      );
+      const products = data.map((product) =>
+        Product.fromJson({
+          id: product["id"],
+          name: product["name"],
+          price: product["price"],
+          image: product["image"],
+          description: product["description"],
+        })
+      );
+
+      setProductsInCart(
+        products.filter((product) =>
+          carts.some((cart) => cart.id === product.id)
+        )
+      );
+    };
+
+    getProducts();
+  }, [carts]);
 
   if (productsInCart.length === 0) {
     return (
