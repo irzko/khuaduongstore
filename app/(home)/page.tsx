@@ -19,6 +19,7 @@ const getProducts = unstable_cache(
         name: product["name"],
         price: product["price"],
         image: product["image"],
+        description: product["description"],
       })
     );
   },
@@ -52,10 +53,11 @@ export default async function Home() {
               })}-${product.id}.html`}
             >
               <Flex position="relative" aspectRatio={1}>
-                <Image asChild alt={product.name}>
+                <Image asChild alt={product.name} padding="0.5rem">
                   <NextImage
                     src={product.image || "/no-image.jpg"}
                     alt={product.name}
+                    objectFit="contain"
                     fill
                     unoptimized
                   />
@@ -70,7 +72,7 @@ export default async function Home() {
                 <Heading lineClamp={2} size="md">
                   {product.name}
                 </Heading>
-                <Text>
+                <Text fontSize="md" color="red.500" fontWeight="bold">
                   {Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",

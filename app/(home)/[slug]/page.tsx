@@ -7,6 +7,7 @@ import { Box, Flex, Heading, Stack, VStack } from "@chakra-ui/react";
 import { getGSheet } from "@/lib/getGSheet";
 import { Product } from "@/models/product";
 import Image from "next/image";
+import { EmptyState } from "@/components/ui/empty-state";
 
 const getProducts = unstable_cache(
   async (id: string) => {
@@ -20,6 +21,7 @@ const getProducts = unstable_cache(
         name: product["name"],
         price: product["price"],
         image: product["image"],
+        description: product["description"],
       })
     );
 
@@ -40,6 +42,7 @@ export async function generateStaticParams() {
       name: product["name"],
       price: product["price"],
       image: product["image"],
+      description: product["description"],
     })
   );
   return products.map((product) => ({
@@ -95,9 +98,10 @@ export default async function Page({
 
   if (!product) {
     return (
-      <main>
-        <h2>404</h2>
-      </main>
+      <EmptyState
+        title="Sản phẩm không tồn tại"
+        description="Sản phẩm bạn đang tìm kiếm không tồn tại"
+      />
     );
   }
 
@@ -144,7 +148,7 @@ export default async function Page({
                 fill
               />
             </Box>
-            <Heading as="h1" size="4xl">
+            <Heading as="h1" size="lg">
               {product.name || "(No title)"}
             </Heading>
             <p>
