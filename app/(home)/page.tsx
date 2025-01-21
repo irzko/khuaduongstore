@@ -1,9 +1,16 @@
-import { Flex, Grid, Text, Heading, Container, Card } from "@chakra-ui/react";
+import {
+  Flex,
+  Grid,
+  Text,
+  Heading,
+  Container,
+  Card,
+  Image,
+} from "@chakra-ui/react";
 import { unstable_cache } from "next/cache";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import slugify from "slugify";
-import { Image } from "@chakra-ui/react";
 import { getGSheet } from "@/lib/getGSheet";
 import { Product } from "@/models/product";
 

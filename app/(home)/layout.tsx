@@ -2,8 +2,11 @@ import { Flex } from "@chakra-ui/react/flex";
 import Link from "next/link";
 import { Heading, Input } from "@chakra-ui/react";
 import { InputGroup } from "@/components/ui/input-group";
-import { ColorModeButton } from "@/components/ui/color-mode";
 import SideBar from "@/components/sidebar";
+import { Passion_One } from "next/font/google";
+import CartButton from "@/components/ui/cart-button";
+
+const passionOne = Passion_One({ weight: ["400", "700", "900"] });
 
 export default function Layout({
   children,
@@ -36,7 +39,11 @@ export default function Layout({
         >
           <Flex gapX="1rem">
             <Link href="/">
-              <Heading whiteSpace="nowrap" size="2xl">
+              <Heading
+                whiteSpace="nowrap"
+                size="2xl"
+                className={`${passionOne.className}`}
+              >
                 KDShop
               </Heading>
             </Link>
@@ -75,8 +82,8 @@ export default function Layout({
                 placeholder="Tìm kiếm"
               />
             </InputGroup>
-            <ColorModeButton />
             {/* <AvatarMenu /> */}
+            <CartButton />
             <SideBar />
           </Flex>
         </Flex>
