@@ -18,6 +18,7 @@ import Image from "next/image";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Button } from "@/components/ui/button";
 import AddToCartButton from "@/components/ui/add-to-cart-button";
+import { Toaster } from "@/components/ui/toaster";
 
 const getProducts = unstable_cache(
   async (id: string) => {
@@ -96,17 +97,18 @@ export default async function Page({
   //   href: `/category/${c.category.slug}`,
   // }));
   return (
-    <VStack>
-      <Flex
-        direction={{
-          base: "column",
-          md: "row",
-        }}
-        maxWidth="1024px"
-        w="full"
-      >
-        <Flex direction="column" gap="1rem" w="full">
-          {/* <BreadcrumbRoot
+    <>
+      <VStack>
+        <Flex
+          direction={{
+            base: "column",
+            md: "row",
+          }}
+          maxWidth="1024px"
+          w="full"
+        >
+          <Flex direction="column" gap="1rem" w="full">
+            {/* <BreadcrumbRoot
             backgroundColor={{
               base: "white",
               _dark: "black",
@@ -123,69 +125,71 @@ export default async function Page({
               </BreadcrumbLink>
             ))}
           </BreadcrumbRoot> */}
-          <Stack paddingX="1rem" spaceY="1rem">
-            <Box position="relative" aspectRatio={16 / 9}>
-              <Image
-                src={product.image || "/no-image.jpg"}
-                alt={product.name}
-                objectFit="contain"
-                fill
-              />
-            </Box>
+            <Stack paddingX="1rem" spaceY="1rem">
+              <Box position="relative" aspectRatio={16 / 9}>
+                <Image
+                  src={product.image || "/no-image.jpg"}
+                  alt={product.name}
+                  objectFit="contain"
+                  fill
+                />
+              </Box>
 
-            <Card.Root rounded="lg">
-              <Card.Header paddingTop="1rem" paddingX="1rem">
-                <Heading as="h1" size="lg">
-                  {product.name || "(No title)"}
-                </Heading>
-                <Text color="red.500" fontWeight="bold">
-                  {Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  }).format(product.price)}
-                </Text>
-              </Card.Header>
-              <Card.Body padding="1rem">
-                <Grid templateColumns="1fr 1fr" gap="1rem">
-                  <AddToCartButton productId={product.id} />
-                  <Button rounded="lg">Mua ngay</Button>
-                </Grid>
+              <Card.Root rounded="lg">
+                <Card.Header paddingTop="1rem" paddingX="1rem">
+                  <Heading as="h1" size="lg">
+                    {product.name || "(No title)"}
+                  </Heading>
+                  <Text color="red.500" fontWeight="bold">
+                    {Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(product.price)}
+                  </Text>
+                </Card.Header>
+                <Card.Body padding="1rem">
+                  <Grid templateColumns="1fr 1fr" gap="1rem">
+                    <AddToCartButton productId={product.id} />
+                    <Button rounded="lg">Mua ngay</Button>
+                  </Grid>
+                </Card.Body>
+              </Card.Root>
+              <Text>{product.description}</Text>
+            </Stack>
+          </Flex>
+          <Box
+            padding="1rem"
+            width={{
+              base: "full",
+              md: "32rem",
+            }}
+          >
+            <Card.Root>
+              <Card.Header>Đề xuất</Card.Header>
+              <Card.Body>
+                <Box>
+                  <Box position="relative" aspectRatio={1}>
+                    <Image
+                      src={product.image || "/no-image.jpg"}
+                      alt={product.name}
+                      objectFit="contain"
+                      fill
+                    />
+                  </Box>
+                  <Text>{product.name}</Text>
+                  <Text color="red.500" fontWeight="bold">
+                    {Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(product.price)}
+                  </Text>
+                </Box>
               </Card.Body>
             </Card.Root>
-            <Text>{product.description}</Text>
-          </Stack>
+          </Box>
         </Flex>
-        <Box
-          padding="1rem"
-          width={{
-            base: "full",
-            md: "32rem",
-          }}
-        >
-          <Card.Root>
-            <Card.Header>Đề xuất</Card.Header>
-            <Card.Body>
-              <Box>
-                <Box position="relative" aspectRatio={1}>
-                  <Image
-                    src={product.image || "/no-image.jpg"}
-                    alt={product.name}
-                    objectFit="contain"
-                    fill
-                  />
-                </Box>
-                <Text>{product.name}</Text>
-                <Text color="red.500" fontWeight="bold">
-                  {Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  }).format(product.price)}
-                </Text>
-              </Box>
-            </Card.Body>
-          </Card.Root>
-        </Box>
-      </Flex>
-    </VStack>
+      </VStack>
+      <Toaster />
+    </>
   );
 }
