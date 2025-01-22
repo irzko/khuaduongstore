@@ -165,9 +165,13 @@ export default async function Page({
             }}
           >
             <Card.Root>
-              <Card.Header>Đề xuất</Card.Header>
+              <Card.Header>
+                <Card.Title fontSize="lg" fontWeight="bold">
+                  Sản phẩm liên quan
+                </Card.Title>
+              </Card.Header>
               <Card.Body>
-                <Box>
+                <Grid templateColumns="repeat(3, minmax(0, 1fr))" gap="1rem">
                   <Box position="relative" aspectRatio={1}>
                     <Image
                       src={product.image || "/no-image.jpg"}
@@ -176,14 +180,16 @@ export default async function Page({
                       fill
                     />
                   </Box>
-                  <Text>{product.name}</Text>
-                  <Text color="red.500" fontWeight="bold">
-                    {Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    }).format(product.price)}
-                  </Text>
-                </Box>
+                  <Box gridColumn="span 2 / span 2">
+                    <Text>{product.name}</Text>
+                    <Text color="red.500" fontWeight="bold">
+                      {Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }).format(product.price)}
+                    </Text>
+                  </Box>
+                </Grid>
               </Card.Body>
             </Card.Root>
           </Box>

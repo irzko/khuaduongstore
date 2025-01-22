@@ -3,11 +3,11 @@ import Link from "next/link";
 import { Heading, Input } from "@chakra-ui/react";
 import { InputGroup } from "@/components/ui/input-group";
 import SideBar from "@/components/sidebar";
-import { Passion_One } from "next/font/google";
+import { Anton } from "next/font/google";
 import CartButton from "@/components/ui/cart-button";
 
-const passionOne = Passion_One({
-  weight: ["400", "700", "900"],
+const anton = Anton({
+  weight: ["400"],
   subsets: ["latin"],
 });
 
@@ -44,10 +44,11 @@ export default function Layout({
             <Link href="/">
               <Heading
                 whiteSpace="nowrap"
+                color="teal.700"
                 size="2xl"
-                className={`${passionOne.className}`}
+                className={`${anton.className}`}
               >
-                KDShop
+                KHỨA DƯƠNG
               </Heading>
             </Link>
           </Flex>

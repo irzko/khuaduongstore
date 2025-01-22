@@ -144,13 +144,27 @@ export default function CartList({ products }: { products: IProduct[] }) {
                   )
                 )}
               </Text>
-              <Button whiteSpace="wrap" colorPalette="red">
-                Đặt hàng (
-                {productsInCart.reduce(
-                  (acc, product) => acc + (product.isChecked ? 1 : 0),
-                  0
-                )}
-                )
+              <Button whiteSpace="wrap" colorPalette="red" asChild>
+                <NextLink
+                  href={
+                    "/order?products=" +
+                    encodeURIComponent(
+                      Buffer.from(
+                        productsInCart
+                          .filter((product) => product.isChecked)
+                          .map((product) => product.id)
+                          .join(",")
+                      ).toString("base64")
+                    )
+                  }
+                >
+                  Đặt hàng (
+                  {productsInCart.reduce(
+                    (acc, product) => acc + (product.isChecked ? 1 : 0),
+                    0
+                  )}
+                  )
+                </NextLink>
               </Button>
             </Flex>
           </Flex>

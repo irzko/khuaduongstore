@@ -37,7 +37,7 @@ export default async function Home() {
         ]}
         gap="0.5rem"
       >
-        {products.slice(0, 4).map((product) => (
+        {products.map((product) => (
           <Card.Root key={product.id} asChild overflow="hidden">
             <NextLink
               href={`/${slugify(product.name, {
