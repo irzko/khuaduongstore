@@ -3,7 +3,7 @@
 import CartContext from "@/context/cart-context";
 import { Box, Card, Grid, Text } from "@chakra-ui/react";
 import { useSearchParams } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, Suspense } from "react";
 import Image from "next/image";
 
 export default function CheckoutForm({ products }: { products: IProduct[] }) {
@@ -31,6 +31,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
     );
   }, [carts, products, searchParams]);
   return (
+    <Suspense>
     <Card.Root>
       <Card.Header>
         <Card.Title fontSize="lg" fontWeight="bold">
@@ -65,5 +66,6 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
         ))}
       </Card.Body>
     </Card.Root>
+    </Suspense>
   );
 }
