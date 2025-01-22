@@ -31,6 +31,7 @@ export default function AdjustQuantity({ productId }: { productId: string }) {
     <Group attached height="2.25rem">
       <IconButton
         h="full"
+        rounded="lg"
         onClick={decreaseQuantity}
         variant="outline"
         size="sm"
@@ -41,6 +42,7 @@ export default function AdjustQuantity({ productId }: { productId: string }) {
       <IconButton
         h="full"
         variant="outline"
+        rounded="lg"
         onClick={inscreaseQuantity}
         size="sm"
       >
