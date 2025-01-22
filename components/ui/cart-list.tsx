@@ -7,20 +7,22 @@ import { LuShoppingCart } from "react-icons/lu";
 import DeleteFromCartButton from "./delete-from-cart-button";
 import NextLink from "next/link";
 import slugify from "slugify";
+import AdjustQuantity from "./adjust-quantity";
 
 export default function CartList({ products }: { products: IProduct[] }) {
-  const [productsInCart, setProductsInCart] = useState<IProduct[]>([]);
+  const [productsInCart, setProductsInCart] = useState<
+    Array<IProduct & { quantity: number }>
+  >([]);
   const { carts } = useContext(CartContext);
   useEffect(() => {
-    const getProducts = () => {
-      setProductsInCart(
-        products.filter((product) =>
-          carts.some((cart) => cart.id === product.id)
-        )
-      );
-    };
-
-    getProducts();
+    setProductsInCart(
+      products
+        .filter((product) => carts.some((cart) => cart.id === product.id))
+        .map((product) => ({
+          ...product,
+          quantity: carts.find((cart) => cart.id === product.id)?.quantity || 0,
+        }))
+    );
   }, [carts, products]);
 
   if (productsInCart.length === 0) {
@@ -54,6 +56,9 @@ export default function CartList({ products }: { products: IProduct[] }) {
                     <Text>{product.name}</Text>
                   </NextLink>
                 </Link>
+                <Text fontSize="sm" color="gray.500">
+                  Số lượng: {product.quantity}
+                </Text>
                 <Text color="red.500" fontWeight="bold">
                   {Intl.NumberFormat("vi-VN", {
                     style: "currency",
@@ -61,9 +66,10 @@ export default function CartList({ products }: { products: IProduct[] }) {
                   }).format(product.price)}
                 </Text>
               </Box>
-              <Box>
+              <Flex alignItems="center" gap="1rem">
+                <AdjustQuantity productId={product.id} />
                 <DeleteFromCartButton productId={product.id} />
-              </Box>
+              </Flex>
             </Flex>
           ))}
         </Card.Body>
