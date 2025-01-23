@@ -64,6 +64,7 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
           products: checkoutProductList.map((product) => ({
             productId: product.id,
             quantity: product.quantity,
+            price: product.price,
             total: product.price * product.quantity,
           })),
         }),
