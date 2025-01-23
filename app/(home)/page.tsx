@@ -26,6 +26,7 @@ const getProducts = unstable_cache(
 
 export default async function Home() {
   const products = await getProducts();
+
   return (
     <Container maxW="5xl" padding="1rem">
       <Grid
