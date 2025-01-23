@@ -17,6 +17,7 @@ import {
   DialogRoot,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { createId } from "@paralleldrive/cuid2";
 
 function ProductCheckout({ products }: { products: IProduct[] }) {
   const [checkoutProductList, setCheckoutProductList] = useState<
@@ -63,6 +64,7 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
         redirect: "follow",
         body: JSON.stringify({
           ...shippingInfo,
+          id: createId(),
           products: checkoutProductList.map((product) => ({
             productId: product.id,
             quantity: product.quantity,
