@@ -3,10 +3,12 @@
 import CartContext from "@/context/cart-context";
 import { Box, Card, Grid, Text } from "@chakra-ui/react";
 import { useSearchParams } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, Suspense } from "react";
 import Image from "next/image";
 
-export default function CheckoutForm({ products }: { products: IProduct[] }) {
+
+
+function ProductCheckout({ products }: { products: IProduct[] }) {
   const [checkoutProductList, setCheckoutProductList] = useState<
     Array<IProduct & { quantity: number }>
   >([]);
@@ -65,5 +67,14 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
         ))}
       </Card.Body>
     </Card.Root>
+  );
+}
+
+
+export default function CheckoutForm({ products }: { products: IProduct[] }) {
+  return (
+    <Suspense>
+      <ProductCheckout products={products} />
+    </Suspense>
   );
 }
