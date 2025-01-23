@@ -131,6 +131,7 @@ export default async function Page({
                   src={product.image || "/no-image.jpg"}
                   alt={product.name}
                   objectFit="contain"
+                  unoptimized
                   fill
                 />
               </Box>
@@ -177,6 +178,7 @@ export default async function Page({
                       src={product.image || "/no-image.jpg"}
                       alt={product.name}
                       objectFit="contain"
+                      unoptimized
                       fill
                     />
                   </Box>

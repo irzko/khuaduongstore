@@ -7,6 +7,7 @@ import { useContext, useEffect, useState, Suspense } from "react";
 import Image from "next/image";
 import { Field } from "./field";
 import { Button } from "./button";
+import axios from "axios";
 
 function ProductCheckout({ products }: { products: IProduct[] }) {
   const [checkoutProductList, setCheckoutProductList] = useState<
@@ -41,7 +42,24 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
         }))
     );
   }, [carts, products, searchParams]);
-
+  const handleOrder = async () => {
+    const response = await axios.post(
+      "https://script.google.com/macros/s/AKfycbzjMBjVzSLVBBFHNpxHVaCgKYlHOF0PJCoQKrjcyB-w3acS9k6Z_xwcMNN2U02_PA8/exec",
+      {
+        ...shippingInfo,
+        products: checkoutProductList.map((product) => ({
+          productId: product.id,
+          quantity: product.quantity,
+          total: product.price * product.quantity,
+        })),
+      }
+    );
+    if (response.status === 200) {
+      alert("Đặt hàng thành công");
+    } else {
+      alert("Đặt hàng thất bại");
+    }
+  };
   return (
     <Flex direction="column" gap="1rem">
       <Card.Root rounded="lg">
@@ -110,6 +128,7 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
                   <Image
                     src={product.image || "/no-image.jpg"}
                     alt={product.name}
+                    unoptimized
                     objectFit="contain"
                     fill
                   />
@@ -146,7 +165,13 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
           </Flex>
         </Card.Body>
       </Card.Root>
-      <Button colorScheme="primary" size="lg" rounded="lg" colorPalette="red">
+      <Button
+        colorScheme="primary"
+        size="lg"
+        onClick={handleOrder}
+        rounded="lg"
+        colorPalette="red"
+      >
         Đặt hàng
       </Button>
     </Flex>
