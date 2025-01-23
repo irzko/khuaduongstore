@@ -44,7 +44,6 @@ export default function Layout({
             <Link href="/">
               <Heading
                 whiteSpace="nowrap"
-                color="teal.700"
                 size="2xl"
                 className={`${anton.className}`}
               >
