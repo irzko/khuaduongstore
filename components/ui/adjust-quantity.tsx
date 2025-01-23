@@ -19,7 +19,11 @@ export default function AdjustQuantity({ productId }: { productId: string }) {
   const decreaseQuantity = () => {
     const newCarts = carts.map((cart) => {
       if (cart.id === productId) {
-        return { ...cart, quantity: cart.quantity - 1 };
+        if (cart.quantity > 1) {
+          return { ...cart, quantity: cart.quantity - 1 };
+        } else {
+          return { ...cart };
+        }
       }
       return cart;
     });
