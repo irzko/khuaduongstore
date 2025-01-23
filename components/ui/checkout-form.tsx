@@ -23,6 +23,7 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
     Array<IProduct & { quantity: number }>
   >([]);
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [shippingInfo, setShippingInfo] = useState<{
     name: string;
@@ -54,6 +55,7 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
     );
   }, [carts, products, searchParams]);
   const handleOrder = async () => {
+    setIsLoading(true);
     const response = await fetch(
       "https://script.google.com/macros/s/AKfycbzjMBjVzSLVBBFHNpxHVaCgKYlHOF0PJCoQKrjcyB-w3acS9k6Z_xwcMNN2U02_PA8/exec",
       {
@@ -74,6 +76,7 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
         },
       }
     );
+    setIsLoading(false);
     if (response.ok) {
       setOpen(true);
     } else {
@@ -193,6 +196,7 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
         <Button
           colorScheme="primary"
           size="lg"
+          loading={isLoading}
           onClick={handleOrder}
           rounded="lg"
           colorPalette="red"
