@@ -11,7 +11,6 @@ export const getGSheet = async (spreadsheetId: string, sheetId: string) => {
     columns: true,
     skip_empty_lines: true,
   });
-  console.log(records);
 
   return records;
 };

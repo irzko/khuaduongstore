@@ -154,7 +154,7 @@ export default async function Page({
                   </Grid>
                 </Card.Body>
               </Card.Root>
-              <Text>{product.description}</Text>
+              <Text whiteSpace="pre-line">{product.description}</Text>
             </Stack>
           </Flex>
           <Box
