@@ -32,7 +32,6 @@ export default function Carousel({ imageUrlList }: { imageUrlList: string[] }) {
                 <NextImage
                   src={imageUrl}
                   fill
-                  objectFit="contain"
                   unoptimized
                   alt=""
                 />
