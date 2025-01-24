@@ -16,10 +16,10 @@ import {
 import { getGSheet } from "@/lib/getGSheet";
 import Image from "next/image";
 import { EmptyState } from "@/components/ui/empty-state";
-import { Button } from "@/components/ui/button";
 import AddToCartButton from "@/components/ui/add-to-cart-button";
 import { Toaster } from "@/components/ui/toaster";
 import Carousel from "@/components/ui/carousel";
+import BuyButton from "@/components/ui/buy-button";
 
 const getProducts = unstable_cache(
   async (id: string) => {
@@ -144,7 +144,7 @@ export default async function Page({
                 <Card.Body padding="1rem">
                   <Grid templateColumns="1fr 1fr" gap="1rem">
                     <AddToCartButton productId={product.id} />
-                    <Button rounded="lg">Mua ngay</Button>
+                    <BuyButton product={product} />
                   </Grid>
                 </Card.Body>
               </Card.Root>

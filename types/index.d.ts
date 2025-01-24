@@ -8,9 +8,9 @@ interface IProduct {
   name: string;
   price: number;
   image: string;
+  remaining: string;
   description: string;
 }
-
 
 interface IOrder {
   id: string;
