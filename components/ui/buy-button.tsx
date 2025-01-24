@@ -58,7 +58,14 @@ export default function BuyButton({ product }: { product: IProduct }) {
     router.push(
       "/order?products=" +
         encodeURIComponent(
-          Buffer.from(JSON.stringify(product.id)).toString("base64")
+          Buffer.from(
+            JSON.stringify([
+              {
+                id: product.id,
+                quantity,
+              },
+            ])
+          ).toString("base64")
         )
     );
   };

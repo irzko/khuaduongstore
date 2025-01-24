@@ -1,9 +1,8 @@
 "use client";
 
-import CartContext from "@/context/cart-context";
 import { Box, Card, Flex, Input, Text } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useContext, useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Image from "next/image";
 import { Field } from "./field";
 import { Button } from "./button";
@@ -35,26 +34,37 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
     address: "",
     phone: "",
   });
-  const { carts } = useContext(CartContext);
   const router = useRouter();
   const searchParams = useSearchParams();
   useEffect(() => {
     const productsParam = searchParams.get("products");
-    const checkoutProductId = productsParam
-      ? Buffer.from(decodeURIComponent(productsParam), "base64").toString(
-          "utf8"
+    const checkoutProductId: {
+      id: string;
+      quantity: number;
+    }[] = productsParam
+      ? JSON.parse(
+          Buffer.from(decodeURIComponent(productsParam), "base64").toString(
+            "utf8"
+          )
         )
-      : ([] as string[]);
+      : [];
 
     setCheckoutProductList(
       products
-        .filter((product) => checkoutProductId.includes(product.id))
+        .filter((product) =>
+          checkoutProductId.some(
+            (checkoutProduct) => checkoutProduct.id === product.id
+          )
+        )
         .map((product) => ({
           ...product,
-          quantity: carts.find((cart) => cart.id === product.id)?.quantity || 0,
+          quantity:
+            checkoutProductId.find(
+              (checkoutProduct) => checkoutProduct.id === product.id
+            )?.quantity || 0,
         }))
     );
-  }, [carts, products, searchParams]);
+  }, [products, searchParams]);
   const handleOrder = async () => {
     setIsLoading(true);
     const response = await fetch(

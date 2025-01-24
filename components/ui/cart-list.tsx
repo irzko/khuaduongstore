@@ -150,10 +150,14 @@ export default function CartList({ products }: { products: IProduct[] }) {
                     "/order?products=" +
                     encodeURIComponent(
                       Buffer.from(
-                        productsInCart
-                          .filter((product) => product.isChecked)
-                          .map((product) => product.id)
-                          .join(",")
+                        JSON.stringify(
+                          productsInCart
+                            .filter((product) => product.isChecked)
+                            .map((product) => ({
+                              id: product.id,
+                              quantity: product.quantity,
+                            }))
+                        )
                       ).toString("base64")
                     )
                   }
