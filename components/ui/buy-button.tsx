@@ -21,13 +21,11 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { LuMinus, LuPlus } from "react-icons/lu";
-import { useContext, useState } from "react";
-import CartContext from "@/context/cart-context";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function BuyButton({ product }: { product: IProduct }) {
   const [quantity, setQuantity] = useState(1);
-  const { carts, setCarts } = useContext(CartContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -46,15 +44,6 @@ export default function BuyButton({ product }: { product: IProduct }) {
 
   const handleBuy = () => {
     setIsLoading(true);
-    const newCarts = [
-      ...carts,
-      {
-        id: product.id,
-        quantity,
-      },
-    ];
-    localStorage.setItem("cart", JSON.stringify(newCarts));
-    setCarts(newCarts);
     router.push(
       "/order?products=" +
         encodeURIComponent(
