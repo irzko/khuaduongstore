@@ -2,7 +2,7 @@
 
 import { Box, Card, Flex, Input, Text } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense, useContext } from "react";
 import Image from "next/image";
 import { Field } from "./field";
 import { Button } from "./button";
@@ -17,6 +17,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { createId } from "@paralleldrive/cuid2";
+import CartContext from "@/context/cart-context";
 
 function ProductCheckout({ products }: { products: IProduct[] }) {
   const [checkoutProductList, setCheckoutProductList] = useState<
@@ -24,6 +25,8 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
   >([]);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { carts, setCarts } = useContext(CartContext);
 
   const [shippingInfo, setShippingInfo] = useState<{
     name: string;
@@ -90,6 +93,12 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
     );
     setIsLoading(false);
     if (response.ok) {
+      const newCarts = carts.filter(
+        (cart) => !checkoutProductList.some((product) => product.id === cart.id)
+      );
+      localStorage.setItem("cart", JSON.stringify(newCarts));
+      setCarts(newCarts);
+
       setOpen(true);
     } else {
       alert("Đặt hàng thất bại");
