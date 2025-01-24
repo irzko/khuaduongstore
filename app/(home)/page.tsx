@@ -53,7 +53,7 @@ export default async function Home() {
               <Flex position="relative" aspectRatio={1}>
                 <Image asChild alt={product.name} padding="0.5rem">
                   <NextImage
-                    src={product.image || "/no-image.jpg"}
+                    src={product.image.split("\n")[0] || "/no-image.jpg"}
                     alt={product.name}
                     objectFit="contain"
                     fill

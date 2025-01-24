@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react/flex";
 import Link from "next/link";
-import { Heading, Input } from "@chakra-ui/react";
+import { Heading, Input, Text } from "@chakra-ui/react";
 import { InputGroup } from "@/components/ui/input-group";
 import SideBar from "@/components/sidebar";
 import { Anton } from "next/font/google";
@@ -8,7 +8,7 @@ import CartButton from "@/components/ui/cart-button";
 
 const anton = Anton({
   weight: ["400"],
-  subsets: ["latin"],
+  subsets: ["vietnamese"],
 });
 
 export default function Layout({
@@ -41,15 +41,20 @@ export default function Layout({
           alignItems="center"
         >
           <Flex gapX="1rem">
-            <Link href="/">
-              <Heading
-                whiteSpace="nowrap"
-                size="2xl"
-                className={`${anton.className}`}
-              >
-                KHỨA DƯƠNG
-              </Heading>
-            </Link>
+            <Flex gap="0.25rem" alignItems="end" asChild>
+              <Link href="/">
+                <Heading
+                  whiteSpace="nowrap"
+                  size="xl"
+                  className={`${anton.className}`}
+                >
+                  KHỨA DƯƠNG
+                </Heading>
+                <Text as="span" fontSize="xl" fontWeight="400">
+                  SHOP
+                </Text>
+              </Link>
+            </Flex>
           </Flex>
           <Flex gap="0.5rem" alignItems="center">
             <InputGroup

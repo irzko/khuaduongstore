@@ -150,6 +150,7 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
                   <Box
                     position="relative"
                     height="5rem"
+                    overflow="hidden"
                     rounded="lg"
                     borderWidth="1px"
                     aspectRatio={1}

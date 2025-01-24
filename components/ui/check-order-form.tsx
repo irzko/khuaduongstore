@@ -9,9 +9,7 @@ export default function CheckOrderForm({ orders }: { orders: IOrder[] }) {
   const [userOrder, setUserOrder] = useState<IOrder[]>([]);
   const [phone, setPhone] = useState("");
   useEffect(() => {
-    if (phone) {
-      setUserOrder(orders.filter((order) => order.phone === phone));
-    }
+    setUserOrder(orders.filter((order) => order.phone === phone));
   }, [orders, phone]);
 
   return (
@@ -20,6 +18,7 @@ export default function CheckOrderForm({ orders }: { orders: IOrder[] }) {
         <Field label="Tra cứu bằng điện thoại">
           <Input
             name="phone"
+            rounded="lg"
             value={phone}
             onChange={(e) => {
               setPhone(e.target.value);
@@ -28,15 +27,15 @@ export default function CheckOrderForm({ orders }: { orders: IOrder[] }) {
           />
         </Field>
       </Flex>
-      <Flex divideY="1px">
+      <Flex divideY="1px" direction="column">
         {userOrder.map((order) => (
-          <DataListRoot key={order.id} orientation="horizontal">
+          <DataListRoot key={order.id} paddingY="1rem" orientation="horizontal">
             <DataListItem label="Mã đơn đặt" value={order.id} />
             <DataListItem label="Thời gian đặt" value={order.timestamp} />
             <DataListItem
               key={order.id}
-              label="Địa chỉ"
-              value={order.address}
+              label="Trang thái"
+              value={order.status}
             />
           </DataListRoot>
         ))}

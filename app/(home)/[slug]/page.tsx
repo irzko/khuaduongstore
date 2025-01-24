@@ -5,12 +5,12 @@ import { Metadata } from "next";
 import {
   Box,
   Card,
+  Container,
   Flex,
   Grid,
   Heading,
   Stack,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 // import { BreadcrumbLink, BreadcrumbRoot } from "@/components/ui/breadcrumb";
 import { getGSheet } from "@/lib/getGSheet";
@@ -19,6 +19,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { Button } from "@/components/ui/button";
 import AddToCartButton from "@/components/ui/add-to-cart-button";
 import { Toaster } from "@/components/ui/toaster";
+import Carousel from "@/components/ui/carousel";
 
 const getProducts = unstable_cache(
   async (id: string) => {
@@ -98,14 +99,14 @@ export default async function Page({
   // }));
   return (
     <>
-      <VStack>
+      <Container maxW="5xl" padding="1rem">
         <Flex
           direction={{
             base: "column",
             md: "row",
           }}
-          maxWidth="1024px"
           w="full"
+          gap="1rem"
         >
           <Flex direction="column" gap="1rem" w="full">
             {/* <BreadcrumbRoot
@@ -125,16 +126,8 @@ export default async function Page({
               </BreadcrumbLink>
             ))}
           </BreadcrumbRoot> */}
-            <Stack paddingX="1rem" spaceY="1rem">
-              <Box position="relative" aspectRatio={16 / 9}>
-                <Image
-                  src={product.image || "/no-image.jpg"}
-                  alt={product.name}
-                  objectFit="contain"
-                  unoptimized
-                  fill
-                />
-              </Box>
+            <Stack spaceY="1rem">
+              <Carousel imageUrlList={product.image.split("\n")} />
 
               <Card.Root rounded="lg">
                 <Card.Header paddingTop="1rem" paddingX="1rem">
@@ -159,7 +152,6 @@ export default async function Page({
             </Stack>
           </Flex>
           <Box
-            padding="1rem"
             width={{
               base: "full",
               md: "32rem",
@@ -175,7 +167,7 @@ export default async function Page({
                 <Grid templateColumns="repeat(3, minmax(0, 1fr))" gap="1rem">
                   <Box position="relative" aspectRatio={1}>
                     <Image
-                      src={product.image || "/no-image.jpg"}
+                      src={product.image.split("\n")[0] || "/no-image.jpg"}
                       alt={product.name}
                       objectFit="contain"
                       unoptimized
@@ -196,7 +188,7 @@ export default async function Page({
             </Card.Root>
           </Box>
         </Flex>
-      </VStack>
+      </Container>
       <Toaster />
     </>
   );

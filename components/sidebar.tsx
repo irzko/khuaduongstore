@@ -1,4 +1,5 @@
 import {
+  DrawerActionTrigger,
   DrawerBackdrop,
   DrawerBody,
   DrawerCloseTrigger,
@@ -8,13 +9,12 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { IconButton } from "@chakra-ui/react";
+import { Button, IconButton } from "@chakra-ui/react";
 
 import { LuMenu } from "react-icons/lu";
 import Link from "next/link";
 
 const SideBar = async () => {
-  
   return (
     <DrawerRoot>
       <DrawerBackdrop />
@@ -29,9 +29,11 @@ const SideBar = async () => {
           <DrawerTitle>Menu</DrawerTitle>
         </DrawerHeader>
         <DrawerBody autoFocus={false}>
-          <DrawerTrigger asChild>
-            <Link href="/check-order">Tra cứu đơn đặt</Link>
-          </DrawerTrigger>
+          <DrawerActionTrigger asChild>
+            <Button justifyContent="start" w="full" variant="ghost" asChild>
+              <Link href="/check-order">Tra cứu đơn đặt</Link>
+            </Button>
+          </DrawerActionTrigger>
         </DrawerBody>
       </DrawerContent>
     </DrawerRoot>
