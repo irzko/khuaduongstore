@@ -169,7 +169,7 @@ export default async function Page({
                     <Image
                       src={product.image.split("\n")[0] || "/no-image.jpg"}
                       alt={product.name}
-                      objectFit="contain"
+                      style={{ objectFit: "contain" }}
                       unoptimized
                       fill
                     />

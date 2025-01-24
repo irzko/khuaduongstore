@@ -169,7 +169,7 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
                       src={product.image || "/no-image.jpg"}
                       alt={product.name}
                       unoptimized
-                      objectFit="contain"
+                      style={{ objectFit: "contain" }}
                       fill
                     />
                   </Box>

@@ -96,7 +96,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
                 <Image
                   src={product.image.split("\n")[0] || "/no-image.jpg"}
                   alt={product.name}
-                  objectFit="cover"
+                  style={{ objectFit: "contain" }}
                   unoptimized
                   fill
                 />
