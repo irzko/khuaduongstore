@@ -74,8 +74,8 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
         redirect: "follow",
         body: JSON.stringify({
           ...shippingInfo,
-          id: createId(),
           products: checkoutProductList.map((product) => ({
+            orderId: createId(),
             productId: product.id,
             quantity: product.quantity,
             price: product.price,
