@@ -8,11 +8,13 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Grid, IconButton } from "@chakra-ui/react";
+import { IconButton } from "@chakra-ui/react";
 
 import { LuMenu } from "react-icons/lu";
+import Link from "next/link";
 
 const SideBar = async () => {
+  
   return (
     <DrawerRoot>
       <DrawerBackdrop />
@@ -27,11 +29,10 @@ const SideBar = async () => {
           <DrawerTitle>Menu</DrawerTitle>
         </DrawerHeader>
         <DrawerBody autoFocus={false}>
-          <Grid templateColumns={"repeat(2, 1fr)"} gap="1rem"></Grid>
+          <DrawerTrigger asChild>
+            <Link href="/check-order">Tra cứu đơn đặt</Link>
+          </DrawerTrigger>
         </DrawerBody>
-        {/* <DrawerFooter>
-          <UserItem />
-        </DrawerFooter> */}
       </DrawerContent>
     </DrawerRoot>
   );
