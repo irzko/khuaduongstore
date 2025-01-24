@@ -9,7 +9,8 @@ export default function CheckOrderForm({ orders }: { orders: IOrder[] }) {
   const [userOrder, setUserOrder] = useState<IOrder[]>([]);
   const [phone, setPhone] = useState("");
   useEffect(() => {
-    setUserOrder(orders.filter((order) => order.phone === phone));
+    const checkPhone = phone.charAt(0) === "0" ? phone.slice(1) : phone;
+    setUserOrder(orders.filter((order) => order.phone === checkPhone));
   }, [orders, phone]);
 
   return (
