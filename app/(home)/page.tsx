@@ -48,7 +48,7 @@ export default async function Home() {
               })}-${product.id}.html`}
             >
               <Flex position="relative" aspectRatio={1}>
-                <Image asChild alt={product.name} padding="0.5rem">
+                <Image asChild alt={product.name}>
                   <NextImage
                     src={product.image.split("\n")[0] || "/no-image.jpg"}
                     alt={product.name}
