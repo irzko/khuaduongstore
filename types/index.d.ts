@@ -8,7 +8,7 @@ interface IProduct {
   name: string;
   price: number;
   image: string;
-  stock: string;
+  stock: number;
   description: string;
 }
 
@@ -16,7 +16,7 @@ interface IOrder {
   id: string;
   timestamp: string;
   unitPrice: number;
-  totalPrice: string;
+  totalPrice: number;
   quantity: string;
   productId: string;
   name: string;

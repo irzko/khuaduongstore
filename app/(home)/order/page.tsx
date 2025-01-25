@@ -8,7 +8,7 @@ const getProducts = unstable_cache(
     return await getAllProducts();
   },
   ["products"],
-  { tags: ["products"] }
+  { tags: ["products"] },
 );
 
 export default async function Page() {

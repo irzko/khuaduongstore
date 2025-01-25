@@ -31,7 +31,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
   const router = useRouter();
 
   const inscreaseQuantity = () => {
-    if (parseInt(product.stock) > quantity) {
+    if (product.stock > quantity) {
       setQuantity(quantity + 1);
     }
   };
@@ -53,9 +53,9 @@ export default function BuyButton({ product }: { product: IProduct }) {
                 id: product.id,
                 quantity,
               },
-            ])
-          ).toString("base64")
-        )
+            ]),
+          ).toString("base64"),
+        ),
     );
   };
   return (
