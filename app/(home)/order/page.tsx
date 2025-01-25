@@ -1,14 +1,11 @@
 import CheckoutForm from "@/components/ui/checkout-form";
-import { getGSheet } from "@/lib/getGSheet";
 import { Container } from "@chakra-ui/react";
 import { unstable_cache } from "next/cache";
+import { getAllProducts } from "@/lib/db";
 
 const getProducts = unstable_cache(
   async () => {
-    return (await getGSheet(
-      "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
-      "0"
-    )) as unknown as IProduct[];
+    return await getAllProducts();
   },
   ["products"],
   { tags: ["products"] }
