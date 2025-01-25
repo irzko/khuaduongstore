@@ -11,11 +11,14 @@ import { unstable_cache } from "next/cache";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import slugify from "slugify";
-import { getAllProducts } from "@/lib/db";
+import { getGSheet } from "@/lib/getGSheet";
 
 const getProducts = unstable_cache(
   async () => {
-    return await getAllProducts();
+    return (await getGSheet(
+      "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
+      "0"
+    )) as IProduct[];
   },
   ["products"],
   { tags: ["products"] }

@@ -1,5 +1,4 @@
 import { unstable_cache } from "next/cache";
-import { getAllProducts } from "@/lib/db";
 import slugify from "slugify";
 import { Metadata } from "next";
 import {
@@ -19,18 +18,25 @@ import AddToCartButton from "@/components/ui/add-to-cart-button";
 import { Toaster } from "@/components/ui/toaster";
 import Carousel from "@/components/ui/carousel";
 import BuyButton from "@/components/ui/buy-button";
+import { getGSheet } from "@/lib/getGSheet";
 
-const getProducts = unstable_cache(
+const getProduct = unstable_cache(
   async (id: string) => {
-    const products = await getAllProducts();
+    const products = (await getGSheet(
+      "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
+      "0"
+    )) as IProduct[];
     return products.find((p) => p.id === id);
   },
   ["products"],
-  { tags: ["products"] },
+  { tags: ["products"] }
 );
 
 export async function generateStaticParams() {
-  const products = await getAllProducts();
+  const products = (await getGSheet(
+    "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
+    "0"
+  )) as IProduct[];
 
   return products.map((product) => ({
     slug:
@@ -56,7 +62,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = (await params).slug;
   const id = slug.split(".")[0].split("-").pop() || "";
-  const post = await getProducts(id);
+  const post = await getProduct(id);
 
   return {
     title: post ? post.name : "No Name",
@@ -74,7 +80,7 @@ export default async function Page({
   if (!productId) {
     return null;
   }
-  const product = await getProducts(productId);
+  const product = await getProduct(productId);
 
   if (!product) {
     return (
