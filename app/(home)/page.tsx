@@ -52,7 +52,7 @@ export default async function Home() {
                   <NextImage
                     src={product.image.split("\n")[0] || "/no-image.jpg"}
                     alt={product.name}
-                    style={{ objectFit: "contain" }}
+                    style={{ objectFit: "cover" }}
                     fill
                     unoptimized
                   />
