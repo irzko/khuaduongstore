@@ -91,14 +91,13 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
         },
       }
     );
-    setIsLoading(false);
     if (response.ok) {
       const newCarts = carts.filter(
         (cart) => !checkoutProductList.some((product) => product.id === cart.id)
       );
       localStorage.setItem("cart", JSON.stringify(newCarts));
       setCarts(newCarts);
-
+      setIsLoading(false);
       setOpen(true);
     } else {
       alert("Đặt hàng thất bại");

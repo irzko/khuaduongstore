@@ -33,7 +33,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
   const router = useRouter();
 
   const inscreaseQuantity = () => {
-    if (parseInt(product.remaining) > quantity) {
+    if (parseInt(product.stock) > quantity) {
       setQuantity(quantity + 1);
     }
   };
@@ -108,7 +108,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
                     currency: "VND",
                   }).format(product.price)}
                 </Text>
-                <Text>Kho: {product.remaining || 0}</Text>
+                <Text>Kho: {product.stock || 0}</Text>
               </Box>
             </Flex>
             <Separator />

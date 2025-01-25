@@ -1,13 +1,10 @@
 import CartList from "@/components/ui/cart-list";
-import { getGSheet } from "@/lib/getGSheet";
+import { getAllProducts } from "@/lib/db";
 import { unstable_cache } from "next/cache";
 
 const getProducts = unstable_cache(
   async () => {
-    return (await getGSheet(
-      "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
-      "0"
-    )) as unknown as IProduct[];
+    return await getAllProducts();
   },
   ["products"],
   { tags: ["products"] }

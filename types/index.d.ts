@@ -8,7 +8,7 @@ interface IProduct {
   name: string;
   price: number;
   image: string;
-  remaining: string;
+  stock: string;
   description: string;
 }
 

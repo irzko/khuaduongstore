@@ -13,21 +13,17 @@ import {
   Text,
 } from "@chakra-ui/react";
 // import { BreadcrumbLink, BreadcrumbRoot } from "@/components/ui/breadcrumb";
-import { getGSheet } from "@/lib/getGSheet";
 import Image from "next/image";
 import { EmptyState } from "@/components/ui/empty-state";
 import AddToCartButton from "@/components/ui/add-to-cart-button";
 import { Toaster } from "@/components/ui/toaster";
 import Carousel from "@/components/ui/carousel";
 import BuyButton from "@/components/ui/buy-button";
+import { getAllProducts } from "@/lib/db";
 
 const getProducts = unstable_cache(
   async (id: string) => {
-    const products = (await getGSheet(
-      "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
-      "0"
-    )) as unknown as IProduct[];
-
+    const products = await getAllProducts();
     return products.find((p) => p.id === id);
   },
   ["products"],
@@ -35,10 +31,7 @@ const getProducts = unstable_cache(
 );
 
 export async function generateStaticParams() {
-  const products = (await getGSheet(
-    "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
-    "0"
-  )) as unknown as IProduct[];
+  const products = await getAllProducts();
   return products.map((product) => ({
     slug:
       slugify(product.name, {
