@@ -52,8 +52,8 @@ export const getAllOrders = async (): Promise<IOrder[]> => {
     name: order["Tên khách hàng"],
     productId: order["Mã sản phẩm"],
     unitPrice: Number(order["Đơn giá"]),
-    quantity: order["Số lượng"],
-    totalPrice: order["Thành tiền"],
+    quantity: Number(order["Số lượng"]),
+    totalPrice: Number(order["Thành tiền"]),
     status: order["Trạng thái"],
   }));
 };

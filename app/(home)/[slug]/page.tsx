@@ -1,5 +1,5 @@
 import { unstable_cache } from "next/cache";
-import { getGSheet } from "@/lib/getGSheet";
+import { getAllProducts } from "@/lib/db";
 import slugify from "slugify";
 import { Metadata } from "next";
 import {
@@ -20,30 +20,9 @@ import { Toaster } from "@/components/ui/toaster";
 import Carousel from "@/components/ui/carousel";
 import BuyButton from "@/components/ui/buy-button";
 
-type Product = {
-  "Mã sản phẩm": string;
-  "Tên sản phẩm": string;
-  "Hình ảnh": string;
-  Giá: string;
-  "Mô tả": string;
-  "Số lượng tồn": string;
-};
-
 const getProducts = unstable_cache(
   async (id: string) => {
-    const data = await getGSheet(
-      "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
-      "0",
-    );
-
-    const products: IProduct[] = data.map((product: Product) => ({
-      id: product["Mã sản phẩm"],
-      name: product["Tên sản phẩm"],
-      image: product["Hình ảnh"],
-      price: Number(product["Giá"]),
-      description: product["Mô tả"],
-      stock: Number(product["Số lượng tồn"]),
-    }));
+    const products = await getAllProducts();
     return products.find((p) => p.id === id);
   },
   ["products"],
@@ -51,19 +30,7 @@ const getProducts = unstable_cache(
 );
 
 export async function generateStaticParams() {
-  const data = await getGSheet(
-    "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
-    "0",
-  );
-
-  const products: IProduct[] = data.map((product: Product) => ({
-    id: product["Mã sản phẩm"],
-    name: product["Tên sản phẩm"],
-    image: product["Hình ảnh"],
-    price: Number(product["Giá"]),
-    description: product["Mô tả"],
-    stock: Number(product["Số lượng tồn"]),
-  }));
+  const products = await getAllProducts();
 
   return products.map((product) => ({
     slug:
