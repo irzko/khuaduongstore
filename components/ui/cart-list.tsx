@@ -107,7 +107,14 @@ export default function CartList({ products }: { products: IProduct[] }) {
           ))}
         </Card.Body>
       </Card.Root>
-      <Box position="sticky" bottom="0">
+      <Box
+        position="sticky"
+        bottom="0"
+        backgroundColor={{
+          base: "white",
+          _dark: "black",
+        }}
+      >
         {
           <Flex justifyContent="space-between" alignItems="center">
             <Checkbox
