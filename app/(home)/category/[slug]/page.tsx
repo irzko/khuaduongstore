@@ -1,4 +1,4 @@
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 import {
   Flex,
   Grid,
@@ -8,6 +8,7 @@ import {
   Card,
   Image,
 } from "@chakra-ui/react";
+import slugify from "slugify";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import { getAllProducts } from "@/lib/db";
