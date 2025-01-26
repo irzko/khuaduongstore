@@ -10,13 +10,16 @@ import {
   Heading,
   Stack,
   Text,
+  Image,
 } from "@chakra-ui/react";
-import Image from "next/image";
+import NextImage from "next/image";
 import { EmptyState } from "@/components/ui/empty-state";
 import AddToCartButton from "@/components/ui/add-to-cart-button";
 import { Toaster } from "@/components/ui/toaster";
 import Carousel from "@/components/ui/carousel";
 import BuyButton from "@/components/ui/buy-button";
+import NextLink from "next/link";
+import slugify from "slugify";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -104,52 +107,61 @@ export default async function Page({
               md: "32rem",
             }}
           >
-            <Card.Root>
-              <Card.Header>
-                <Card.Title fontSize="lg" fontWeight="bold">
-                  Sản phẩm liên quan
-                </Card.Title>
-              </Card.Header>
-              <Card.Body>
-                <Box spaceY="1rem">
-                  {productSuggetions.slice(0, 5).map((product) => {
-                    return (
-                      <Grid
-                        key={product.id}
-                        templateColumns="repeat(3, minmax(0, 1fr))"
-                        gap="1rem"
-                      >
-                        <Box
-                          position="relative"
-                          rounded="lg"
-                          overflow="hidden"
-                          aspectRatio={1}
-                        >
-                          <Image
-                            src={
-                              product.image.split("\n")[0] || "/no-image.jpg"
-                            }
-                            alt={product.name}
-                            style={{ objectFit: "cover" }}
-                            unoptimized
-                            fill
-                          />
-                        </Box>
-                        <Box gridColumn="span 2 / span 2">
-                          <Text>{product.name}</Text>
-                          <Text color="red.500" fontWeight="bold">
-                            {Intl.NumberFormat("vi-VN", {
-                              style: "currency",
-                              currency: "VND",
-                            }).format(product.price)}
-                          </Text>
-                        </Box>
-                      </Grid>
-                    );
-                  })}
-                </Box>
-              </Card.Body>
-            </Card.Root>
+            <Heading size="xl" marginBottom="1rem">
+              Sản phẩm tương tự
+            </Heading>
+            <Grid
+              templateColumns={[
+                "repeat(2, 1fr)",
+                "repeat(4, 1fr)",
+                "repeat(6, 1fr)",
+                "repeat(6, 1fr)",
+              ]}
+              gap="0.5rem"
+            >
+              {productSuggetions.map((product) => (
+                <Card.Root key={product.id} asChild overflow="hidden">
+                  <NextLink
+                    href={`/${slugify(product.name, {
+                      replacement: "-",
+                      remove: undefined,
+                      lower: true,
+                      strict: true,
+                      locale: "vi",
+                      trim: true,
+                    })}-${product.id}.html`}
+                  >
+                    <Flex position="relative" aspectRatio={1}>
+                      <Image asChild alt={product.name}>
+                        <NextImage
+                          src={product.image.split("\n")[0] || "/no-image.jpg"}
+                          alt={product.name}
+                          style={{ objectFit: "cover" }}
+                          fill
+                          unoptimized
+                        />
+                      </Image>
+                    </Flex>
+                    <Card.Body
+                      gap="0.5rem"
+                      padding="0.5rem"
+                      direction="col"
+                      justifyContent="space-between"
+                    >
+                      <Heading lineClamp={2} size="md">
+                        {product.name}
+                      </Heading>
+                      <Text fontSize="md" color="red.500" fontWeight="bold">
+                        {Intl.NumberFormat("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        }).format(product.price)}
+                      </Text>
+                    </Card.Body>
+                  </NextLink>
+                </Card.Root>
+              ))}
+            </Grid>
           </Box>
         </Flex>
       </Container>
