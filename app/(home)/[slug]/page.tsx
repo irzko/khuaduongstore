@@ -58,7 +58,7 @@ export default async function Page({
   }
 
   const productSuggetions = allProducts.filter(
-    (p) => p.category === product.category,
+    (p) => p.category === product.category && p.id !== product.id,
   );
 
   return (
@@ -119,7 +119,12 @@ export default async function Page({
                         templateColumns="repeat(3, minmax(0, 1fr))"
                         gap="1rem"
                       >
-                        <Box position="relative" rounded="lg" overflow="hidden" aspectRatio={1}>
+                        <Box
+                          position="relative"
+                          rounded="lg"
+                          overflow="hidden"
+                          aspectRatio={1}
+                        >
                           <Image
                             src={
                               product.image.split("\n")[0] || "/no-image.jpg"
@@ -142,7 +147,6 @@ export default async function Page({
                       </Grid>
                     );
                   })}
-                  
                 </Box>
               </Card.Body>
             </Card.Root>
