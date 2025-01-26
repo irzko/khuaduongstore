@@ -1,3 +1,4 @@
+export const dynamic = 'force-static';
 import {
   Flex,
   Grid,
@@ -9,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import slugify from "slugify";
 import { getAllProducts } from "@/lib/db";
 import { Metadata } from "next";
 
@@ -28,25 +28,6 @@ const getProducts = async (slug: string) => {
     );
   });
 };
-
-export async function generateStaticParams() {
-  const allProducts = await getAllProducts();
-  const uniqueCategoies = Array.from(
-    new Set(allProducts.map((product) => product.category))
-  );
-
-  return uniqueCategoies.map((category) => ({
-    slug:
-      slugify(category, {
-        replacement: "-",
-        remove: undefined,
-        lower: true,
-        strict: true,
-        locale: "vi",
-        trim: true,
-      }) + ".html",
-  }));
-}
 
 type Props = {
   params: Promise<{ slug: string }>;
