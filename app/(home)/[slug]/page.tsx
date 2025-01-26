@@ -118,7 +118,7 @@ export default async function Page({
                 "repeat(6, 1fr)",
                 "repeat(6, 1fr)",
               ]}
-              gap="0.5rem"
+              gap="1rem"
             >
               {productSuggetions.slice(0, 6).map((product) => (
                 <Card.Root key={product.id} asChild overflow="hidden">
