@@ -52,7 +52,7 @@ export default function Layout({
                   KHỨA DƯƠNG
                 </Heading>
                 <Text as="span" fontSize="xl" fontWeight="400">
-                  SHOP
+                  STORE
                 </Text>
               </Link>
             </Flex>

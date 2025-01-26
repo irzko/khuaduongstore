@@ -22,7 +22,7 @@ export default async function Home() {
 
   return (
     <Container maxW="5xl" padding="1rem" spaceY="1rem">
-      <Flex gap="1rem" overflowX="auto">
+      <Flex gap="1rem" scrollbar="hidden" overflowX="auto">
         {uniqueCategoies.map((category) => (
           <Button
             key={category}

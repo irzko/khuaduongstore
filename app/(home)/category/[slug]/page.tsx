@@ -11,16 +11,11 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 import slugify from "slugify";
 import { getAllProducts } from "@/lib/db";
+import { Metadata } from "next";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const allProducts = await getAllProducts();
-  const slug = (await params).slug;
-
-  const matchedProductCategory = allProducts.filter((product) => {
+const getProducts = async (slug: string) => {
+  const products = await getAllProducts();
+  return products.filter((product) => {
     return (
       slugify(product.category, {
         replacement: "-",
@@ -32,11 +27,53 @@ export default async function Page({
       }) === slug
     );
   });
+};
+
+export async function generateStaticParams() {
+  const allProducts = await getAllProducts();
+  const uniqueCategoies = Array.from(
+    new Set(allProducts.map((product) => product.category))
+  );
+
+  return uniqueCategoies.map((category) => ({
+    slug:
+      slugify(category, {
+        replacement: "-",
+        remove: undefined,
+        lower: true,
+        strict: true,
+        locale: "vi",
+        trim: true,
+      }) + ".html",
+  }));
+}
+
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const slug = (await params).slug;
+  const products = await getProducts(slug.replace(".html", ""));
+
+  return {
+    title: products ? products[0].category : "No Name",
+  };
+}
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const slug = (await params).slug;
+  const products = await getProducts(slug.replace(".html", ""));
 
   return (
     <Container maxW="5xl" padding="1rem">
       <Heading size="xl" marginBottom="1rem">
-        {matchedProductCategory[0].category}
+        {products[0].category}
       </Heading>
       <Grid
         templateColumns={[
@@ -47,7 +84,7 @@ export default async function Page({
         ]}
         gap="0.5rem"
       >
-        {matchedProductCategory.map((product) => (
+        {products.map((product) => (
           <Card.Root key={product.id} asChild overflow="hidden">
             <NextLink
               href={`/${slugify(product.name, {
