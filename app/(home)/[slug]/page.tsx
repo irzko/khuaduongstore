@@ -25,22 +25,7 @@ const getProducts = async (id: string) => {
 };
 
 export async function generateStaticParams() {
-  const products = await getAllProducts();
-
-  return products.map((product) => ({
-    slug:
-      slugify(product.name, {
-        replacement: "-",
-        remove: undefined,
-        lower: true,
-        strict: true,
-        locale: "vi",
-        trim: true,
-      }) +
-      "-" +
-      product.id +
-      ".html",
-  }));
+  return []
 }
 
 type Props = {
