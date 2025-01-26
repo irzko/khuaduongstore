@@ -98,6 +98,7 @@ export default async function Page({
                   </Grid>
                 </Card.Body>
               </Card.Root>
+              <Text marginBottom="1rem">Mô tả sản phẩm</Text>
               <Text whiteSpace="pre-line">{product.description}</Text>
             </Stack>
           </Flex>
@@ -107,7 +108,7 @@ export default async function Page({
               md: "32rem",
             }}
           >
-            <Heading size="xl" marginBottom="1rem">
+            <Heading marginBottom="1rem">
               Sản phẩm tương tự
             </Heading>
             <Grid
@@ -119,7 +120,7 @@ export default async function Page({
               ]}
               gap="0.5rem"
             >
-              {productSuggetions.slice(0, 5).map((product) => (
+              {productSuggetions.slice(0, 6).map((product) => (
                 <Card.Root key={product.id} asChild overflow="hidden">
                   <NextLink
                     href={`/${slugify(product.name, {
