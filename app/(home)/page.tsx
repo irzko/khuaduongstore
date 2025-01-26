@@ -7,22 +7,13 @@ import {
   Card,
   Image,
 } from "@chakra-ui/react";
-import { unstable_cache } from "next/cache";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import slugify from "slugify";
 import { getAllProducts } from "@/lib/db";
 
-const getProducts = unstable_cache(
-  async () => {
-    return await getAllProducts();
-  },
-  ["products"],
-  { tags: ["products"] }
-);
-
 export default async function Home() {
-  const products = await getProducts();
+  const products = await getAllProducts();
 
   return (
     <Container maxW="5xl" padding="1rem">

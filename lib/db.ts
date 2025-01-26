@@ -3,7 +3,9 @@ import { getGSheet } from "./getGSheet";
 export const getAllProducts = async (): Promise<IProduct[]> => {
   const products = await getGSheet(
     "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
-    "0"
+    "0",
+    "force-cache",
+    { tags: ["products"] }
   );
 
   type Product = {

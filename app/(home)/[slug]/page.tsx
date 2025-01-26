@@ -1,4 +1,3 @@
-import { unstable_cache } from "next/cache";
 import { getAllProducts } from "@/lib/db";
 import slugify from "slugify";
 import { Metadata } from "next";
@@ -20,14 +19,10 @@ import { Toaster } from "@/components/ui/toaster";
 import Carousel from "@/components/ui/carousel";
 import BuyButton from "@/components/ui/buy-button";
 
-const getProducts = unstable_cache(
-  async (id: string) => {
-    const products = await getAllProducts();
-    return products.find((p) => p.id === id);
-  },
-  ["products"],
-  { tags: ["products"] }
-);
+const getProducts = async (id: string) => {
+  const products = await getAllProducts();
+  return products.find((p) => p.id === id);
+};
 
 export async function generateStaticParams() {
   const products = await getAllProducts();
