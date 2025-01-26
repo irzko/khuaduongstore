@@ -119,7 +119,7 @@ export default async function Page({
               ]}
               gap="0.5rem"
             >
-              {productSuggetions.map((product) => (
+              {productSuggetions.slice(0, 5).map((product) => (
                 <Card.Root key={product.id} asChild overflow="hidden">
                   <NextLink
                     href={`/${slugify(product.name, {

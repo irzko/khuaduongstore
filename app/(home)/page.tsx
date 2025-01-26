@@ -22,7 +22,7 @@ export default async function Home() {
 
   return (
     <Container maxW="5xl" padding="1rem" spaceY="1rem">
-      <Flex gap="1rem" scrollbar="hidden" overflowX="auto">
+      <Flex gap="0.5rem" scrollbar="hidden" overflowX="auto">
         {uniqueCategoies.map((category) => (
           <Button
             key={category}
@@ -41,7 +41,7 @@ export default async function Home() {
                 trim: true,
               })}`}
             >
-              <Text fontSize="smaller">{category}</Text>
+              <Text fontSize="sm">{category}</Text>
             </Link>
           </Button>
         ))}
