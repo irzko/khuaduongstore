@@ -58,7 +58,7 @@ export default async function Page({
   }
 
   const productSuggetions = allProducts.filter(
-    (p) => p.category !== product.category,
+    (p) => p.category === product.category,
   );
 
   return (
@@ -112,20 +112,20 @@ export default async function Page({
               </Card.Header>
               <Card.Body>
                 <Box spaceY="1rem">
-                  {productSuggetions.map((product) => {
+                  {productSuggetions.slice(0, 5).map((product) => {
                     return (
                       <Grid
                         key={product.id}
                         templateColumns="repeat(3, minmax(0, 1fr))"
                         gap="1rem"
                       >
-                        <Box position="relative" aspectRatio={1}>
+                        <Box position="relative" rounded="lg" overflow="hidden" aspectRatio={1}>
                           <Image
                             src={
                               product.image.split("\n")[0] || "/no-image.jpg"
                             }
                             alt={product.name}
-                            style={{ objectFit: "contain" }}
+                            style={{ objectFit: "cover" }}
                             unoptimized
                             fill
                           />
@@ -142,6 +142,7 @@ export default async function Page({
                       </Grid>
                     );
                   })}
+                  
                 </Box>
               </Card.Body>
             </Card.Root>
