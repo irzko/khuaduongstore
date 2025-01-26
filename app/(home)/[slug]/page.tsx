@@ -1,5 +1,4 @@
 import { getAllProducts } from "@/lib/db";
-import slugify from "slugify";
 import { Metadata } from "next";
 import {
   Box,
