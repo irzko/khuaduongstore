@@ -12,18 +12,20 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
     "Mã sản phẩm": string;
     "Tên sản phẩm": string;
     "Hình ảnh": string;
-    Giá: string;
+    "Đơn giá": string;
     "Mô tả": string;
     "Số lượng tồn": string;
+    "Danh mục": string;
   };
 
   return products.map((product: Product) => ({
     id: product["Mã sản phẩm"],
     name: product["Tên sản phẩm"],
     image: product["Hình ảnh"],
-    price: Number(product["Giá"]),
+    price: Number(product["Đơn giá"]),
     description: product["Mô tả"],
     stock: Number(product["Số lượng tồn"]),
+    category: product["Danh mục"],
   }));
 };
 

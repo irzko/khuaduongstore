@@ -6,46 +6,38 @@ import {
   Container,
   Card,
   Image,
-  Button,
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import slugify from "slugify";
 import { getAllProducts } from "@/lib/db";
-import Link from "next/link";
 
-export default async function Home() {
-  const products = await getAllProducts();
-  const uniqueCategoies = Array.from(
-    new Set(products.map((product) => product.category))
-  );
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const allProducts = await getAllProducts();
+  const slug = (await params).slug;
+
+  const matchedProductCategory = allProducts.filter((product) => {
+    return (
+      slugify(product.category, {
+        replacement: "-",
+        remove: undefined,
+        lower: true,
+        strict: true,
+        locale: "vi",
+        trim: true,
+      }) === slug
+    );
+  });
 
   return (
-    <Container maxW="5xl" padding="1rem" spaceY="1rem">
-      <Flex gap="1rem" overflowX="auto">
-        {uniqueCategoies.map((category) => (
-          <Button
-            key={category}
-            variant="outline"
-            rounded="lg"
-            size="sm"
-            asChild
-          >
-            <Link
-              href={`/category/${slugify(category, {
-                replacement: "-",
-                remove: undefined,
-                lower: true,
-                strict: true,
-                locale: "vi",
-                trim: true,
-              })}`}
-            >
-              <Text fontSize="smaller">{category}</Text>
-            </Link>
-          </Button>
-        ))}
-      </Flex>
+    <Container maxW="5xl" padding="1rem">
+      <Heading size="xl" marginBottom="1rem">
+        {matchedProductCategory[0].category}
+      </Heading>
       <Grid
         templateColumns={[
           "repeat(2, 1fr)",
@@ -55,7 +47,7 @@ export default async function Home() {
         ]}
         gap="0.5rem"
       >
-        {products.map((product) => (
+        {matchedProductCategory.map((product) => (
           <Card.Root key={product.id} asChild overflow="hidden">
             <NextLink
               href={`/${slugify(product.name, {
