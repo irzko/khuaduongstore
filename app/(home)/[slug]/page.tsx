@@ -1,3 +1,4 @@
+export const dynamic = 'force-static'
 import { getAllProducts } from "@/lib/db";
 import { Metadata } from "next";
 import {
@@ -23,9 +24,6 @@ const getProducts = async (id: string) => {
   return products.find((p) => p.id === id);
 };
 
-export async function generateStaticParams() {
-  return []
-}
 
 type Props = {
   params: Promise<{ slug: string }>;
