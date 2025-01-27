@@ -18,7 +18,24 @@ import slugify from "slugify";
 import NextLink from "next/link";
 import NextImage from "next/image";
 import debounce from "lodash.debounce";
-import { fuzzySearchProduct } from "@/lib/fuzzySearchProduct";
+import fuzzy from "fuzzy";
+
+function normalizeString(str: string): string {
+  return str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Bỏ dấu
+    .replace(/[đĐ]/g, "d") // Xử lý chữ đ
+    .replace(/[^a-z0-9\s]/g, " ") // Chỉ giữ lại chữ cái, số và khoảng trắng
+    .replace(/\s+/g, " ") // Chuẩn hóa khoảng trắng
+    .trim();
+}
+
+const options = {
+  extract: function (el: IProduct) {
+    return normalizeString(el.name);
+  },
+};
 
 export default function SearchProductForm({
   products,
@@ -32,9 +49,12 @@ export default function SearchProductForm({
       if (!value) {
         setFilteredProducts([]);
       } else {
-        const filtered = fuzzySearchProduct(products, value);
+        const results = fuzzy.filter(normalizeString(value), products, options);
+        const matches = results.map(function (el) {
+          return el.original;
+        });
 
-        setFilteredProducts(filtered);
+        setFilteredProducts(matches);
       }
     }, 300),
     [products]
