@@ -18,6 +18,7 @@ import slugify from "slugify";
 import NextLink from "next/link";
 import NextImage from "next/image";
 import debounce from "lodash.debounce";
+import { fuzzySearchProduct } from "@/lib/fuzzySearchProduct";
 
 export default function SearchProductForm({
   products,
@@ -31,25 +32,7 @@ export default function SearchProductForm({
       if (!value) {
         setFilteredProducts([]);
       } else {
-        const filtered = products.filter((product) =>
-          slugify(product.name, {
-            remove: undefined,
-            replacement: " ",
-            lower: true,
-            strict: true,
-            locale: "vi",
-            trim: true,
-          }).includes(
-            slugify(value, {
-              replacement: " ",
-              remove: undefined,
-              lower: true,
-              strict: true,
-              locale: "vi",
-              trim: true,
-            })
-          )
-        );
+        const filtered = fuzzySearchProduct(products, value);
 
         setFilteredProducts(filtered);
       }

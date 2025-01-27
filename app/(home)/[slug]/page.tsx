@@ -61,7 +61,7 @@ export default async function Page({
   }
 
   const productSuggetions = allProducts.filter(
-    (p) => p.category === product.category && p.id !== product.id,
+    (p) => p.category === product.category && p.id !== product.id
   );
 
   return (
@@ -108,18 +108,8 @@ export default async function Page({
               md: "32rem",
             }}
           >
-            <Heading marginBottom="1rem">
-              Sản phẩm tương tự
-            </Heading>
-            <Grid
-              templateColumns={[
-                "repeat(2, 1fr)",
-                "repeat(4, 1fr)",
-                "repeat(6, 1fr)",
-                "repeat(6, 1fr)",
-              ]}
-              gap="0.5rem"
-            >
+            <Heading marginBottom="1rem">Sản phẩm tương tự</Heading>
+            <Grid templateColumns="repeat(2, 1fr)" gap="0.5rem">
               {productSuggetions.slice(0, 6).map((product) => (
                 <Card.Root key={product.id} asChild overflow="hidden">
                   <NextLink

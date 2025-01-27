@@ -1,7 +1,6 @@
 import { Flex } from "@chakra-ui/react/flex";
 import Link from "next/link";
-import { Heading, IconButton, Input, Text } from "@chakra-ui/react";
-import { InputGroup } from "@/components/ui/input-group";
+import { Button, Heading, IconButton, Text } from "@chakra-ui/react";
 import SideBar from "@/components/sidebar";
 import { Anton } from "next/font/google";
 import CartButton from "@/components/ui/cart-button";
@@ -57,21 +56,27 @@ export default function Layout({
               </Link>
             </Flex>
           </Flex>
+          <Button
+            variant="subtle"
+            rounded="lg"
+            maxWidth="20rem"
+            w="full"
+            justifyContent="flex-start"
+            color="gray.500"
+            asChild
+            hideBelow="md"
+          >
+            <Link href="/search">
+              <LuSearch /> Tìm kiếm sản phẩm
+            </Link>
+          </Button>
           <Flex gap="0.5rem" alignItems="center">
             <IconButton variant="ghost" rounded="lg" asChild hideFrom="md">
               <Link href="/search">
                 <LuSearch />
               </Link>
             </IconButton>
-            <InputGroup hideBelow="md" startElement={<LuSearch />}>
-              <Input
-                rounded="xl"
-                ps="2.5rem"
-                variant="subtle"
-                placeholder="Tìm kiếm"
-              />
-            </InputGroup>
-            {/* <AvatarMenu /> */}
+
             <CartButton />
             <SideBar />
           </Flex>
