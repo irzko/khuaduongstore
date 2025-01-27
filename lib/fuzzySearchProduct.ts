@@ -1,4 +1,4 @@
-export function enhancedFuzzySearch(
+export function fuzzySearchProduct(
   products: IProduct[],
   searchTerm: string
 ): IProduct[] {
