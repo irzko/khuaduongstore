@@ -1,5 +1,5 @@
+export const dynamic = "force-static";
 import { getAllProducts } from "@/lib/db";
-import slugify from "slugify";
 import { Metadata } from "next";
 import {
   Box,
@@ -10,38 +10,16 @@ import {
   Heading,
   Stack,
   Text,
+  Image,
 } from "@chakra-ui/react";
-// import { BreadcrumbLink, BreadcrumbRoot } from "@/components/ui/breadcrumb";
-import Image from "next/image";
+import NextImage from "next/image";
 import { EmptyState } from "@/components/ui/empty-state";
 import AddToCartButton from "@/components/ui/add-to-cart-button";
 import { Toaster } from "@/components/ui/toaster";
 import Carousel from "@/components/ui/carousel";
 import BuyButton from "@/components/ui/buy-button";
-
-const getProducts = async (id: string) => {
-  const products = await getAllProducts();
-  return products.find((p) => p.id === id);
-};
-
-export async function generateStaticParams() {
-  const products = await getAllProducts();
-
-  return products.map((product) => ({
-    slug:
-      slugify(product.name, {
-        replacement: "-",
-        remove: undefined,
-        lower: true,
-        strict: true,
-        locale: "vi",
-        trim: true,
-      }) +
-      "-" +
-      product.id +
-      ".html",
-  }));
-}
+import NextLink from "next/link";
+import slugify from "slugify";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -51,10 +29,11 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = (await params).slug;
   const id = slug.split(".")[0].split("-").pop() || "";
-  const post = await getProducts(id);
+  const data = await getAllProducts();
+  const product = data.find((p) => p.id === id);
 
   return {
-    title: post ? post.name : "No Name",
+    title: product ? product.name : "No Name",
   };
 }
 
@@ -69,7 +48,8 @@ export default async function Page({
   if (!productId) {
     return null;
   }
-  const product = await getProducts(productId);
+  const allProducts = await getAllProducts();
+  const product = allProducts.find((p) => p.id === productId);
 
   if (!product) {
     return (
@@ -80,11 +60,10 @@ export default async function Page({
     );
   }
 
-  // const breadcrumbs = post.categories.map((c) => ({
-  //   id: c.category.id,
-  //   name: c.category.name,
-  //   href: `/category/${c.category.slug}`,
-  // }));
+  const productSuggetions = allProducts.filter(
+    (p) => p.category === product.category && p.id !== product.id,
+  );
+
   return (
     <>
       <Container maxW="5xl" padding="1rem">
@@ -97,23 +76,6 @@ export default async function Page({
           gap="1rem"
         >
           <Flex direction="column" gap="1rem" w="full">
-            {/* <BreadcrumbRoot
-            backgroundColor={{
-              base: "white",
-              _dark: "black",
-            }}
-            borderYWidth={1}
-            position="sticky"
-            top="4rem"
-            paddingY="0.5rem"
-            paddingX="1rem"
-          >
-            {breadcrumbs.map((b) => (
-              <BreadcrumbLink key={b.id} href={b.href}>
-                {b.name}
-              </BreadcrumbLink>
-            ))}
-          </BreadcrumbRoot> */}
             <Stack spaceY="1rem">
               <Carousel imageUrlList={product.image.split("\n")} />
 
@@ -136,6 +98,7 @@ export default async function Page({
                   </Grid>
                 </Card.Body>
               </Card.Root>
+              <Text marginBottom="1rem">Mô tả sản phẩm</Text>
               <Text whiteSpace="pre-line">{product.description}</Text>
             </Stack>
           </Flex>
@@ -145,35 +108,61 @@ export default async function Page({
               md: "32rem",
             }}
           >
-            <Card.Root>
-              <Card.Header>
-                <Card.Title fontSize="lg" fontWeight="bold">
-                  Sản phẩm liên quan
-                </Card.Title>
-              </Card.Header>
-              <Card.Body>
-                <Grid templateColumns="repeat(3, minmax(0, 1fr))" gap="1rem">
-                  <Box position="relative" aspectRatio={1}>
-                    <Image
-                      src={product.image.split("\n")[0] || "/no-image.jpg"}
-                      alt={product.name}
-                      style={{ objectFit: "contain" }}
-                      unoptimized
-                      fill
-                    />
-                  </Box>
-                  <Box gridColumn="span 2 / span 2">
-                    <Text>{product.name}</Text>
-                    <Text color="red.500" fontWeight="bold">
-                      {Intl.NumberFormat("vi-VN", {
-                        style: "currency",
-                        currency: "VND",
-                      }).format(product.price)}
-                    </Text>
-                  </Box>
-                </Grid>
-              </Card.Body>
-            </Card.Root>
+            <Heading marginBottom="1rem">
+              Sản phẩm tương tự
+            </Heading>
+            <Grid
+              templateColumns={[
+                "repeat(2, 1fr)",
+                "repeat(4, 1fr)",
+                "repeat(6, 1fr)",
+                "repeat(6, 1fr)",
+              ]}
+              gap="0.5rem"
+            >
+              {productSuggetions.slice(0, 6).map((product) => (
+                <Card.Root key={product.id} asChild overflow="hidden">
+                  <NextLink
+                    href={`/${slugify(product.name, {
+                      replacement: "-",
+                      remove: undefined,
+                      lower: true,
+                      strict: true,
+                      locale: "vi",
+                      trim: true,
+                    })}-${product.id}.html`}
+                  >
+                    <Flex position="relative" aspectRatio={1}>
+                      <Image asChild alt={product.name}>
+                        <NextImage
+                          src={product.image.split("\n")[0] || "/no-image.jpg"}
+                          alt={product.name}
+                          style={{ objectFit: "cover" }}
+                          fill
+                          unoptimized
+                        />
+                      </Image>
+                    </Flex>
+                    <Card.Body
+                      gap="0.5rem"
+                      padding="0.5rem"
+                      direction="col"
+                      justifyContent="space-between"
+                    >
+                      <Heading lineClamp={2} size="md">
+                        {product.name}
+                      </Heading>
+                      <Text fontSize="md" color="red.500" fontWeight="bold">
+                        {Intl.NumberFormat("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        }).format(product.price)}
+                      </Text>
+                    </Card.Body>
+                  </NextLink>
+                </Card.Root>
+              ))}
+            </Grid>
           </Box>
         </Flex>
       </Container>
