@@ -44,13 +44,15 @@ export default function Layout({
             <Flex gap="0.25rem" alignItems="end" asChild>
               <Link href="/">
                 <Heading
+                  lineHeight={0}
                   whiteSpace="nowrap"
+                  color="red.600"
                   size="xl"
                   className={`${anton.className}`}
                 >
                   KHỨA DƯƠNG
                 </Heading>
-                <Text as="span" fontSize="xl" fontWeight="400">
+                <Text as="span" fontSize="md" lineHeight={0} fontWeight="400">
                   STORE
                 </Text>
               </Link>
