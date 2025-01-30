@@ -32,7 +32,8 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
 export const getAllOrders = async (): Promise<IOrder[]> => {
   const orders = await getGSheet(
     "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
-    "1595734372"
+    "1595734372",
+    "no-store"
   );
 
   type Order = {
