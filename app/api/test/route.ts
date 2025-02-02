@@ -3,7 +3,7 @@ import sheets from "@googleapis/sheets";
 export const GET = async () => {
   const sheet = sheets.sheets({
     version: "v4",
-    auth: "AIzaSyCNWpeurAYM0XIS_U_t4OLmDXMa8MQi7Vs", // specify your API key here
+    auth: process.env.GOOGLE_API_KEY, // specify your API key here
   });
 
   const res = await sheet.spreadsheets.values.get({
