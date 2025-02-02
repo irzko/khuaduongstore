@@ -9,7 +9,7 @@ export default async function CategoryTabs({ slug }: { slug: string }) {
     new Set(products.map((product) => product.category))
   );
   return (
-    <Flex gap="1rem" zIndex={40} paddingY="0.5rem" positon="sticky" top="4rem" whiteSpace="nowrap" scrollbar="hidden" overflowX="auto">
+    <Flex gap="1rem" zIndex={40} paddingY="0.5rem" position="sticky" top="4rem" whiteSpace="nowrap" scrollbar="hidden" overflowX="auto">
       <Link
         variant={slug === "/" ? "underline" : "plain"}
         outline="none"
