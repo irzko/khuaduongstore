@@ -13,12 +13,14 @@ import {
 import { InputGroup } from "@/components/ui/input-group";
 import { LuArrowLeft, LuSearch } from "react-icons/lu";
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import slugify from "slugify";
 import NextLink from "next/link";
 import NextImage from "next/image";
-import debounce from "lodash.debounce";
 import fuzzy from "fuzzy";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import { useDebouncedCallback } from "use-debounce";
 
 function normalizeString(str: string): string {
   return str
@@ -43,22 +45,26 @@ export default function SearchProductForm({
   products: IProduct[];
 }) {
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
-  const handleChange = useCallback(
-    debounce((value: string) => {
-      if (!value) {
-        setFilteredProducts([]);
-      } else {
-        const results = fuzzy.filter(normalizeString(value), products, options);
-        const matches = results.map(function (el) {
-          return el.original;
-        });
+  const handleSearch = useDebouncedCallback((term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("query", term);
+      const results = fuzzy.filter(normalizeString(term), products, options);
+      const matches = results.map(function (el) {
+        return el.original;
+      });
+      setFilteredProducts(matches);
+    } else {
+      params.delete("query");
+      setFilteredProducts([]);
+    }
 
-        setFilteredProducts(matches);
-      }
-    }, 300),
-    [products]
-  );
+    replace(`${pathname}?${params.toString()}`);
+  }, 300);
 
   return (
     <>
@@ -97,8 +103,9 @@ export default function SearchProductForm({
                 variant="subtle"
                 placeholder="Tìm kiếm"
                 onChange={(e) => {
-                  handleChange(e.target.value);
+                  handleSearch(e.target.value);
                 }}
+                defaultValue={searchParams.get("query")?.toString()}
               />
             </InputGroup>
           </Flex>
