@@ -6,24 +6,20 @@ import {
   Container,
   Card,
   Image,
-  Button,
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import slugify from "slugify";
 import { getAllProducts } from "@/lib/db";
-import Link from "next/link";
+import CategoryTabs from "@/components/ui/category-tabs";
 
 export default async function Home() {
   const products = await getAllProducts();
-  const uniqueCategoies = Array.from(
-    new Set(products.map((product) => product.category))
-  );
 
   return (
     <Container maxW="5xl" padding="1rem" spaceY="1rem">
-      <Flex gap="0.5rem" scrollbar="hidden" overflowX="auto">
-        {uniqueCategoies.map((category) => (
+      {/* <Flex gap="0.5rem" scrollbar="hidden" overflowX="auto">
+        {distinctCategories.map((category) => (
           <Button
             key={category}
             variant="outline"
@@ -45,7 +41,8 @@ export default async function Home() {
             </Link>
           </Button>
         ))}
-      </Flex>
+      </Flex> */}
+      <CategoryTabs slug="/" />
       <Grid
         templateColumns={[
           "repeat(2, 1fr)",

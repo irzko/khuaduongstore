@@ -13,6 +13,7 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 import { getAllProducts } from "@/lib/db";
 import { Metadata } from "next";
+import CategoryTabs from "@/components/ui/category-tabs";
 
 const getProducts = async (slug: string) => {
   const products = await getAllProducts();
@@ -53,10 +54,8 @@ export default async function Page({
   const products = await getProducts(slug.replace(".html", ""));
 
   return (
-    <Container maxW="5xl" padding="1rem">
-      <Heading size="xl" marginBottom="1rem">
-        {products[0].category}
-      </Heading>
+    <Container maxW="5xl" spaceY="1rem" padding="1rem">
+      <CategoryTabs slug={slug} />
       <Grid
         templateColumns={[
           "repeat(2, 1fr)",
