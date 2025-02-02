@@ -19,7 +19,7 @@ import NextLink from "next/link";
 import NextImage from "next/image";
 import fuzzy from "fuzzy";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
 function normalizeString(str: string): string {
@@ -50,9 +50,9 @@ export default function SearchProductForm({
   const { replace } = useRouter();
 
   useEffect(() => {
-    const search = searchParams.get("search") || "";
+    const search = searchParams.get("query") || "";
     if (search) {
-      const results = fuzzy.filter(normalizeString(term), products, options);
+      const results = fuzzy.filter(normalizeString(search), products, options);
       const matches = results.map(function (el) {
         return el.original;
       });
@@ -60,12 +60,12 @@ export default function SearchProductForm({
     } else {
       setFilteredProducts([]);
     }
-  },[])
+  }, [products, searchParams]);
 
   const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
-      params.set("query", term);     
+      params.set("query", term);
     } else {
       params.delete("query");
     }
