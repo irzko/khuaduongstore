@@ -1,6 +1,8 @@
 import CheckOrderForm from "@/components/ui/check-order-form";
+import Fallback from "@/components/ui/fallback";
 import { getAllOrders } from "@/lib/db";
 import { Card, Container } from "@chakra-ui/react";
+import { Suspense } from "react";
 
 export default async function Page() {
   const orders = await getAllOrders();
@@ -14,7 +16,9 @@ export default async function Page() {
           </Card.Title>
         </Card.Header>
         <Card.Body padding="1rem" divideY="1px">
-          <CheckOrderForm orders={orders} />
+          <Suspense fallback={<Fallback />}>
+            <CheckOrderForm orders={orders} />
+          </Suspense>
         </Card.Body>
       </Card.Root>
     </Container>

@@ -4,14 +4,33 @@ import { useEffect, useState } from "react";
 import { Field } from "./field";
 import { Flex, Input } from "@chakra-ui/react";
 import { DataListItem, DataListRoot } from "./data-list";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 export default function CheckOrderForm({ orders }: { orders: IOrder[] }) {
   const [userOrder, setUserOrder] = useState<IOrder[]>([]);
-  const [phone, setPhone] = useState("");
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
   useEffect(() => {
-    const checkPhone = phone.charAt(0) === "0" ? phone.slice(1) : phone;
-    setUserOrder(orders.filter((order) => order.phone === checkPhone));
-  }, [orders, phone]);
+    const phone = searchParams.get("phone") || "";
+    if (phone) {
+      const checkPhone = phone.charAt(0) === "0" ? phone.slice(1) : phone;
+      setUserOrder(orders.filter((order) => order.phone === checkPhone));
+    }
+  }, [orders, searchParams]);
+
+  const handleSearch = useDebouncedCallback((term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("phone", term);
+    } else {
+      params.delete("phone");
+    }
+
+    replace(`${pathname}?${params.toString()}`);
+  }, 300);
 
   return (
     <Flex direction="column" gap="1rem">
@@ -20,9 +39,9 @@ export default function CheckOrderForm({ orders }: { orders: IOrder[] }) {
           <Input
             name="phone"
             rounded="lg"
-            value={phone}
+            defaultValue={searchParams.get("phone")?.toString()}
             onChange={(e) => {
-              setPhone(e.target.value);
+              handleSearch(e.target.value);
             }}
             placeholder="Nhập số điện thoại"
           />

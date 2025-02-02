@@ -2,7 +2,7 @@
 
 import { Box, Card, Flex, Input, Text } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, Suspense, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import Image from "next/image";
 import { Field } from "./field";
 import { Button } from "./button";
@@ -19,7 +19,7 @@ import {
 import { createId } from "@paralleldrive/cuid2";
 import CartContext from "@/context/cart-context";
 
-function ProductCheckout({ products }: { products: IProduct[] }) {
+export default function CheckoutForm({ products }: { products: IProduct[] }) {
   const [checkoutProductList, setCheckoutProductList] = useState<
     Array<IProduct & { quantity: number }>
   >([]);
@@ -248,13 +248,5 @@ function ProductCheckout({ products }: { products: IProduct[] }) {
         </DialogRoot>
       </Flex>
     </>
-  );
-}
-
-export default function CheckoutForm({ products }: { products: IProduct[] }) {
-  return (
-    <Suspense>
-      <ProductCheckout products={products} />
-    </Suspense>
   );
 }
