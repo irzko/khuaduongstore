@@ -13,7 +13,7 @@ import {
 import { InputGroup } from "@/components/ui/input-group";
 import { LuArrowLeft, LuSearch } from "react-icons/lu";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import slugify from "slugify";
 import NextLink from "next/link";
 import NextImage from "next/image";
@@ -49,18 +49,25 @@ export default function SearchProductForm({
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSearch = useDebouncedCallback((term: string) => {
-    const params = new URLSearchParams(searchParams);
-    if (term) {
-      params.set("query", term);
+  useEffect(() => {
+    const search = searchParams.get("search") || "";
+    if (search) {
       const results = fuzzy.filter(normalizeString(term), products, options);
       const matches = results.map(function (el) {
         return el.original;
       });
       setFilteredProducts(matches);
     } else {
-      params.delete("query");
       setFilteredProducts([]);
+    }
+  },[])
+
+  const handleSearch = useDebouncedCallback((term: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (term) {
+      params.set("query", term);     
+    } else {
+      params.delete("query");
     }
 
     replace(`${pathname}?${params.toString()}`);
