@@ -20,6 +20,7 @@ import Carousel from "@/components/ui/carousel";
 import BuyButton from "@/components/ui/buy-button";
 import NextLink from "next/link";
 import slugify from "slugify";
+import { calculateSimilarity } from "@/lib/calculateSimilarity";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -49,9 +50,9 @@ export default async function Page({
     return null;
   }
   const allProducts = await getAllProducts();
-  const product = allProducts.find((p) => p.id === productId);
+  const currentProduct = allProducts.find((p) => p.id === productId);
 
-  if (!product) {
+  if (!currentProduct) {
     return (
       <EmptyState
         title="Sản phẩm không tồn tại"
@@ -60,9 +61,18 @@ export default async function Page({
     );
   }
 
-  const productSuggetions = allProducts.filter(
-    (p) => p.category === product.category && p.id !== product.id
-  );
+  // const productSuggetions = allProducts.filter(
+  //   (p) => p.category === product.category && p.id !== product.id
+  // );
+
+  const recommendedProducts = allProducts
+    .filter((p) => p.id !== productId)
+    .map((product) => ({
+      ...product,
+      similarityScore: calculateSimilarity(currentProduct, product),
+    }))
+    .sort((a, b) => b.similarityScore - a.similarityScore)
+    .slice(0, 6);
 
   return (
     <>
@@ -77,29 +87,29 @@ export default async function Page({
         >
           <Flex direction="column" gap="1rem" w="full">
             <Stack spaceY="1rem">
-              <Carousel imageUrlList={product.image.split("\n")} />
+              <Carousel imageUrlList={currentProduct.image.split("\n")} />
 
               <Card.Root rounded="lg">
                 <Card.Header paddingTop="1rem" paddingX="1rem">
                   <Heading as="h1" size="lg">
-                    {product.name || "(No title)"}
+                    {currentProduct.name || "(No title)"}
                   </Heading>
                   <Text color="red.500" fontWeight="bold">
                     {Intl.NumberFormat("vi-VN", {
                       style: "currency",
                       currency: "VND",
-                    }).format(product.price)}
+                    }).format(currentProduct.price)}
                   </Text>
                 </Card.Header>
                 <Card.Body padding="1rem">
                   <Grid templateColumns="1fr 1fr" gap="1rem">
-                    <AddToCartButton productId={product.id} />
-                    <BuyButton product={product} />
+                    <AddToCartButton productId={currentProduct.id} />
+                    <BuyButton product={currentProduct} />
                   </Grid>
                 </Card.Body>
               </Card.Root>
               <Text marginBottom="1rem">Mô tả sản phẩm</Text>
-              <Text whiteSpace="pre-line">{product.description}</Text>
+              <Text whiteSpace="pre-line">{currentProduct.description}</Text>
             </Stack>
           </Flex>
           <Box
@@ -108,9 +118,9 @@ export default async function Page({
               md: "32rem",
             }}
           >
-            <Heading marginBottom="1rem">Sản phẩm tương tự</Heading>
+            <Heading marginBottom="1rem">Đề xuất cho bạn</Heading>
             <Grid templateColumns="repeat(2, 1fr)" gap="0.5rem">
-              {productSuggetions.slice(0, 6).map((product) => (
+              {recommendedProducts.map((product) => (
                 <Card.Root key={product.id} asChild overflow="hidden">
                   <NextLink
                     href={`/${slugify(product.name, {

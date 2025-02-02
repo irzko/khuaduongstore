@@ -1,12 +1,12 @@
 import { Flex } from "@chakra-ui/react/flex";
 import Link from "next/link";
-import { Button, Heading, IconButton, Text } from "@chakra-ui/react";
+import { Button, Heading, IconButton } from "@chakra-ui/react";
 import SideBar from "@/components/sidebar";
-import { Anton } from "next/font/google";
+import { Anton_SC } from "next/font/google";
 import CartButton from "@/components/ui/cart-button";
 import { LuSearch } from "react-icons/lu";
 
-const anton = Anton({
+const agbalumo = Anton_SC({
   weight: ["400"],
   subsets: ["vietnamese"],
 });
@@ -23,7 +23,7 @@ export default function Layout({
         inset="0"
         zIndex="40"
         backgroundColor={{
-          base: "white",
+          base: "orange",
           _dark: "black",
         }}
         height="auto"
@@ -46,15 +46,15 @@ export default function Layout({
                 <Heading
                   lineHeight={0}
                   whiteSpace="nowrap"
-                  color="red.600"
-                  size="xl"
-                  className={`${anton.className}`}
+                  // color="teal"
+                  size="2xl"
+                  className={`${agbalumo.className}`}
                 >
                   KHỨA DƯƠNG
                 </Heading>
-                <Text as="span" fontSize="md" lineHeight={0} fontWeight="400">
+                {/* <Text as="span" fontSize="md" lineHeight={0} fontWeight="400">
                   STORE
-                </Text>
+                </Text> */}
               </Link>
             </Flex>
           </Flex>
