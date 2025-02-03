@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { Button } from "./button";
 import CartContext from "@/context/cart-context";
 import { toaster } from "@/components/ui/toaster";
+import { TbShoppingCartPlus } from "react-icons/tb";
 
 export default function AddToCartButton({ productId }: { productId: string }) {
   const { setCarts } = useContext(CartContext);
@@ -42,7 +43,7 @@ export default function AddToCartButton({ productId }: { productId: string }) {
 
   return (
     <Button variant="outline" onClick={handleClick} rounded="lg">
-      Thêm vào giở hàng
+      <TbShoppingCartPlus /> Thêm vào giở hàng
     </Button>
   );
 }

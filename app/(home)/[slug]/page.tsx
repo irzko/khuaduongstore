@@ -11,6 +11,7 @@ import {
   Stack,
   Text,
   Image,
+  Separator,
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -88,37 +89,51 @@ export default async function Page({
           <Flex direction="column" gap="1rem" w="full">
             <Stack spaceY="1rem">
               <Carousel imageUrlList={currentProduct.image.split("\n")} />
+              <Flex position="fixed" bottom="0" insetX={0} zIndex={10}>
+                <Grid
+                  templateColumns="repeat(2, 1fr)"
+                  paddingY="0.5rem"
+                  paddingX="1rem"
+                  w="full"
+                  gap="1rem"
+                  bg={{
+                    base: "white",
+                    _dark: "black",
+                  }}
+                >
+                  <AddToCartButton productId={currentProduct.id} />
+                  <BuyButton product={currentProduct} />
+                </Grid>
+              </Flex>
+              <Flex direction="column" gap="1rem">
+                <Text color="red.500" fontSize="2xl">
+                  {Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(currentProduct.price)}
+                </Text>
+                <Heading as="h1" size="xl">
+                  {currentProduct.name || "(No title)"}
+                </Heading>
+              </Flex>
+              <Separator />
 
-              <Card.Root rounded="lg">
-                <Card.Header paddingTop="1rem" paddingX="1rem">
-                  <Heading as="h1" size="lg">
-                    {currentProduct.name || "(No title)"}
-                  </Heading>
-                  <Text color="red.500" fontWeight="bold">
-                    {Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    }).format(currentProduct.price)}
-                  </Text>
-                </Card.Header>
-                <Card.Body padding="1rem">
-                  <Grid templateColumns="1fr 1fr" gap="1rem">
-                    <AddToCartButton productId={currentProduct.id} />
-                    <BuyButton product={currentProduct} />
-                  </Grid>
-                </Card.Body>
-              </Card.Root>
-              <Text marginBottom="1rem">Mô tả sản phẩm</Text>
+              <Heading size="lg" marginBottom="1rem">
+                Mô tả sản phẩm
+              </Heading>
               <Text whiteSpace="pre-line">{currentProduct.description}</Text>
             </Stack>
           </Flex>
+          <Separator />
           <Box
             width={{
               base: "full",
               md: "32rem",
             }}
           >
-            <Heading marginBottom="1rem">Đề xuất cho bạn</Heading>
+            <Heading size="lg" marginBottom="1rem">
+              Đề xuất cho bạn
+            </Heading>
             <Grid templateColumns="repeat(2, 1fr)" gap="0.5rem">
               {recommendedProducts.map((product) => (
                 <Card.Root key={product.id} asChild overflow="hidden">
