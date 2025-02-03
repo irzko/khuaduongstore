@@ -1,15 +1,9 @@
-import { Flex } from "@chakra-ui/react/flex";
 import Link from "next/link";
-import { Button, Heading, IconButton } from "@chakra-ui/react";
+import { Button, Flex, IconButton } from "@chakra-ui/react";
 import SideBar from "@/components/sidebar";
-import { Anton_SC } from "next/font/google";
 import CartButton from "@/components/ui/cart-button";
 import { LuSearch } from "react-icons/lu";
-
-const agbalumo = Anton_SC({
-  weight: ["400"],
-  subsets: ["vietnamese"],
-});
+import Logo from "@/components/ui/logo";
 
 export default function Layout({
   children,
@@ -43,18 +37,7 @@ export default function Layout({
           <Flex gapX="1rem">
             <Flex gap="0.25rem" alignItems="end" asChild>
               <Link href="/">
-                <Heading
-                  lineHeight={0}
-                  whiteSpace="nowrap"
-                  color="white"
-                  size="lg"
-                  className={`${agbalumo.className}`}
-                >
-                  KHỨA DƯƠNG
-                </Heading>
-                {/* <Text as="span" fontSize="md" lineHeight={0} fontWeight="400">
-                  STORE
-                </Text> */}
+                <Logo />
               </Link>
             </Flex>
           </Flex>
@@ -73,12 +56,7 @@ export default function Layout({
             </Link>
           </Button>
           <Flex gap="0.5rem" alignItems="center">
-            <IconButton
-              variant="ghost"
-              rounded="lg"
-              asChild
-              hideFrom="md"
-            >
+            <IconButton variant="ghost" rounded="lg" asChild hideFrom="md">
               <Link href="/search">
                 <LuSearch />
               </Link>

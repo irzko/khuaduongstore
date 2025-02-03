@@ -25,3 +25,10 @@ interface IOrder {
   address: string;
   status: string;
 }
+
+interface IContact {
+  id: string;
+  method: string;
+  href: string;
+  value: string;
+}

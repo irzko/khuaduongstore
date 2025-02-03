@@ -62,3 +62,26 @@ export const getAllOrders = async (): Promise<IOrder[]> => {
     status: order["Trạng thái"],
   }));
 };
+
+export const getAllContacts = async (): Promise<IContact[]> => {
+  const contacts = await getGSheet(
+    "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
+    "1197771900",
+    "force-cache",
+    { tags: ["contacts"] }
+  );
+
+  type Contact = {
+    ID: string;
+    "Phương thức": string;
+    "Liên kết": string;
+    "Hiển thị": string;
+  };
+
+  return contacts.map((contact: Contact) => ({
+    id: contact["ID"],
+    method: contact["Phương thức"],
+    href: contact["Liên kết"],
+    value: contact["Hiển thị"],
+  }));
+};

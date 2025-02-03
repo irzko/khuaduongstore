@@ -46,8 +46,8 @@ export function ScrollableCategories({
       ref={scrollContainerRef}
       gap="1rem"
       position="sticky"
-      top="4rem"
-      zIndex={40}
+      top="3.5rem"
+      zIndex={10}
       backgroundColor={{
         base: "white",
         _dark: "black",
