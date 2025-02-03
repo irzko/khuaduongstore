@@ -12,10 +12,10 @@ export default function Logo() {
       lineHeight={0}
       whiteSpace="nowrap"
       // color="white"
-      size="lg"
+      size="2xl"
       className={`${font.className}`}
     >
-      Khứa Dương
+      KHỨA DƯƠNG
     </Heading>
   );
 }
