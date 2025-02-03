@@ -12,7 +12,7 @@ export default function Logo() {
       lineHeight={0}
       whiteSpace="nowrap"
       // color="white"
-      size="2xl"
+      size="xl"
       className={`${font.className}`}
     >
       KHỨA DƯƠNG
