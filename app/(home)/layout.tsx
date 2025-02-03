@@ -35,7 +35,7 @@ export default function Layout({
           paddingX="1rem"
           justifyContent="space-between"
           width="full"
-          height="4rem"
+          height="3.5rem"
           gap="1rem"
           maxWidth="1024px"
           alignItems="center"
@@ -46,8 +46,8 @@ export default function Layout({
                 <Heading
                   lineHeight={0}
                   whiteSpace="nowrap"
-                  // color="teal"
-                  size="2xl"
+                  color="white"
+                  size="lg"
                   className={`${agbalumo.className}`}
                 >
                   KHỨA DƯƠNG
@@ -65,15 +65,20 @@ export default function Layout({
             w="full"
             justifyContent="flex-start"
             color="gray.500"
-            asChild
             hideBelow="md"
+            asChild
           >
             <Link href="/search">
               <LuSearch /> Tìm kiếm sản phẩm
             </Link>
           </Button>
           <Flex gap="0.5rem" alignItems="center">
-            <IconButton variant="ghost" rounded="lg" asChild hideFrom="md">
+            <IconButton
+              variant="ghost"
+              rounded="lg"
+              asChild
+              hideFrom="md"
+            >
               <Link href="/search">
                 <LuSearch />
               </Link>

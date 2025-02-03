@@ -19,7 +19,7 @@ const SideBar = async () => {
     <DrawerRoot>
       <DrawerBackdrop />
       <DrawerTrigger asChild>
-        <IconButton rounded="lg" variant="ghost" size="sm">
+        <IconButton rounded="lg" variant="ghost">
           <LuMenu />
         </IconButton>
       </DrawerTrigger>
