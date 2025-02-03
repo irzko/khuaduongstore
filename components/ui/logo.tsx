@@ -1,21 +1,20 @@
-import { Alfa_Slab_One } from "next/font/google";
-import { Heading } from "@chakra-ui/react";
+import { Anton } from "next/font/google";
+import { Text } from "@chakra-ui/react";
 
-const font = Alfa_Slab_One({
+const font = Anton({
   weight: ["400"],
   subsets: ["vietnamese"],
 });
 
 export default function Logo() {
   return (
-    <Heading
+    <Text
       lineHeight={0}
       whiteSpace="nowrap"
-      // color="white"
-      size="xl"
+      fontSize="xl"
       className={`${font.className}`}
     >
       KHỨA DƯƠNG
-    </Heading>
+    </Text>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 import CartContext from "@/context/cart-context";
-import { Box, Card, Container, Flex, Text, Link } from "@chakra-ui/react";
+import { Box, Container, Flex, Text, Link, Heading } from "@chakra-ui/react";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { EmptyState } from "./empty-state";
 import { LuShoppingCart } from "react-icons/lu";
@@ -54,59 +54,55 @@ export default function CartList({ products }: { products: IProduct[] }) {
 
   return (
     <Container maxW="5xl" padding="1rem" spaceY="1rem">
-      <Card.Root rounded="lg">
-        <Card.Header borderBottomWidth="1px" padding="1rem">
-          <Card.Title fontSize="lg" fontWeight="bold">
-            Giỏ hàng
-          </Card.Title>
-        </Card.Header>
-        <Card.Body padding="1rem" divideY="1px">
-          {productsInCart.map((product) => (
-            <Flex
-              paddingY="1rem"
-              key={product.id}
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Flex gap="1rem">
-                <Checkbox
-                  checked={product.isChecked}
-                  onCheckedChange={() => toggleProductCheck(product.id)}
-                ></Checkbox>
-                <Box>
-                  <Link asChild>
-                    <NextLink
-                      href={`/${slugify(product.name, {
-                        replacement: "-",
-                        remove: undefined,
-                        lower: true,
-                        strict: true,
-                        locale: "vi",
-                        trim: true,
-                      })}-${product.id}.html`}
-                    >
-                      <Text fontWeight="bold">{product.name}</Text>
-                    </NextLink>
-                  </Link>
-                  <Text fontSize="sm" color="gray.500">
-                    Số lượng: {product.quantity}
-                  </Text>
-                  <Text color="red.500" fontWeight="bold">
-                    {Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    }).format(product.price)}
-                  </Text>
-                </Box>
-              </Flex>
-              <Flex alignItems="center" gap="1rem">
-                <AdjustQuantity productId={product.id} />
-                <DeleteFromCartButton productId={product.id} />
-              </Flex>
+      <Heading size="2xl" fontWeight="bold">
+        Giỏ hàng
+      </Heading>
+      <Flex direction="column" divideY="1px">
+        {productsInCart.map((product) => (
+          <Flex
+            paddingY="1rem"
+            key={product.id}
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Flex gap="1rem">
+              <Checkbox
+                checked={product.isChecked}
+                onCheckedChange={() => toggleProductCheck(product.id)}
+              ></Checkbox>
+              <Box>
+                <Link asChild>
+                  <NextLink
+                    href={`/${slugify(product.name, {
+                      replacement: "-",
+                      remove: undefined,
+                      lower: true,
+                      strict: true,
+                      locale: "vi",
+                      trim: true,
+                    })}-${product.id}.html`}
+                  >
+                    <Text fontWeight="bold">{product.name}</Text>
+                  </NextLink>
+                </Link>
+                <Text fontSize="sm" color="gray.500">
+                  Số lượng: {product.quantity}
+                </Text>
+                <Text fontWeight="bold">
+                  {Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(product.price)}
+                </Text>
+              </Box>
             </Flex>
-          ))}
-        </Card.Body>
-      </Card.Root>
+            <Flex alignItems="center" gap="1rem">
+              <AdjustQuantity productId={product.id} />
+              <DeleteFromCartButton productId={product.id} />
+            </Flex>
+          </Flex>
+        ))}
+      </Flex>
       <Box
         position="sticky"
         bottom="0"
@@ -136,7 +132,7 @@ export default function CartList({ products }: { products: IProduct[] }) {
               <Box whiteSpace="nowrap" fontSize="xs">
                 Tổng tiền:{" "}
               </Box>
-              <Text fontWeight="bold" color="red.500">
+              <Text fontWeight="bold">
                 {Intl.NumberFormat("vi-VN", {
                   style: "currency",
                   currency: "VND",
@@ -151,7 +147,7 @@ export default function CartList({ products }: { products: IProduct[] }) {
                   )
                 )}
               </Text>
-              <Button whiteSpace="wrap" rounded="lg" colorPalette="red" asChild>
+              <Button whiteSpace="wrap" rounded="lg" asChild>
                 <NextLink
                   href={
                     "/order?products=" +

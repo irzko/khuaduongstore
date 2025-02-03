@@ -18,30 +18,6 @@ export default async function Home() {
 
   return (
     <Container maxW="5xl" padding="1rem" spaceY="1rem">
-      {/* <Flex gap="0.5rem" scrollbar="hidden" overflowX="auto">
-        {distinctCategories.map((category) => (
-          <Button
-            key={category}
-            variant="outline"
-            rounded="lg"
-            size="sm"
-            asChild
-          >
-            <Link
-              href={`/category/${slugify(category, {
-                replacement: "-",
-                remove: undefined,
-                lower: true,
-                strict: true,
-                locale: "vi",
-                trim: true,
-              })}`}
-            >
-              <Text fontSize="sm">{category}</Text>
-            </Link>
-          </Button>
-        ))}
-      </Flex> */}
       <CategoryTabs slug="/" />
       <Grid
         templateColumns={[
@@ -75,21 +51,16 @@ export default async function Home() {
                   />
                 </Image>
               </Flex>
-              <Card.Body
-                gap="0.5rem"
-                padding="0.5rem"
-                direction="col"
-                justifyContent="space-between"
-              >
-                <Heading lineClamp={2} size="md">
-                  {product.name}
-                </Heading>
-                <Text fontSize="md" color="red.500" fontWeight="bold">
+              <Card.Body padding="0.5rem" direction="col">
+                <Text fontSize="sm" color="orange" fontWeight="bold">
                   {Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",
                   }).format(product.price)}
                 </Text>
+                <Heading lineClamp={2} size="sm">
+                  {product.name}
+                </Heading>
               </Card.Body>
             </NextLink>
           </Card.Root>

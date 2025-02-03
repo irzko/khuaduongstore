@@ -34,7 +34,7 @@ export default function DeleteFromCartButton({
   return (
     <DialogRoot>
       <DialogTrigger asChild>
-        <IconButton colorPalette="red" size="sm" rounded="lg">
+        <IconButton colorPalette="red" variant="ghost" size="sm" rounded="lg">
           <LuTrash />
         </IconButton>
       </DialogTrigger>

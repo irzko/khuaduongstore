@@ -89,16 +89,17 @@ export default async function Page({
           <Flex direction="column" gap="1rem" w="full">
             <Stack spaceY="1rem">
               <Carousel imageUrlList={currentProduct.image.split("\n")} />
-              <Flex position="fixed" bottom="0" insetX={0} zIndex={10}>
+              <Flex position="fixed" bottom="0" insetX={0} zIndex={40}>
                 <Grid
                   templateColumns="repeat(2, 1fr)"
                   paddingY="0.5rem"
                   paddingX="1rem"
                   w="full"
                   gap="1rem"
-                  bg={{
-                    base: "white",
-                    _dark: "black",
+                  // backdropFilter="blur(16px) saturate(1.5)"
+                  backgroundColor={{
+                    base: "rgba(255, 255, 255)",
+                    _dark: "rgba(0, 0, 0)",
                   }}
                 >
                   <AddToCartButton productId={currentProduct.id} />
@@ -106,22 +107,24 @@ export default async function Page({
                 </Grid>
               </Flex>
               <Flex direction="column" gap="1rem">
-                <Text color="red.500" fontSize="2xl">
+                <Heading as="h1" size="2xl">
+                  {currentProduct.name || "(No name)"}
+                </Heading>
+                <Text>
                   {Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",
                   }).format(currentProduct.price)}
                 </Text>
-                <Heading as="h1" size="xl">
-                  {currentProduct.name || "(No title)"}
-                </Heading>
               </Flex>
               <Separator />
 
-              <Heading size="lg" marginBottom="1rem">
+              <Heading size="md" marginBottom="1rem">
                 Mô tả sản phẩm
               </Heading>
-              <Text whiteSpace="pre-line">{currentProduct.description}</Text>
+              <Text whiteSpace="pre-line" color="gray" fontSize="sm">
+                {currentProduct.description}
+              </Text>
             </Stack>
           </Flex>
           <Separator />
@@ -158,21 +161,16 @@ export default async function Page({
                         />
                       </Image>
                     </Flex>
-                    <Card.Body
-                      gap="0.5rem"
-                      padding="0.5rem"
-                      direction="col"
-                      justifyContent="space-between"
-                    >
-                      <Heading lineClamp={2} size="md">
-                        {product.name}
-                      </Heading>
-                      <Text fontSize="md" color="red.500" fontWeight="bold">
+                    <Card.Body padding="0.5rem" direction="col">
+                      <Text fontSize="sm" color="orange" fontWeight="bold">
                         {Intl.NumberFormat("vi-VN", {
                           style: "currency",
                           currency: "VND",
                         }).format(product.price)}
                       </Text>
+                      <Heading lineClamp={2} size="sm">
+                        {product.name}
+                      </Heading>
                     </Card.Body>
                   </NextLink>
                 </Card.Root>

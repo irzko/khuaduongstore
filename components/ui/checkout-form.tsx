@@ -155,7 +155,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
             </Box>
           </Card.Body>
         </Card.Root>
-        <Card.Root rounded="lg">
+        <Card.Root rounded="lg" variant="subtle">
           <Card.Header>
             <Card.Title fontSize="lg" fontWeight="bold">
               Thông tin đơn hàng
@@ -185,7 +185,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
                     <Text>{product.name}</Text>
                     <Flex gap="0.5rem">
                       <Text>{product.quantity} x</Text>
-                      <Text color="red.500" fontWeight="bold">
+                      <Text fontWeight="bold">
                         {Intl.NumberFormat("vi-VN", {
                           style: "currency",
                           currency: "VND",
@@ -199,7 +199,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
 
             <Flex justifyContent="space-between" mt="1rem">
               <Text>Tổng cộng:</Text>
-              <Text color="red.500" fontWeight="bold">
+              <Text fontWeight="bold">
                 {Intl.NumberFormat("vi-VN", {
                   style: "currency",
                   currency: "VND",
@@ -220,7 +220,6 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
           loading={isLoading}
           onClick={handleOrder}
           rounded="lg"
-          colorPalette="red"
         >
           Đặt hàng
         </Button>

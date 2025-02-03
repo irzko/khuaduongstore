@@ -53,20 +53,25 @@ export default function BuyButton({ product }: { product: IProduct }) {
                 id: product.id,
                 quantity,
               },
-            ]),
-          ).toString("base64"),
-        ),
+            ])
+          ).toString("base64")
+        )
     );
   };
   return (
     <DrawerRoot placement="bottom">
       <DrawerBackdrop />
       <DrawerTrigger asChild>
-        <Button rounded="lg" colorPalette="red">
-          Mua ngay
-        </Button>
+        <Button rounded="lg">Mua ngay</Button>
       </DrawerTrigger>
-      <DrawerContent roundedTop="lg">
+      <DrawerContent
+        roundedTop="lg"
+        backdropFilter="blur(16px) saturate(1.5)"
+        backgroundColor={{
+          base: "rgba(255, 255, 255, 0.7)",
+          _dark: "rgba(0, 0, 0, 0.7)",
+        }}
+      >
         <DrawerCloseTrigger />
         <DrawerHeader>
           <DrawerTitle />
@@ -91,7 +96,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
                 />
               </Box>
               <Box>
-                <Text color="red.500" fontWeight="bold" fontSize="xl">
+                <Text fontWeight="bold" fontSize="xl">
                   {Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",
@@ -125,12 +130,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
                 </IconButton>
               </Group>
             </Flex>
-            <Button
-              loading={isLoading}
-              onClick={handleBuy}
-              rounded="lg"
-              colorPalette="red"
-            >
+            <Button loading={isLoading} onClick={handleBuy} rounded="lg">
               Mua ngay
             </Button>
           </Stack>

@@ -15,10 +15,11 @@ export default function Layout({
       <Flex
         position="sticky"
         inset="0"
-        zIndex="40"
+        zIndex="10"
+        backdropFilter="blur(16px) saturate(1.5)"
         backgroundColor={{
-          base: "orange",
-          _dark: "black",
+          base: "rgba(245, 245, 245, 0.5)",
+          _dark: "rgba(0, 0, 0, 0.7)",
         }}
         height="auto"
         justifyContent="center"
@@ -55,7 +56,7 @@ export default function Layout({
               <LuSearch /> Tìm kiếm sản phẩm
             </Link>
           </Button>
-          <Flex gap="0.5rem" alignItems="center">
+          <Flex alignItems="center">
             <IconButton variant="ghost" rounded="lg" asChild hideFrom="md">
               <Link href="/search">
                 <LuSearch />

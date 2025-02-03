@@ -1,7 +1,7 @@
 "use client";
 
 import CartContext from "@/context/cart-context";
-import { Badge, Float, IconButton } from "@chakra-ui/react";
+import { Badge, Flex, Float, IconButton } from "@chakra-ui/react";
 import Link from "next/link";
 import { useContext } from "react";
 import { TbShoppingCart } from "react-icons/tb";
@@ -11,12 +11,14 @@ export default function CartButton() {
   return (
     <IconButton variant="ghost" rounded="lg" asChild>
       <Link href="/cart">
-        <TbShoppingCart />
-        <Float placement="top-end" offsetX="1" offsetY="1">
-          <Badge colorPalette="red" size="xs" rounded="full" variant="solid">
-            {carts.length}
-          </Badge>
-        </Float>
+        <Flex position="relative" padding="0.125rem">
+          <TbShoppingCart />
+          <Float placement="top-end" offsetX="1" offsetY="1">
+            <Badge size="xs" variant="solid" rounded="full">
+              {carts.length}
+            </Badge>
+          </Float>
+        </Flex>
       </Link>
     </IconButton>
   );

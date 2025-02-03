@@ -26,7 +26,13 @@ const SideBar = async () => {
           <LuMenu />
         </IconButton>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent
+        backdropFilter="blur(16px) saturate(1.5)"
+        backgroundColor={{
+          base: "rgba(255, 255, 255, 0.7)",
+          _dark: "rgba(0, 0, 0, 0.7)",
+        }}
+      >
         <DrawerCloseTrigger />
         <DrawerHeader>
           <DrawerTitle>
@@ -35,7 +41,14 @@ const SideBar = async () => {
         </DrawerHeader>
         <DrawerBody autoFocus={false}>
           <DrawerActionTrigger asChild>
-            <Button justifyContent="start" w="full" variant="ghost" asChild>
+            <Button
+              size="xl"
+              justifyContent="start"
+              rounded="lg"
+              w="full"
+              variant="ghost"
+              asChild
+            >
               <Link href="/check-order">Tra cứu đơn đặt</Link>
             </Button>
           </DrawerActionTrigger>

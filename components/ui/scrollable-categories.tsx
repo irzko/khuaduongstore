@@ -45,12 +45,13 @@ export function ScrollableCategories({
     <Flex
       ref={scrollContainerRef}
       gap="1rem"
-      position="sticky"
-      top="3.5rem"
+      // position="sticky"
+      // top="3.5rem"
       zIndex={10}
+      backdropFilter="blur(16px) saturate(1.5)"
       backgroundColor={{
-        base: "white",
-        _dark: "black",
+        base: "rgba(255, 255, 255, 0.7)",
+        _dark: "rgba(0, 0, 0, 0.7)",
       }}
       whiteSpace="nowrap"
       scrollbar="hidden"
