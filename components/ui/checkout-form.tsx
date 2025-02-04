@@ -128,16 +128,16 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
   };
   return (
     <>
-      <Flex direction="column" gap="1rem">
-        <Card.Root rounded="lg">
-          <Card.Header>
-            <Card.Title fontSize="lg" fontWeight="bold">
-              Thông tin giao hàng
-            </Card.Title>
-          </Card.Header>
-          <Card.Body>
-            <Box spaceY="1rem" asChild>
-              <form onSubmit={handleSubmit(handleOrder)}>
+      <form onSubmit={handleSubmit(handleOrder)}>
+        <Flex direction="column" gap="1rem">
+          <Card.Root rounded="lg">
+            <Card.Header>
+              <Card.Title fontSize="lg" fontWeight="bold">
+                Thông tin giao hàng
+              </Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <Box spaceY="1rem">
                 <Field
                   label="Họ và tên"
                   invalid={Boolean(errors.name)}
@@ -189,101 +189,106 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
                     }
                   />
                 </Field>
-              </form>
-            </Box>
-          </Card.Body>
-        </Card.Root>
-        <Card.Root rounded="lg" variant="subtle">
-          <Card.Header>
-            <Card.Title fontSize="lg" fontWeight="bold">
-              Thông tin đơn hàng
-            </Card.Title>
-          </Card.Header>
-          <Card.Body>
-            <Box divideY="1px">
-              {checkoutProductList.map((product) => (
-                <Flex key={product.id} gap="1rem" paddingY="1rem">
-                  <Box
-                    position="relative"
-                    height="5rem"
-                    overflow="hidden"
-                    rounded="lg"
-                    borderWidth="1px"
-                    aspectRatio={1}
-                  >
-                    <Image
-                      src={product.image || "/no-image.jpg"}
-                      alt={product.name}
-                      unoptimized
-                      style={{ objectFit: "contain" }}
-                      fill
-                    />
-                  </Box>
-                  <Box gridColumn="span 2 / span 2">
-                    <Text>{product.name}</Text>
-                    <Flex gap="0.5rem">
-                      <Text>{product.quantity} x</Text>
-                      <Text fontWeight="bold">
-                        {Intl.NumberFormat("vi-VN", {
-                          style: "currency",
-                          currency: "VND",
-                        }).format(product.price)}
-                      </Text>
-                    </Flex>
-                  </Box>
-                </Flex>
-              ))}
-            </Box>
+              </Box>
+            </Card.Body>
+          </Card.Root>
+          <Card.Root rounded="lg" variant="subtle">
+            <Card.Header>
+              <Card.Title fontSize="lg" fontWeight="bold">
+                Thông tin đơn hàng
+              </Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <Box divideY="1px">
+                {checkoutProductList.map((product) => (
+                  <Flex key={product.id} gap="1rem" paddingY="1rem">
+                    <Box
+                      position="relative"
+                      height="5rem"
+                      overflow="hidden"
+                      rounded="lg"
+                      borderWidth="1px"
+                      aspectRatio={1}
+                    >
+                      <Image
+                        src={product.image || "/no-image.jpg"}
+                        alt={product.name}
+                        unoptimized
+                        style={{ objectFit: "contain" }}
+                        fill
+                      />
+                    </Box>
+                    <Box gridColumn="span 2 / span 2">
+                      <Text>{product.name}</Text>
+                      <Flex gap="0.5rem">
+                        <Text>{product.quantity} x</Text>
+                        <Text fontWeight="bold">
+                          {Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(product.price)}
+                        </Text>
+                      </Flex>
+                    </Box>
+                  </Flex>
+                ))}
+              </Box>
 
-            <Flex justifyContent="space-between" mt="1rem">
-              <Text>Tổng cộng:</Text>
-              <Text fontWeight="bold">
-                {Intl.NumberFormat("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                }).format(
-                  checkoutProductList.reduce(
-                    (total, product) =>
-                      total + product.price * product.quantity,
-                    0
-                  )
-                )}
-              </Text>
-            </Flex>
-          </Card.Body>
-        </Card.Root>
-        <Button
-          type="submit"
-          colorScheme="primary"
-          size="lg"
-          loading={isLoading}
-          rounded="lg"
-        >
-          Đặt hàng
-        </Button>
-        <DialogRoot lazyMount open={open} onOpenChange={(e) => setOpen(e.open)}>
-          <DialogBackdrop />
-          <DialogContent>
-            <DialogCloseTrigger />
-            <DialogHeader>
-              <DialogTitle>Thông báo</DialogTitle>
-            </DialogHeader>
-            <DialogBody>
-              <Text>Đặt hàng thành công</Text>
-            </DialogBody>
-            <DialogFooter>
-              <Button
-                onClick={() => {
-                  setOpen(false);
-                  router.push("/cart");
-                }}
-              >
-                Đóng
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </DialogRoot>
-      </Flex>
+              <Flex justifyContent="space-between" mt="1rem">
+                <Text>Tổng cộng:</Text>
+                <Text fontWeight="bold">
+                  {Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(
+                    checkoutProductList.reduce(
+                      (total, product) =>
+                        total + product.price * product.quantity,
+                      0
+                    )
+                  )}
+                </Text>
+              </Flex>
+            </Card.Body>
+          </Card.Root>
+          <Button
+            type="submit"
+            colorScheme="primary"
+            size="lg"
+            loading={isLoading}
+            rounded="lg"
+          >
+            Đặt hàng
+          </Button>
+
+          <DialogRoot
+            lazyMount
+            open={open}
+            onOpenChange={(e) => setOpen(e.open)}
+          >
+            <DialogBackdrop />
+            <DialogContent>
+              <DialogCloseTrigger />
+              <DialogHeader>
+                <DialogTitle>Thông báo</DialogTitle>
+              </DialogHeader>
+              <DialogBody>
+                <Text>Đặt hàng thành công</Text>
+              </DialogBody>
+              <DialogFooter>
+                <Button
+                  onClick={() => {
+                    setOpen(false);
+                    router.push("/check-order?phone=" + shippingInfo.phone);
+                  }}
+                >
+                  Đóng
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </DialogRoot>
+        </Flex>
+      </form>
     </>
   );
 }
