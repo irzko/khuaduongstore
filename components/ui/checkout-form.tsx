@@ -18,6 +18,20 @@ import {
 } from "@/components/ui/dialog";
 import { createId } from "@paralleldrive/cuid2";
 import CartContext from "@/context/cart-context";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import { useForm } from "react-hook-form";
+
+const vietnamPhoneRegex =
+  /^(?:(?:\+84|84|0)?(?:3[2-9]|5[2689]|7[0689]|8[1-9]|9[0-4689]))\d{7}$/;
+
+const schema = Yup.object({
+  name: Yup.string().required("Tên không được để trống"),
+  phone: Yup.string()
+    .required("Số điện thoại không được để trống")
+    .matches(vietnamPhoneRegex, "Số điện thoại không hợp lệ"),
+  address: Yup.string().required("Địa chỉ không được để trống"),
+});
 
 export default function CheckoutForm({ products }: { products: IProduct[] }) {
   const [checkoutProductList, setCheckoutProductList] = useState<
@@ -27,6 +41,15 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const { carts, setCarts } = useContext(CartContext);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: "onBlur",
+  });
 
   const [shippingInfo, setShippingInfo] = useState<{
     name: string;
@@ -114,9 +137,14 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
           </Card.Header>
           <Card.Body>
             <Box spaceY="1rem" asChild>
-              <form>
-                <Field label="Họ và tên">
+              <form onSubmit={handleSubmit(handleOrder)}>
+                <Field
+                  label="Họ và tên"
+                  invalid={Boolean(errors.name)}
+                  errorText={errors.name?.message}
+                >
                   <Input
+                    {...register("name")}
                     name="name"
                     rounded="lg"
                     onChange={(e) =>
@@ -125,8 +153,13 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
                     placeholder="Nhập họ tên"
                   />
                 </Field>
-                <Field label="Địa chỉ">
+                <Field
+                  label="Địa chỉ"
+                  invalid={Boolean(errors.address)}
+                  errorText={errors.address?.message}
+                >
                   <Input
+                    {...register("address")}
                     name="address"
                     rounded="lg"
                     placeholder="Nhập địa chỉ"
@@ -138,8 +171,13 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
                     }
                   />
                 </Field>
-                <Field label="Số điện thoại">
+                <Field
+                  label="Số điện thoại"
+                  invalid={Boolean(errors.phone)}
+                  errorText={errors.phone?.message}
+                >
                   <Input
+                    {...register("phone")}
                     name="phone"
                     rounded="lg"
                     placeholder="Nhập số điện thoại"
@@ -215,10 +253,10 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
           </Card.Body>
         </Card.Root>
         <Button
+          type="submit"
           colorScheme="primary"
           size="lg"
           loading={isLoading}
-          onClick={handleOrder}
           rounded="lg"
         >
           Đặt hàng
