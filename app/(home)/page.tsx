@@ -29,7 +29,7 @@ export default async function Home() {
         gap="1rem"
       >
         {products.map((product) => (
-          <Card.Root key={product.id} asChild overflow="hidden" border="none">
+          <Card.Root key={product.id} asChild overflow="hidden" rounded="2xl" border="none">
             <NextLink
               href={`/${slugify(product.name, {
                 replacement: "-",
@@ -40,7 +40,7 @@ export default async function Home() {
                 trim: true,
               })}-${product.id}.html`}
             >
-              <Flex position="relative" aspectRatio={1}>
+              <Flex position="relative" p="0.125rem" aspectRatio={1}>
                 <Image asChild alt={product.name} rounded="2xl">
                   <NextImage
                     src={product.image.split("\n")[0] || "/no-image.jpg"}

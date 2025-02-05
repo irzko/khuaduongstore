@@ -30,7 +30,7 @@ export default function Layout({
           paddingX="1rem"
           justifyContent="space-between"
           width="full"
-          height="3.5rem"
+          height="4rem"
           gap="1rem"
           maxWidth="1024px"
           alignItems="center"
