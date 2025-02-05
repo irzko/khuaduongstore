@@ -1,11 +1,11 @@
 import {
   Flex,
   Grid,
-  Text,
   Heading,
   Container,
   Card,
   Image,
+  Badge,
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
@@ -29,7 +29,13 @@ export default async function Home() {
         gap="1rem"
       >
         {products.map((product) => (
-          <Card.Root key={product.id} asChild overflow="hidden" rounded="2xl" border="none">
+          <Card.Root
+            key={product.id}
+            asChild
+            overflow="hidden"
+            rounded="2xl"
+            border="none"
+          >
             <NextLink
               href={`/${slugify(product.name, {
                 replacement: "-",
@@ -51,13 +57,20 @@ export default async function Home() {
                   />
                 </Image>
               </Flex>
-              <Card.Body padding="0.5rem" direction="col">
-                <Text fontSize="sm" color="orange" fontWeight="bold">
-                  {Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  }).format(product.price)}
-                </Text>
+              <Card.Body padding="0.5rem" gap="0.5rem" direction="col">
+                <Flex>
+                  <Badge
+                    colorPalette="blue"
+                    variant="solid"
+                    size="md"
+                    rounded="full"
+                  >
+                    {Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(product.price)}
+                  </Badge>
+                </Flex>
                 <Heading lineClamp={2} size="sm">
                   {product.name}
                 </Heading>

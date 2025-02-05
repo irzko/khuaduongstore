@@ -130,7 +130,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
     <>
       <form onSubmit={handleSubmit(handleOrder)}>
         <Flex direction="column" gap="1rem">
-          <Card.Root rounded="lg">
+          <Card.Root rounded="2xl">
             <Card.Header>
               <Card.Title fontSize="lg" fontWeight="bold">
                 Thông tin giao hàng
@@ -192,7 +192,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
               </Box>
             </Card.Body>
           </Card.Root>
-          <Card.Root rounded="lg" variant="subtle">
+          <Card.Root rounded="2xl" variant="subtle">
             <Card.Header>
               <Card.Title fontSize="lg" fontWeight="bold">
                 Thông tin đơn hàng
@@ -206,15 +206,14 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
                       position="relative"
                       height="5rem"
                       overflow="hidden"
-                      rounded="lg"
-                      borderWidth="1px"
+                      rounded="xl"
                       aspectRatio={1}
                     >
                       <Image
                         src={product.image || "/no-image.jpg"}
                         alt={product.name}
                         unoptimized
-                        style={{ objectFit: "contain" }}
+                        style={{ objectFit: "cover" }}
                         fill
                       />
                     </Box>
@@ -256,7 +255,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
             colorScheme="primary"
             size="lg"
             loading={isLoading}
-            rounded="lg"
+            rounded="xl"
           >
             Đặt hàng
           </Button>

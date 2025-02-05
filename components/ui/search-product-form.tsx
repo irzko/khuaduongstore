@@ -68,11 +68,7 @@ export default function SearchProductForm({
       <Flex
         position="sticky"
         inset="0"
-        zIndex="40"
-        backgroundColor={{
-          base: "white",
-          _dark: "black",
-        }}
+        zIndex="10"
         height="auto"
         justifyContent="center"
         alignItems="center"
@@ -82,9 +78,14 @@ export default function SearchProductForm({
           paddingX="1rem"
           justifyContent="space-between"
           width="full"
-          height="4rem"
+          height="3.5rem"
           gap="1rem"
           maxWidth="1024px"
+          backdropFilter="blur(16px) saturate(1.5)"
+          backgroundColor={{
+            base: "rgba(245, 245, 245, 0.5)",
+            _dark: "rgba(0, 0, 0, 0.7)",
+          }}
           alignItems="center"
         >
           <Flex gap="0.5rem" alignItems="center" width="full">
@@ -95,9 +96,15 @@ export default function SearchProductForm({
             </IconButton>
             <InputGroup width="full" startElement={<LuSearch />}>
               <Input
-                rounded="xl"
+                rounded="lg"
                 ps="2.5rem"
-                variant="subtle"
+                autoFocus
+                backgroundColor={{
+                  base: "rgba(245, 245, 245, 0.5)",
+                  _dark: "rgba(0, 0, 0, 0.7)",
+                }}
+                size={{ base: "xs", md: "md" }}
+                variant="outline"
                 placeholder="Tìm kiếm"
                 onChange={(e) => {
                   handleSearch(e.target.value);

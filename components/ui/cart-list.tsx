@@ -147,7 +147,7 @@ export default function CartList({ products }: { products: IProduct[] }) {
                   )
                 )}
               </Text>
-              <Button whiteSpace="wrap" rounded="lg" asChild>
+              <Button whiteSpace="wrap" rounded="xl" asChild>
                 <NextLink
                   href={
                     "/order?products=" +

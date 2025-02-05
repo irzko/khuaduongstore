@@ -65,10 +65,10 @@ export default function BuyButton({ product }: { product: IProduct }) {
         <Button rounded="xl">Mua ngay</Button>
       </DrawerTrigger>
       <DrawerContent
-        roundedTop="lg"
+        roundedTop="2xl"
         backdropFilter="blur(16px) saturate(1.5)"
         backgroundColor={{
-          base: "rgba(255, 255, 255, 0.7)",
+          base: "rgba(245, 245, 245, 0.5)",
           _dark: "rgba(0, 0, 0, 0.7)",
         }}
       >
@@ -80,8 +80,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
           <Stack gap="1rem">
             <Flex gap="1rem" alignItems="end">
               <Box
-                rounded="lg"
-                borderWidth="1px"
+                rounded="xl"
                 overflow="hidden"
                 position="relative"
                 aspectRatio={1}
@@ -90,7 +89,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
                 <Image
                   src={product.image.split("\n")[0] || "/no-image.jpg"}
                   alt={product.name}
-                  style={{ objectFit: "contain" }}
+                  style={{ objectFit: "cover" }}
                   unoptimized
                   fill
                 />
@@ -130,7 +129,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
                 </IconButton>
               </Group>
             </Flex>
-            <Button loading={isLoading} onClick={handleBuy} rounded="lg">
+            <Button loading={isLoading} onClick={handleBuy} rounded="xl">
               Mua ngay
             </Button>
           </Stack>

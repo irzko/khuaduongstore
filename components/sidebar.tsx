@@ -19,7 +19,7 @@ import Logo from "./ui/logo";
 
 const SideBar = async () => {
   return (
-    <DrawerRoot size="md">
+    <DrawerRoot size="md" placement="start">
       <DrawerBackdrop />
       <DrawerTrigger asChild>
         <IconButton rounded="lg" variant="ghost">
@@ -29,7 +29,7 @@ const SideBar = async () => {
       <DrawerContent
         backdropFilter="blur(16px) saturate(1.5)"
         backgroundColor={{
-          base: "rgba(255, 255, 255, 0.7)",
+          base: "rgba(245, 245, 245, 0.5)",
           _dark: "rgba(0, 0, 0, 0.7)",
         }}
       >

@@ -12,6 +12,7 @@ import {
   Text,
   Image,
   Separator,
+  Badge,
 } from "@chakra-ui/react";
 import NextImage from "next/image";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -98,8 +99,8 @@ export default async function Page({
                   gap="1rem"
                   // backdropFilter="blur(16px) saturate(1.5)"
                   backgroundColor={{
-                    base: "rgba(255, 255, 255)",
-                    _dark: "rgba(0, 0, 0)",
+                    base: "rgb(245, 245, 245)",
+                    _dark: "rgb(0, 0, 0)",
                   }}
                 >
                   <AddToCartButton productId={currentProduct.id} />
@@ -139,7 +140,12 @@ export default async function Page({
             </Heading>
             <Grid templateColumns="repeat(2, 1fr)" gap="1rem">
               {recommendedProducts.map((product) => (
-                <Card.Root key={product.id} asChild overflow="hidden" border="none">
+                <Card.Root
+                  key={product.id}
+                  asChild
+                  overflow="hidden"
+                  border="none"
+                >
                   <NextLink
                     href={`/${slugify(product.name, {
                       replacement: "-",
@@ -161,13 +167,20 @@ export default async function Page({
                         />
                       </Image>
                     </Flex>
-                    <Card.Body padding="0.5rem" direction="col">
-                      <Text fontSize="sm" color="orange" fontWeight="bold">
-                        {Intl.NumberFormat("vi-VN", {
-                          style: "currency",
-                          currency: "VND",
-                        }).format(product.price)}
-                      </Text>
+                    <Card.Body padding="0.5rem" gap="0.5rem" direction="col">
+                      <Flex>
+                        <Badge
+                          colorPalette="blue"
+                          variant="solid"
+                          size="md"
+                          rounded="full"
+                        >
+                          {Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(product.price)}
+                        </Badge>
+                      </Flex>
                       <Heading lineClamp={2} size="sm">
                         {product.name}
                       </Heading>

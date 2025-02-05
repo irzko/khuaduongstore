@@ -2,11 +2,11 @@ export const dynamic = "force-static";
 import {
   Flex,
   Grid,
-  Text,
   Heading,
   Container,
   Card,
   Image,
+  Badge,
 } from "@chakra-ui/react";
 import slugify from "slugify";
 import NextImage from "next/image";
@@ -88,13 +88,20 @@ export default async function Page({
                   />
                 </Image>
               </Flex>
-              <Card.Body padding="0.5rem" direction="col">
-                <Text fontSize="sm" color="orange" fontWeight="bold">
-                  {Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  }).format(product.price)}
-                </Text>
+              <Card.Body padding="0.5rem" gap="0.5rem" direction="col">
+                <Flex>
+                  <Badge
+                    colorPalette="blue"
+                    variant="solid"
+                    size="md"
+                    rounded="full"
+                  >
+                    {Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(product.price)}
+                  </Badge>
+                </Flex>
                 <Heading lineClamp={2} size="sm">
                   {product.name}
                 </Heading>
