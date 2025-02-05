@@ -1,5 +1,5 @@
 "use client";
-import { Flex, Text, Link } from "@chakra-ui/react";
+import { Flex, Text, Badge } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
@@ -44,7 +44,7 @@ export function ScrollableCategories({
   return (
     <Flex
       ref={scrollContainerRef}
-      gap="1rem"
+      gap="0.5rem"
       // position="sticky"
       // top="3.5rem"
       zIndex={10}
@@ -54,15 +54,16 @@ export function ScrollableCategories({
       paddingY="0.5rem"
     >
       <div ref={currentSlug === "/" ? selectedItemRef : null}>
-        <Link
-          variant={currentSlug === "/" ? "underline" : "plain"}
-          outline="none"
+        <Badge
+          variant={currentSlug === "/" ? "solid" : "outline"}
+          size="lg"
+          rounded="full"
           asChild
         >
           <NextLink href="/">
             <Text fontWeight="semibold">Tất cả</Text>
           </NextLink>
-        </Link>
+        </Badge>
       </div>
 
       {categories.map((category) => (
@@ -82,9 +83,10 @@ export function ScrollableCategories({
               : null
           }
         >
-          <Link
-            outline="none"
+          <Badge
             asChild
+            size="lg"
+            rounded="full"
             variant={
               currentSlug ===
               slugify(category, {
@@ -95,8 +97,8 @@ export function ScrollableCategories({
                 locale: "vi",
                 trim: true,
               })
-                ? "underline"
-                : "plain"
+                ? "solid"
+                : "outline"
             }
           >
             <NextLink
@@ -111,7 +113,7 @@ export function ScrollableCategories({
             >
               <Text fontWeight="semibold">{category}</Text>
             </NextLink>
-          </Link>
+          </Badge>
         </div>
       ))}
     </Flex>
