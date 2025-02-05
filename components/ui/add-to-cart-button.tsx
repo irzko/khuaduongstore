@@ -42,7 +42,7 @@ export default function AddToCartButton({ productId }: { productId: string }) {
   };
 
   return (
-    <Button variant="outline" onClick={handleClick} rounded="lg">
+    <Button variant="outline" onClick={handleClick} rounded="xl">
       <TbShoppingCartPlus /> Thêm vào giở hàng
     </Button>
   );

@@ -62,7 +62,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
     <DrawerRoot placement="bottom">
       <DrawerBackdrop />
       <DrawerTrigger asChild>
-        <Button rounded="lg">Mua ngay</Button>
+        <Button rounded="xl">Mua ngay</Button>
       </DrawerTrigger>
       <DrawerContent
         roundedTop="lg"

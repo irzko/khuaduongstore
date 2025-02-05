@@ -9,7 +9,7 @@ import { Box, Image } from "@chakra-ui/react";
 
 export default function Carousel({ imageUrlList }: { imageUrlList: string[] }) {
   return (
-    <Box rounded="lg" overflow="hidden" w="full" maxWidth="md" mx="auto">
+    <Box rounded="2xl" overflow="hidden" w="full" maxWidth="md" mx="auto">
       <Swiper pagination={true} modules={[Pagination]}>
         {imageUrlList.map((imageUrl, index) => (
           <SwiperSlide key={index}>

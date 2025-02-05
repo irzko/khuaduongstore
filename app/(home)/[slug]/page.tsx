@@ -137,9 +137,9 @@ export default async function Page({
             <Heading size="lg" marginBottom="1rem">
               Đề xuất cho bạn
             </Heading>
-            <Grid templateColumns="repeat(2, 1fr)" gap="0.5rem">
+            <Grid templateColumns="repeat(2, 1fr)" gap="1rem">
               {recommendedProducts.map((product) => (
-                <Card.Root key={product.id} asChild overflow="hidden">
+                <Card.Root key={product.id} asChild overflow="hidden" border="none">
                   <NextLink
                     href={`/${slugify(product.name, {
                       replacement: "-",
@@ -151,7 +151,7 @@ export default async function Page({
                     })}-${product.id}.html`}
                   >
                     <Flex position="relative" aspectRatio={1}>
-                      <Image asChild alt={product.name}>
+                      <Image asChild alt={product.name} rounded="2xl">
                         <NextImage
                           src={product.image.split("\n")[0] || "/no-image.jpg"}
                           alt={product.name}
