@@ -3,26 +3,21 @@ import { getAllProducts } from "@/lib/db";
 import { Metadata } from "next";
 import {
   Box,
-  Card,
   Container,
   Flex,
   Grid,
   Heading,
   Stack,
   Text,
-  Image,
   Separator,
-  Badge,
 } from "@chakra-ui/react";
-import NextImage from "next/image";
 import { EmptyState } from "@/components/ui/empty-state";
 import AddToCartButton from "@/components/ui/add-to-cart-button";
 import { Toaster } from "@/components/ui/toaster";
 import Carousel from "@/components/ui/carousel";
 import BuyButton from "@/components/ui/buy-button";
-import NextLink from "next/link";
-import slugify from "slugify";
 import { calculateSimilarity } from "@/lib/calculateSimilarity";
+import ProductCard from "@/components/ui/product-card";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -112,7 +107,7 @@ export default async function Page({
                 {currentProduct.description}
               </Text>
             </Stack>
-            <Flex position="sticky" bottom="0" zIndex={10}>
+            <Flex position="sticky" bottom="0">
               <Grid
                 templateColumns="repeat(2, 1fr)"
                 paddingY="0.5rem"
@@ -142,58 +137,7 @@ export default async function Page({
             </Heading>
             <Grid templateColumns="repeat(2, 1fr)" gap="1rem">
               {recommendedProducts.map((product) => (
-                <Card.Root
-                  key={product.id}
-                  asChild
-                  overflow="hidden"
-                  border="none"
-                >
-                  <NextLink
-                    href={`/${slugify(product.name, {
-                      replacement: "-",
-                      remove: undefined,
-                      lower: true,
-                      strict: true,
-                      locale: "vi",
-                      trim: true,
-                    })}-${product.id}.html`}
-                  >
-                    <Flex position="relative" aspectRatio={1}>
-                      <Image asChild alt={product.name} rounded="2xl">
-                        <NextImage
-                          src={product.image.split("\n")[0] || "/no-image.jpg"}
-                          alt={product.name}
-                          style={{ objectFit: "cover" }}
-                          fill
-                          unoptimized
-                        />
-                      </Image>
-                    </Flex>
-                    <Card.Body
-                      paddingY="1rem"
-                      paddingX="0rem"
-                      gap="0.5rem"
-                      direction="col"
-                    >
-                      <Flex>
-                        <Badge
-                          colorPalette="blue"
-                          variant="solid"
-                          size="md"
-                          rounded="full"
-                        >
-                          {Intl.NumberFormat("vi-VN", {
-                            style: "currency",
-                            currency: "VND",
-                          }).format(product.price)}
-                        </Badge>
-                      </Flex>
-                      <Heading lineClamp={2} size="sm">
-                        {product.name}
-                      </Heading>
-                    </Card.Body>
-                  </NextLink>
-                </Card.Root>
+                <ProductCard key={product.id} product={product} />
               ))}
             </Grid>
           </Box>
