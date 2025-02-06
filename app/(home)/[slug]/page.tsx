@@ -90,23 +90,7 @@ export default async function Page({
           <Flex direction="column" gap="1rem" w="full">
             <Stack spaceY="1rem">
               <Carousel imageUrlList={currentProduct.image.split("\n")} />
-              <Flex position="fixed" bottom="0" insetX={0} zIndex={40}>
-                <Grid
-                  templateColumns="repeat(2, 1fr)"
-                  paddingY="0.5rem"
-                  paddingX="1rem"
-                  w="full"
-                  gap="1rem"
-                  // backdropFilter="blur(16px) saturate(1.5)"
-                  backgroundColor={{
-                    base: "rgb(245, 245, 245)",
-                    _dark: "rgb(0, 0, 0)",
-                  }}
-                >
-                  <AddToCartButton productId={currentProduct.id} />
-                  <BuyButton product={currentProduct} />
-                </Grid>
-              </Flex>
+
               <Flex direction="column" gap="1rem">
                 <Heading as="h1" size="2xl">
                   {currentProduct.name || "(No name)"}
@@ -118,6 +102,7 @@ export default async function Page({
                   }).format(currentProduct.price)}
                 </Text>
               </Flex>
+
               <Separator />
 
               <Heading size="md" marginBottom="1rem">
@@ -127,8 +112,25 @@ export default async function Page({
                 {currentProduct.description}
               </Text>
             </Stack>
+            <Flex position="sticky" bottom="0" zIndex={10}>
+              <Grid
+                templateColumns="repeat(2, 1fr)"
+                paddingY="0.5rem"
+                w="full"
+                gap="1rem"
+                // backdropFilter="blur(16px) saturate(1.5)"
+                backgroundColor={{
+                  base: "white",
+                  _dark: "black",
+                }}
+              >
+                <AddToCartButton productId={currentProduct.id} />
+                <BuyButton product={currentProduct} />
+              </Grid>
+            </Flex>
           </Flex>
           <Separator />
+
           <Box
             width={{
               base: "full",
@@ -167,7 +169,12 @@ export default async function Page({
                         />
                       </Image>
                     </Flex>
-                    <Card.Body paddingY="1rem" paddingX="0rem" gap="0.5rem" direction="col">
+                    <Card.Body
+                      paddingY="1rem"
+                      paddingX="0rem"
+                      gap="0.5rem"
+                      direction="col"
+                    >
                       <Flex>
                         <Badge
                           colorPalette="blue"
