@@ -57,7 +57,7 @@ export default async function Home() {
                   />
                 </Image>
               </Flex>
-              <Card.Body padding="0.5rem" gap="0.5rem" direction="col">
+              <Card.Body paddingX="0rem" paddingY="1rem" gap="0.5rem" direction="col">
                 <Flex>
                   <Badge
                     colorPalette="blue"

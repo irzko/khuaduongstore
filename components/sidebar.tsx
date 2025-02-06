@@ -7,7 +7,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerRoot,
-  DrawerTitle,
+  // DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button, Flex, IconButton } from "@chakra-ui/react";
@@ -15,7 +15,7 @@ import { Button, Flex, IconButton } from "@chakra-ui/react";
 import { LuMenu } from "react-icons/lu";
 import Link from "next/link";
 import ContactInfomation from "./ui/contact-infomation";
-import Logo from "./ui/logo";
+// import Logo from "./ui/logo";
 
 const SideBar = async () => {
   return (
@@ -35,9 +35,9 @@ const SideBar = async () => {
       >
         <DrawerCloseTrigger />
         <DrawerHeader>
-          <DrawerTitle>
+          {/* <DrawerTitle>
             <Logo />
-          </DrawerTitle>
+          </DrawerTitle> */}
         </DrawerHeader>
         <DrawerBody autoFocus={false}>
           <DrawerActionTrigger asChild>
