@@ -113,7 +113,7 @@ export default function SearchProductForm({
             "repeat(6, 1fr)",
             "repeat(6, 1fr)",
           ]}
-          gap="0.5rem"
+          gap="1rem"
         >
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
