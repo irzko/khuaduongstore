@@ -39,7 +39,7 @@ export default function Layout({
         position="sticky"
         overflow="hidden"
         top="0"
-        zIndex="10"
+        zIndex="40"
         height="auto"
         justifyContent="center"
         alignItems="center"

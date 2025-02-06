@@ -107,7 +107,7 @@ export default async function Page({
                 {currentProduct.description}
               </Text>
             </Stack>
-            <Flex position="sticky" bottom="0">
+            <Flex position="sticky" bottom="0" zIndex="20">
               <Grid
                 templateColumns="repeat(2, 1fr)"
                 paddingY="0.5rem"
