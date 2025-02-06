@@ -14,7 +14,6 @@ export default function ProductCard({
       asChild
       overflow="hidden"
       rounded="2xl"
-      zIndex={-1}
       border="none"
     >
       <NextLink
