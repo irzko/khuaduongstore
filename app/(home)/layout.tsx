@@ -11,17 +11,17 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <Flex direction="column">
+    <>
       <Flex
         paddingX="1rem"
         justifyContent="center"
         width="full"
         height="2.5rem"
+        backdropFilter="blur(16px) saturate(1.5)"
         backgroundColor={{
           base: "rgba(245, 245, 245, 0.5)",
           _dark: "rgba(0, 0, 0, 0.7)",
         }}
-        // gap="1rem"
         maxWidth="1024px"
         alignItems="center"
         mx="auto"
@@ -37,13 +37,12 @@ export default function Layout({
       </Flex>
       <Flex
         position="sticky"
-        insetX="0"
-        top="0px"
+        overflow="hidden"
+        top="0"
         zIndex="10"
         height="auto"
         justifyContent="center"
         alignItems="center"
-        // shadow="sm"
       >
         <Flex
           paddingX="1rem"
@@ -58,18 +57,17 @@ export default function Layout({
           gap="1rem"
           maxWidth="1024px"
           alignItems="center"
-          // borderBottomWidth="1px"
         >
           <SideBar />
 
           <Button
-            variant="surface"
+            variant="ghost"
             rounded="lg"
             backgroundColor={{
-              base: "rgba(245, 245, 245, 0.5)",
+              base: "rgba(100, 100, 100, 0.2)",
               _dark: "rgba(0, 0, 0, 0.7)",
             }}
-            size={{ base: "xs", md: "md" }}
+            size={{ base: "sm", md: "md" }}
             maxWidth={{
               base: "14rem",
               md: "20rem",
@@ -96,6 +94,6 @@ export default function Layout({
         </Flex>
       </Flex>
       {children}
-    </Flex>
+    </>
   );
 }
