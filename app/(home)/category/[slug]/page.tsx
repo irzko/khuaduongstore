@@ -88,7 +88,7 @@ export default async function Page({
                   />
                 </Image>
               </Flex>
-              <Card.Body padding="0.5rem" gap="0.5rem" direction="col">
+              <Card.Body paddingY="1rem" paddingX="0rem" gap="0.5rem" direction="col">
                 <Flex>
                   <Badge
                     colorPalette="blue"

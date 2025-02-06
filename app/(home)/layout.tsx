@@ -11,7 +11,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <Flex direction="column">
       <Flex
         paddingX="1rem"
         justifyContent="center"
@@ -96,6 +96,6 @@ export default function Layout({
         </Flex>
       </Flex>
       {children}
-    </>
+    </Flex>
   );
 }
