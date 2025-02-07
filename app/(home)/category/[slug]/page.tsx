@@ -57,7 +57,7 @@ export default async function Page({
         ]}
         gap="1rem"
       >
-        {products.map((product) => (
+        {products.reverse().map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </Grid>

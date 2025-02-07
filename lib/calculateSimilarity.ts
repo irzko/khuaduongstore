@@ -8,8 +8,8 @@ export const calculateSimilarity = (product1: IProduct, product2: IProduct) => {
   if (product1.category === product2.category) score += 3;
 
   // Khoảng giá tương tự (trọng số: 2)
-  const priceDiff = Math.abs(product1.price - product2.price) / product1.price;
-  if (priceDiff <= 0.3) score += 2;
+  // const priceDiff = Math.abs(product1.price - product2.price) / product1.price;
+  // if (priceDiff <= 0.3) score += 2;
 
   // Độ tương đồng tên sản phẩm (trọng số: 2)
   const nameSimilarity =
