@@ -1,7 +1,7 @@
 import CheckOrderForm from "@/components/ui/check-order-form";
 import Fallback from "@/components/ui/fallback";
 import { getAllOrders } from "@/lib/db";
-import { Card, Container, Heading } from "@chakra-ui/react";
+import { Container, Heading } from "@chakra-ui/react";
 import { Suspense } from "react";
 
 export default async function Page() {
