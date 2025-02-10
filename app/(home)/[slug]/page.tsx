@@ -97,20 +97,7 @@ export default async function Page({
                   }).format(currentProduct.price)}
                 </Text>
               </Flex>
-
-              <Separator />
-
-              <Heading size="md" marginBottom="1rem">
-                Mô tả sản phẩm
-              </Heading>
-              <Text whiteSpace="pre-line" color="gray" fontSize="sm">
-                {currentProduct.description}
-              </Text>
-            </Stack>
-            <Flex position="sticky" bottom="0" zIndex="20">
-              <Grid
-                templateColumns="repeat(2, 1fr)"
-                paddingY="0.5rem"
+              <Flex
                 w="full"
                 gap="1rem"
                 // backdropFilter="blur(16px) saturate(1.5)"
@@ -121,8 +108,17 @@ export default async function Page({
               >
                 <AddToCartButton productId={currentProduct.id} />
                 <BuyButton product={currentProduct} />
-              </Grid>
-            </Flex>
+              </Flex>
+
+              <Separator />
+
+              <Heading size="md" marginBottom="1rem">
+                Mô tả sản phẩm
+              </Heading>
+              <Text whiteSpace="pre-line" color="gray" fontSize="sm">
+                {currentProduct.description}
+              </Text>
+            </Stack>
           </Flex>
           <Separator />
 

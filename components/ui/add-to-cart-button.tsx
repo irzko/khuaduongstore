@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext } from "react";
-import { Button } from "./button";
+import { IconButton } from "@chakra-ui/react";
 import CartContext from "@/context/cart-context";
 import { toaster } from "@/components/ui/toaster";
 import { TbShoppingCartPlus } from "react-icons/tb";
@@ -13,7 +13,7 @@ export default function AddToCartButton({ productId }: { productId: string }) {
     if (cart) {
       const cartObj = JSON.parse(cart);
       const productIndex = cartObj.findIndex(
-        (cart: { id: string }) => cart.id === productId
+        (cart: { id: string }) => cart.id === productId,
       );
       if (productIndex !== -1) {
         cartObj[productIndex].quantity += 1;
@@ -24,7 +24,7 @@ export default function AddToCartButton({ productId }: { productId: string }) {
     } else {
       localStorage.setItem(
         "cart",
-        JSON.stringify([{ id: productId, quantity: 1 }])
+        JSON.stringify([{ id: productId, quantity: 1 }]),
       );
     }
     setCarts(
@@ -32,8 +32,8 @@ export default function AddToCartButton({ productId }: { productId: string }) {
         (cart: { id: string; quantity: number }) => ({
           id: cart.id,
           quantity: cart.quantity,
-        })
-      )
+        }),
+      ),
     );
     toaster.create({
       title: "Thêm vào giỏ hàng thành công",
@@ -42,8 +42,8 @@ export default function AddToCartButton({ productId }: { productId: string }) {
   };
 
   return (
-    <Button variant="outline" onClick={handleClick} rounded="xl">
-      <TbShoppingCartPlus /> Thêm vào giở hàng
-    </Button>
+    <IconButton variant="outline" onClick={handleClick} rounded="xl" size="xl">
+      <TbShoppingCartPlus />
+    </IconButton>
   );
 }
