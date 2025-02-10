@@ -106,8 +106,8 @@ export default async function Page({
                   _dark: "black",
                 }}
               >
-                <AddToCartButton productId={currentProduct.id} />
                 <BuyButton product={currentProduct} />
+                <AddToCartButton productId={currentProduct.id} />
               </Flex>
 
               <Separator />

@@ -65,7 +65,7 @@ export default function Layout({
               rounded="lg"
               backgroundColor={{
                 base: "rgba(0, 0, 0, 0.1)",
-                _dark: "rgba(0, 0, 0, 0.7)",
+                _dark: "rgba(255, 255, 255, 0.1)",
               }}
               maxWidth={{
                 base: "full",
