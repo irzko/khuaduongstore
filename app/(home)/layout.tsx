@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, Box } from "@chakra-ui/react";
 import SideBar from "@/components/sidebar";
 import CartButton from "@/components/ui/cart-button";
 import { LuSearch } from "react-icons/lu";
@@ -59,29 +59,30 @@ export default function Layout({
           alignItems="center"
         >
           <SideBar />
-
-          <Button
-            variant="ghost"
-            rounded="lg"
-            backgroundColor={{
-              base: "rgba(100, 100, 100, 0.2)",
-              _dark: "rgba(0, 0, 0, 0.7)",
-            }}
-            size={{ base: "sm", md: "md" }}
-            maxWidth={{
-              base: "14rem",
-              md: "20rem",
-            }}
-            w="full"
-            justifyContent="flex-start"
-            color="gray.500"
-            // hideBelow="md"
-            asChild
-          >
-            <Link href="/search">
-              <LuSearch /> Tìm kiếm sản phẩm
-            </Link>
-          </Button>
+          <Box flexBasis="100%">
+            <Button
+              variant="ghost"
+              rounded="lg"
+              backgroundColor={{
+                base: "rgba(0, 0, 0, 0.1)",
+                _dark: "rgba(0, 0, 0, 0.7)",
+              }}
+              maxWidth={{
+                base: "full",
+                md: "20rem",
+              }}
+              w="full"
+              size={{ base: "sm", md: "md" }}
+              justifyContent="flex-start"
+              color="gray.500"
+              // hideBelow="md"
+              asChild
+            >
+              <Link href="/search">
+                <LuSearch /> Tìm kiếm sản phẩm
+              </Link>
+            </Button>
+          </Box>
           <Flex alignItems="center">
             {/* <IconButton variant="ghost" rounded="lg" asChild hideFrom="md">
               <Link href="/search">
