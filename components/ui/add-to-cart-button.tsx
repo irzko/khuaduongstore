@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { IconButton } from "@chakra-ui/react";
 import CartContext from "@/context/cart-context";
 import { toaster } from "@/components/ui/toaster";
-import { TbShoppingCartPlus } from "react-icons/tb";
+import { BsBagPlus } from "react-icons/bs";
 
 export default function AddToCartButton({ productId }: { productId: string }) {
   const { setCarts } = useContext(CartContext);
@@ -43,7 +43,7 @@ export default function AddToCartButton({ productId }: { productId: string }) {
 
   return (
     <IconButton variant="outline" onClick={handleClick} rounded="xl" size="xl">
-      <TbShoppingCartPlus />
+      <BsBagPlus />
     </IconButton>
   );
 }
