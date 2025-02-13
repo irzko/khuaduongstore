@@ -48,7 +48,6 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    mode: "onBlur",
   });
 
   const [shippingInfo, setShippingInfo] = useState<{
@@ -70,8 +69,8 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
     }[] = productsParam
       ? JSON.parse(
           Buffer.from(decodeURIComponent(productsParam), "base64").toString(
-            "utf8"
-          )
+            "utf8",
+          ),
         )
       : [];
 
@@ -79,16 +78,16 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
       products
         .filter((product) =>
           checkoutProductId.some(
-            (checkoutProduct) => checkoutProduct.id === product.id
-          )
+            (checkoutProduct) => checkoutProduct.id === product.id,
+          ),
         )
         .map((product) => ({
           ...product,
           quantity:
             checkoutProductId.find(
-              (checkoutProduct) => checkoutProduct.id === product.id
+              (checkoutProduct) => checkoutProduct.id === product.id,
             )?.quantity || 0,
-        }))
+        })),
     );
   }, [products, searchParams]);
   const handleOrder = async () => {
@@ -112,11 +111,12 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
         headers: {
           "Content-Type": "text/plain;charset=utf-8",
         },
-      }
+      },
     );
     if (response.ok) {
       const newCarts = carts.filter(
-        (cart) => !checkoutProductList.some((product) => product.id === cart.id)
+        (cart) =>
+          !checkoutProductList.some((product) => product.id === cart.id),
       );
       localStorage.setItem("cart", JSON.stringify(newCarts));
       setCarts(newCarts);
@@ -243,8 +243,8 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
                     checkoutProductList.reduce(
                       (total, product) =>
                         total + product.price * product.quantity,
-                      0
-                    )
+                      0,
+                    ),
                   )}
                 </Text>
               </Flex>
