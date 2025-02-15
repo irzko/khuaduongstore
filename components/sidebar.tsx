@@ -49,7 +49,7 @@ const SideBar = async () => {
               variant="ghost"
               asChild
             >
-              <Link href="/check-order">Tra cứu đơn đặt</Link>
+              <Link href="/kiem-tra-don-hang">Tra cứu đơn đặt</Link>
             </Button>
           </DrawerActionTrigger>
         </DrawerBody>

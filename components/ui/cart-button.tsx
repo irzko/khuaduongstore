@@ -10,7 +10,7 @@ export default function CartButton() {
   const { carts } = useContext(CartContext);
   return (
     <IconButton variant="ghost" rounded="lg" asChild>
-      <Link href="/cart">
+      <Link href="/gio-hang">
         <Flex position="relative" padding="0.125rem">
           <BsBag />
           <Float placement="bottom-end" offsetX="1" offsetY="1">

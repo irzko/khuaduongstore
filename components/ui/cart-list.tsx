@@ -150,7 +150,7 @@ export default function CartList({ products }: { products: IProduct[] }) {
               <Button whiteSpace="wrap" rounded="xl" asChild>
                 <NextLink
                   href={
-                    "/order?products=" +
+                    "/dat-hang?products=" +
                     encodeURIComponent(
                       Buffer.from(
                         JSON.stringify(

@@ -102,7 +102,7 @@ export function ScrollableCategories({
             }
           >
             <NextLink
-              href={`/category/${slugify(category, {
+              href={`/danh-muc/${slugify(category, {
                 replacement: "-",
                 remove: undefined,
                 lower: true,

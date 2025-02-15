@@ -45,7 +45,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
   const handleBuy = () => {
     setIsLoading(true);
     router.push(
-      "/order?products=" +
+      "/dat-hang?products=" +
         encodeURIComponent(
           Buffer.from(
             JSON.stringify([

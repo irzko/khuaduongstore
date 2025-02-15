@@ -78,7 +78,7 @@ export default function Layout({
               // hideBelow="md"
               asChild
             >
-              <Link href="/search">
+              <Link href="/tim-kiem">
                 <LuSearch /> Tìm kiếm sản phẩm
               </Link>
             </Button>
