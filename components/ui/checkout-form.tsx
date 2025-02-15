@@ -278,7 +278,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
                 <Button
                   onClick={() => {
                     setOpen(false);
-                    router.push("/check-order?phone=" + shippingInfo.phone);
+                    router.push("/kiem-tra-don-hang?phone=" + shippingInfo.phone);
                   }}
                 >
                   Đóng
