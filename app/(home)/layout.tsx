@@ -13,29 +13,6 @@ export default function Layout({
   return (
     <>
       <Flex
-        paddingX="1rem"
-        justifyContent="center"
-        width="full"
-        height="2.5rem"
-        backdropFilter="blur(16px) saturate(1.5)"
-        backgroundColor={{
-          base: "rgba(245, 245, 245, 0.5)",
-          _dark: "rgba(0, 0, 0, 0.7)",
-        }}
-        maxWidth="1024px"
-        alignItems="center"
-        mx="auto"
-        borderBottomWidth="1px"
-      >
-        <Flex gapX="1rem">
-          <Flex gap="0.25rem" alignItems="end" asChild>
-            <Link href="/">
-              <Logo />
-            </Link>
-          </Flex>
-        </Flex>
-      </Flex>
-      <Flex
         position="sticky"
         overflow="hidden"
         top="0"
@@ -46,52 +23,52 @@ export default function Layout({
       >
         <Flex
           paddingX="1rem"
+          paddingY="1rem"
           backdropFilter="blur(16px) saturate(1.5)"
           backgroundColor={{
             base: "rgba(245, 245, 245, 0.5)",
             _dark: "rgba(0, 0, 0, 0.7)",
           }}
-          justifyContent="space-between"
+          direction="column"
           width="full"
-          height="3.5rem"
-          gap="1rem"
+          gap="0.5rem"
           maxWidth="1024px"
           alignItems="center"
         >
-          <SideBar />
-          <Box flexBasis="100%">
-            <Button
-              variant="ghost"
-              rounded="lg"
-              backgroundColor={{
-                base: "rgba(0, 0, 0, 0.1)",
-                _dark: "rgba(255, 255, 255, 0.1)",
-              }}
-              maxWidth={{
-                base: "full",
-                md: "20rem",
-              }}
-              w="full"
-              size={{ base: "sm", md: "md" }}
-              justifyContent="flex-start"
-              color="gray.500"
-              // hideBelow="md"
-              asChild
-            >
-              <Link href="/tim-kiem">
-                <LuSearch /> Tìm kiếm sản phẩm
-              </Link>
-            </Button>
-          </Box>
-          <Flex alignItems="center">
-            {/* <IconButton variant="ghost" rounded="lg" asChild hideFrom="md">
-              <Link href="/search">
-                <LuSearch />
-              </Link>
-            </IconButton> */}
+          <Flex w="full" justifyContent="space-between" alignItems="center">
+            <SideBar />
 
-            <CartButton />
+            <Link href="/">
+              <Logo />
+            </Link>
+
+            <Flex alignItems="center">
+              <CartButton />
+            </Flex>
           </Flex>
+
+          <Button
+            variant="ghost"
+            rounded="lg"
+            backgroundColor={{
+              base: "rgba(0, 0, 0, 0.1)",
+              _dark: "rgba(255, 255, 255, 0.1)",
+            }}
+            maxWidth={{
+              base: "full",
+              md: "20rem",
+            }}
+            w="full"
+            size={{ base: "sm", md: "md" }}
+            justifyContent="flex-start"
+            color="gray.500"
+            // hideBelow="md"
+            asChild
+          >
+            <Link href="/tim-kiem">
+              <LuSearch /> Tìm kiếm sản phẩm
+            </Link>
+          </Button>
         </Flex>
       </Flex>
       {children}
