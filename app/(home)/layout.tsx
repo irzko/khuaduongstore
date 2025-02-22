@@ -24,10 +24,9 @@ export default function Layout({
         <Flex
           paddingX="1rem"
           paddingY="1rem"
-          backdropFilter="blur(16px) saturate(1.5)"
           backgroundColor={{
-            base: "rgba(245, 245, 245, 0.5)",
-            _dark: "rgba(0, 0, 0, 0.7)",
+            base: "#fff",
+            _dark: "#000",
           }}
           direction="column"
           width="full"
@@ -48,12 +47,8 @@ export default function Layout({
           </Flex>
 
           <Button
-            variant="ghost"
+            variant="surface"
             rounded="lg"
-            backgroundColor={{
-              base: "rgba(0, 0, 0, 0.1)",
-              _dark: "rgba(255, 255, 255, 0.1)",
-            }}
             maxWidth={{
               base: "full",
               md: "20rem",

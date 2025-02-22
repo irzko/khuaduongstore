@@ -27,11 +27,6 @@ const SideBar = async () => {
         </IconButton>
       </DrawerTrigger>
       <DrawerContent
-        backdropFilter="blur(16px) saturate(1.5)"
-        backgroundColor={{
-          base: "rgba(245, 245, 245, 0.5)",
-          _dark: "rgba(0, 0, 0, 0.7)",
-        }}
       >
         <DrawerCloseTrigger />
         <DrawerHeader>

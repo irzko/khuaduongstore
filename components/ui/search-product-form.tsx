@@ -71,10 +71,9 @@ export default function SearchProductForm({
           height="3.5rem"
           gap="1rem"
           maxWidth="1024px"
-          backdropFilter="blur(16px) saturate(1.5)"
           backgroundColor={{
-            base: "rgba(245, 245, 245, 0.5)",
-            _dark: "rgba(0, 0, 0, 0.7)",
+            base: "#fff",
+            _dark: "#000",
           }}
           alignItems="center"
         >
