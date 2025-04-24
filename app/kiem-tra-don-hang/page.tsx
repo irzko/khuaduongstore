@@ -9,7 +9,7 @@ export default async function Page() {
 
   return (
     <Container maxW="5xl" padding="1rem" spaceY="1rem">
-      <Heading fontSize="2xl" fontWeight="bold">
+      <Heading fontSize="xl" fontWeight="bold">
         Tra cứu đơn đặt
       </Heading>
 

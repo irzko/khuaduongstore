@@ -47,7 +47,7 @@ export default function Layout({
           </Flex>
 
           <Button
-            variant="surface"
+            variant="subtle"
             rounded="lg"
             maxWidth={{
               base: "full",

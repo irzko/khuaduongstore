@@ -16,7 +16,7 @@ import {
   DialogRoot,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { createId } from "@paralleldrive/cuid2";
+import { init } from '@paralleldrive/cuid2';
 import CartContext from "@/context/cart-context";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -24,6 +24,10 @@ import { useForm } from "react-hook-form";
 
 const vietnamPhoneRegex =
   /^(?:(?:\+84|84|0)?(?:3[2-9]|5[2689]|7[0689]|8[1-9]|9[0-4689]))\d{7}$/;
+
+const createId = init({
+  length: 10,
+});
 
 const schema = Yup.object({
   name: Yup.string().required("Tên không được để trống"),

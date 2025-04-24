@@ -102,7 +102,7 @@ export default function CheckOrderForm({ orders }: { orders: IOrder[] }) {
                 <DataListItem label="Thời gian đặt" value={order.timestamp} />
                 <DataListItem
                   key={order.id}
-                  label="Trang thái"
+                  label="Trạng thái"
                   value={order.status}
                 />
               </DataListRoot>
