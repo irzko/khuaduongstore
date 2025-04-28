@@ -44,7 +44,6 @@ export function ScrollableCategories({
   return (
     <Flex
       ref={scrollContainerRef}
-      gap="0.5rem"
       // position="sticky"
       // top="3.5rem"
       zIndex={10}
@@ -55,7 +54,7 @@ export function ScrollableCategories({
     >
       <div ref={currentSlug === "/" ? selectedItemRef : null}>
         <Badge
-          variant={currentSlug === "/" ? "solid" : "outline"}
+          variant={currentSlug === "/" ? "solid" : "plain"}
           size="lg"
           rounded="full"
           asChild
@@ -98,7 +97,7 @@ export function ScrollableCategories({
                 trim: true,
               })
                 ? "solid"
-                : "outline"
+                : "plain"
             }
           >
             <NextLink

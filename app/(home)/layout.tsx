@@ -13,17 +13,17 @@ export default function Layout({
   return (
     <>
       <Flex
-        position="sticky"
+        // position="sticky"
         overflow="hidden"
-        top="0"
-        zIndex="40"
+        // top="0"
+        // zIndex="40"
         height="auto"
         justifyContent="center"
         alignItems="center"
       >
         <Flex
           paddingX="1rem"
-          paddingY="1rem"
+          paddingY="0.5rem"
           backgroundColor={{
             base: "#fff",
             _dark: "#000",
@@ -45,7 +45,30 @@ export default function Layout({
               <CartButton />
             </Flex>
           </Flex>
-
+        </Flex>
+      </Flex>
+      <Flex
+        position="sticky"
+        overflow="hidden"
+        top="0"
+        zIndex="40"
+        height="auto"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Flex
+          paddingX="1rem"
+          paddingY="0.5rem"
+          backgroundColor={{
+            base: "#fff",
+            _dark: "#000",
+          }}
+          direction="column"
+          width="full"
+          gap="0.5rem"
+          maxWidth="1024px"
+          alignItems="center"
+        >
           <Button
             variant="subtle"
             rounded="lg"
