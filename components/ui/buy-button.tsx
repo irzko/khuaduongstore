@@ -19,6 +19,8 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import slugify from "slugify";
+
 import Image from "next/image";
 import { LuMinus, LuPlus } from "react-icons/lu";
 import { useState } from "react";
@@ -50,7 +52,14 @@ export default function BuyButton({ product }: { product: IProduct }) {
           Buffer.from(
             JSON.stringify([
               {
-                id: product.id,
+                slug: slugify(product.name, {
+                  replacement: "-",
+                  remove: undefined,
+                  lower: true,
+                  strict: true,
+                  locale: "vi",
+                  trim: true,
+                }),
                 quantity,
               },
             ]),
@@ -67,9 +76,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
             Mua ngay
           </Button>
         </DrawerTrigger>
-        <DrawerContent
-          roundedTop="2xl"
-        >
+        <DrawerContent roundedTop="2xl">
           <DrawerCloseTrigger />
           <DrawerHeader>
             <DrawerTitle />
