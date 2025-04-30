@@ -5,7 +5,7 @@ import { InputGroup } from "@/components/ui/input-group";
 import { LuArrowLeft, LuSearch } from "react-icons/lu";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-
+import slugify from "slugify";
 import fuzzy from "fuzzy";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -115,7 +115,17 @@ export default function SearchProductForm({
           gap="1rem"
         >
           {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={slugify(product.name, {
+                replacement: "-",
+                remove: undefined,
+                lower: true,
+                strict: true,
+                locale: "vi",
+                trim: true,
+              })}
+              product={product}
+            />
           ))}
         </Grid>
       </Container>
