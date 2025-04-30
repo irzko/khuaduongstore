@@ -10,7 +10,6 @@ export default function ProductCard({
 }>) {
   return (
     <Card.Root
-      key={product.id}
       asChild
       overflow="hidden"
       rounded="2xl"
@@ -24,7 +23,7 @@ export default function ProductCard({
           strict: true,
           locale: "vi",
           trim: true,
-        })}-${product.id}.html`}
+        })}.html`}
       >
         <Flex position="relative" p="0.125rem" aspectRatio={1}>
           <Image asChild alt={product.name} rounded="2xl">

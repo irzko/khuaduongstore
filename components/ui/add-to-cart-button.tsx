@@ -6,31 +6,31 @@ import CartContext from "@/context/cart-context";
 import { toaster } from "@/components/ui/toaster";
 import { BsBagPlus } from "react-icons/bs";
 
-export default function AddToCartButton({ productId }: { productId: string }) {
+export default function AddToCartButton({ slug }: { slug: string }) {
   const { setCarts } = useContext(CartContext);
   const handleClick = () => {
     const cart = localStorage.getItem("cart");
     if (cart) {
       const cartObj = JSON.parse(cart);
       const productIndex = cartObj.findIndex(
-        (cart: { id: string }) => cart.id === productId,
+        (cart: { id: string }) => cart.id === slug,
       );
       if (productIndex !== -1) {
         cartObj[productIndex].quantity += 1;
       } else {
-        cartObj.push({ id: productId, quantity: 1 });
+        cartObj.push({ slug: slug, quantity: 1 });
       }
       localStorage.setItem("cart", JSON.stringify(cartObj));
     } else {
       localStorage.setItem(
         "cart",
-        JSON.stringify([{ id: productId, quantity: 1 }]),
+        JSON.stringify([{ slug: slug, quantity: 1 }]),
       );
     }
     setCarts(
       JSON.parse(localStorage.getItem("cart") || "[]").map(
-        (cart: { id: string; quantity: number }) => ({
-          id: cart.id,
+        (cart: { slug: string; quantity: number }) => ({
+          slug: cart.slug,
           quantity: cart.quantity,
         }),
       ),

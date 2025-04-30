@@ -1,10 +1,9 @@
 interface ICart {
-  id: string;
+  slug: string;
   quantity: number;
 }
 
 interface IProduct {
-  id: string;
   name: string;
   price: number;
   image: string;

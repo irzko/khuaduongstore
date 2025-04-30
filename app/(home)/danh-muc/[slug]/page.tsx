@@ -58,7 +58,17 @@ export default async function Page({
         gap="1rem"
       >
         {products.reverse().map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard
+            key={slugify(product.name, {
+              replacement: "-",
+              remove: undefined,
+              lower: true,
+              strict: true,
+              locale: "vi",
+              trim: true,
+            })}
+            product={product}
+          />
         ))}
       </Grid>
     </Container>

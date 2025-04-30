@@ -9,7 +9,6 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
   );
 
   type Product = {
-    "Mã sản phẩm": string;
     "Tên sản phẩm": string;
     "Hình ảnh": string;
     "Đơn giá": string;
@@ -19,7 +18,6 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
   };
 
   return products.map((product: Product) => ({
-    id: product["Mã sản phẩm"],
     name: product["Tên sản phẩm"],
     image: product["Hình ảnh"],
     price: Number(product["Đơn giá"]),

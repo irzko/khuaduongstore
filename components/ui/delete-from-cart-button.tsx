@@ -15,18 +15,14 @@ import {
 import { LuTrash } from "react-icons/lu";
 import { IconButton } from "@chakra-ui/react";
 
-export default function DeleteFromCartButton({
-  productId,
-}: {
-  productId: string;
-}) {
+export default function DeleteFromCartButton({ slug }: { slug: string }) {
   const { setCarts } = useContext(CartContext);
 
   const handleClick = () => {
     const cart = localStorage.getItem("cart");
     if (cart) {
       const cartObj = JSON.parse(cart) as ICart[];
-      const newCart = cartObj.filter((cart) => cart.id !== productId);
+      const newCart = cartObj.filter((cart) => cart.slug !== slug);
       localStorage.setItem("cart", JSON.stringify(newCart));
       setCarts(newCart);
     }

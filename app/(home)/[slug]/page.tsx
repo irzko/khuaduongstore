@@ -18,6 +18,7 @@ import Carousel from "@/components/ui/carousel";
 import BuyButton from "@/components/ui/buy-button";
 import { calculateSimilarity } from "@/lib/calculateSimilarity";
 import ProductCard from "@/components/ui/product-card";
+import slugify from "slugify";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -25,10 +26,19 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const slug = (await params).slug;
-  const id = slug.split(".")[0].split("-").pop() || "";
+  const slug = (await params).slug.split(".")[0];
   const data = await getAllProducts();
-  const product = data.find((p) => p.id === id);
+  const product = data.find(
+    (item) =>
+      slugify(item.name, {
+        replacement: "-",
+        remove: undefined,
+        lower: true,
+        strict: true,
+        locale: "vi",
+        trim: true,
+      }) === slug,
+  );
 
   return {
     title: product ? product.name : "No Name",
@@ -40,14 +50,20 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const slug = (await params).slug;
-  const productId = slug.split(".")[0].split("-").pop();
+  const slug = (await params).slug.split(".")[0];
 
-  if (!productId) {
-    return null;
-  }
   const allProducts = await getAllProducts();
-  const currentProduct = allProducts.find((p) => p.id === productId);
+  const currentProduct = allProducts.find(
+    (item) =>
+      slugify(item.name, {
+        replacement: "-",
+        remove: undefined,
+        lower: true,
+        strict: true,
+        locale: "vi",
+        trim: true,
+      }) === slug,
+  );
 
   if (!currentProduct) {
     return (
@@ -63,7 +79,17 @@ export default async function Page({
   // );
 
   const recommendedProducts = allProducts
-    .filter((p) => p.id !== productId)
+    .filter(
+      (item) =>
+        slugify(item.name, {
+          replacement: "-",
+          remove: undefined,
+          lower: true,
+          strict: true,
+          locale: "vi",
+          trim: true,
+        }) !== slug,
+    )
     .map((product) => ({
       ...product,
       similarityScore: calculateSimilarity(currentProduct, product),
@@ -107,7 +133,16 @@ export default async function Page({
                 }}
               >
                 <BuyButton product={currentProduct} />
-                <AddToCartButton productId={currentProduct.id} />
+                <AddToCartButton
+                  slug={slugify(currentProduct.name, {
+                    replacement: "-",
+                    remove: undefined,
+                    lower: true,
+                    strict: true,
+                    locale: "vi",
+                    trim: true,
+                  })}
+                />
               </Flex>
 
               <Separator />
@@ -133,7 +168,17 @@ export default async function Page({
             </Heading>
             <Grid templateColumns="repeat(2, 1fr)" gap="1rem">
               {recommendedProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard
+                  key={slugify(product.name, {
+                    replacement: "-",
+                    remove: undefined,
+                    lower: true,
+                    strict: true,
+                    locale: "vi",
+                    trim: true,
+                  })}
+                  product={product}
+                />
               ))}
             </Grid>
           </Box>

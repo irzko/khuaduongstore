@@ -3,11 +3,11 @@ import { Group, IconButton } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { LuMinus, LuPlus } from "react-icons/lu";
 
-export default function AdjustQuantity({ productId }: { productId: string }) {
+export default function AdjustQuantity({ slug }: { slug: string }) {
   const { carts, setCarts } = useContext(CartContext);
   const inscreaseQuantity = () => {
     const newCarts = carts.map((cart) => {
-      if (cart.id === productId) {
+      if (cart.slug === slug) {
         return { ...cart, quantity: cart.quantity + 1 };
       }
       return cart;
@@ -18,7 +18,7 @@ export default function AdjustQuantity({ productId }: { productId: string }) {
 
   const decreaseQuantity = () => {
     const newCarts = carts.map((cart) => {
-      if (cart.id === productId) {
+      if (cart.slug === slug) {
         if (cart.quantity > 1) {
           return { ...cart, quantity: cart.quantity - 1 };
         } else {

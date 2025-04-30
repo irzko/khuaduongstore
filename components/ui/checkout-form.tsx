@@ -16,11 +16,12 @@ import {
   DialogRoot,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { init } from '@paralleldrive/cuid2';
+import { init } from "@paralleldrive/cuid2";
 import CartContext from "@/context/cart-context";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
+import slugify from "slugify";
 
 const vietnamPhoneRegex =
   /^(?:(?:\+84|84|0)?(?:3[2-9]|5[2689]|7[0689]|8[1-9]|9[0-4689]))\d{7}$/;
@@ -67,8 +68,8 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
   const searchParams = useSearchParams();
   useEffect(() => {
     const productsParam = searchParams.get("products");
-    const checkoutProductId: {
-      id: string;
+    const checkoutProductSlug: {
+      slug: string;
       quantity: number;
     }[] = productsParam
       ? JSON.parse(
@@ -81,15 +82,33 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
     setCheckoutProductList(
       products
         .filter((product) =>
-          checkoutProductId.some(
-            (checkoutProduct) => checkoutProduct.id === product.id,
+          checkoutProductSlug.some(
+            (checkoutProduct) =>
+              checkoutProduct.slug ===
+              slugify(product.name, {
+                replacement: "-",
+                remove: undefined,
+                lower: true,
+                strict: true,
+                locale: "vi",
+                trim: true,
+              }),
           ),
         )
         .map((product) => ({
           ...product,
           quantity:
-            checkoutProductId.find(
-              (checkoutProduct) => checkoutProduct.id === product.id,
+            checkoutProductSlug.find(
+              (checkoutProduct) =>
+                checkoutProduct.slug ===
+                slugify(product.name, {
+                  replacement: "-",
+                  remove: undefined,
+                  lower: true,
+                  strict: true,
+                  locale: "vi",
+                  trim: true,
+                }),
             )?.quantity || 0,
         })),
     );
@@ -105,7 +124,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
           ...shippingInfo,
           products: checkoutProductList.map((product) => ({
             orderId: createId(),
-            productId: product.id,
+            productName: product.name,
             quantity: product.quantity,
             price: product.price,
             total: product.price * product.quantity,
@@ -120,7 +139,17 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
     if (response.ok) {
       const newCarts = carts.filter(
         (cart) =>
-          !checkoutProductList.some((product) => product.id === cart.id),
+          !checkoutProductList.some(
+            (product) =>
+              slugify(product.name, {
+                replacement: "-",
+                remove: undefined,
+                lower: true,
+                strict: true,
+                locale: "vi",
+                trim: true,
+              }) === cart.slug,
+          ),
       );
       localStorage.setItem("cart", JSON.stringify(newCarts));
       setCarts(newCarts);
@@ -205,7 +234,18 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
             <Card.Body>
               <Box divideY="1px">
                 {checkoutProductList.map((product) => (
-                  <Flex key={product.id} gap="1rem" paddingY="1rem">
+                  <Flex
+                    key={slugify(product.name, {
+                      replacement: "-",
+                      remove: undefined,
+                      lower: true,
+                      strict: true,
+                      locale: "vi",
+                      trim: true,
+                    })}
+                    gap="1rem"
+                    paddingY="1rem"
+                  >
                     <Box
                       position="relative"
                       height="5rem"
@@ -282,7 +322,9 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
                 <Button
                   onClick={() => {
                     setOpen(false);
-                    router.push("/kiem-tra-don-hang?phone=" + shippingInfo.phone);
+                    router.push(
+                      "/kiem-tra-don-hang?phone=" + shippingInfo.phone,
+                    );
                   }}
                 >
                   Đóng

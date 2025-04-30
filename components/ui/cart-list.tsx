@@ -15,31 +15,67 @@ export default function CartList({ products }: { products: IProduct[] }) {
   const [productsInCart, setProductsInCart] = useState<
     Array<IProduct & { quantity: number; isChecked: boolean }>
   >([]);
+
   const { carts } = useContext(CartContext);
   useEffect(() => {
     setProductsInCart(
       products
-        .filter((product) => carts.some((cart) => cart.id === product.id))
+        .filter((product) =>
+          carts.some(
+            (cart) =>
+              cart.slug ===
+              slugify(product.name, {
+                replacement: "-",
+                remove: undefined,
+                lower: true,
+                strict: true,
+                locale: "vi",
+                trim: true,
+              }),
+          ),
+        )
         .map((product) => ({
           ...product,
-          quantity: carts.find((cart) => cart.id === product.id)?.quantity || 0,
+          quantity:
+            carts.find(
+              (cart) =>
+                cart.slug ===
+                slugify(product.name, {
+                  replacement: "-",
+                  remove: undefined,
+                  lower: true,
+                  strict: true,
+                  locale: "vi",
+                  trim: true,
+                }),
+            )?.quantity || 0,
           isChecked: false,
-        }))
+        })),
     );
   }, [carts, products]);
 
   const toggleProductCheck = useCallback(
-    (productId: string) => {
+    (slug: string) => {
+      console.log(slug);
       setProductsInCart(
         productsInCart.map((product) => {
-          if (product.id === productId) {
+          if (
+            slugify(product.name, {
+              replacement: "-",
+              remove: undefined,
+              lower: true,
+              strict: true,
+              locale: "vi",
+              trim: true,
+            }) === slug
+          ) {
             return { ...product, isChecked: !product.isChecked };
           }
           return product;
-        })
+        }),
       );
     },
-    [productsInCart]
+    [productsInCart],
   );
 
   if (carts.length === 0) {
@@ -61,14 +97,32 @@ export default function CartList({ products }: { products: IProduct[] }) {
         {productsInCart.map((product) => (
           <Flex
             paddingY="1rem"
-            key={product.id}
+            key={slugify(product.name, {
+              replacement: "-",
+              remove: undefined,
+              lower: true,
+              strict: true,
+              locale: "vi",
+              trim: true,
+            })}
             justifyContent="space-between"
             alignItems="center"
           >
             <Flex gap="1rem">
               <Checkbox
                 checked={product.isChecked}
-                onCheckedChange={() => toggleProductCheck(product.id)}
+                onCheckedChange={() =>
+                  toggleProductCheck(
+                    slugify(product.name, {
+                      replacement: "-",
+                      remove: undefined,
+                      lower: true,
+                      strict: true,
+                      locale: "vi",
+                      trim: true,
+                    }),
+                  )
+                }
               ></Checkbox>
               <Box>
                 <Link asChild>
@@ -80,7 +134,7 @@ export default function CartList({ products }: { products: IProduct[] }) {
                       strict: true,
                       locale: "vi",
                       trim: true,
-                    })}-${product.id}.html`}
+                    })}.html`}
                   >
                     <Text fontWeight="bold">{product.name}</Text>
                   </NextLink>
@@ -97,8 +151,26 @@ export default function CartList({ products }: { products: IProduct[] }) {
               </Box>
             </Flex>
             <Flex alignItems="center" gap="1rem">
-              <AdjustQuantity productId={product.id} />
-              <DeleteFromCartButton productId={product.id} />
+              <AdjustQuantity
+                slug={slugify(product.name, {
+                  replacement: "-",
+                  remove: undefined,
+                  lower: true,
+                  strict: true,
+                  locale: "vi",
+                  trim: true,
+                })}
+              />
+              <DeleteFromCartButton
+                slug={slugify(product.name, {
+                  replacement: "-",
+                  remove: undefined,
+                  lower: true,
+                  strict: true,
+                  locale: "vi",
+                  trim: true,
+                })}
+              />
             </Flex>
           </Flex>
         ))}
@@ -120,9 +192,9 @@ export default function CartList({ products }: { products: IProduct[] }) {
                   productsInCart.map((product) => ({
                     ...product,
                     isChecked: !productsInCart.every(
-                      (product) => product.isChecked
+                      (product) => product.isChecked,
                     ),
-                  }))
+                  })),
                 );
               }}
             >
@@ -143,8 +215,8 @@ export default function CartList({ products }: { products: IProduct[] }) {
                       product.price *
                         product.quantity *
                         (product.isChecked ? 1 : 0),
-                    0
-                  )
+                    0,
+                  ),
                 )}
               </Text>
               <Button whiteSpace="wrap" rounded="xl" asChild>
@@ -157,18 +229,25 @@ export default function CartList({ products }: { products: IProduct[] }) {
                           productsInCart
                             .filter((product) => product.isChecked)
                             .map((product) => ({
-                              id: product.id,
+                              slug: slugify(product.name, {
+                                replacement: "-",
+                                remove: undefined,
+                                lower: true,
+                                strict: true,
+                                locale: "vi",
+                                trim: true,
+                              }),
                               quantity: product.quantity,
-                            }))
-                        )
-                      ).toString("base64")
+                            })),
+                        ),
+                      ).toString("base64"),
                     )
                   }
                 >
                   Đặt hàng (
                   {productsInCart.reduce(
                     (acc, product) => acc + (product.isChecked ? 1 : 0),
-                    0
+                    0,
                   )}
                   )
                 </NextLink>
