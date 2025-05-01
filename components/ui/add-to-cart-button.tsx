@@ -9,11 +9,28 @@ import { BsBagPlus } from "react-icons/bs";
 export default function AddToCartButton({ slug }: { slug: string }) {
   const { setCarts } = useContext(CartContext);
   const handleClick = () => {
-    const cart = localStorage.getItem("cart");
-    if (cart) {
-      const cartObj = JSON.parse(cart);
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]") as ICart[];
+    if (cart.length !== 0) {
+      const cartObj: ICart[] = cart
+        .map((item) => {
+          if (
+            typeof item === "object" && // Phải là object
+            item !== null && // Không phải là null
+            "slug" in item && // Có thuộc tính 'slug'
+            typeof (item as any).slug === "string" && // 'slug' là string
+            "quantity" in item && // Có thuộc tính 'quantity'
+            typeof (item as any).quantity === "number" // 'quantity' là number
+          ) {
+            return {
+              slug: (item as any).slug,
+              quantity: (item as any).quantity,
+            };
+          }
+          return null;
+        })
+        .filter((item): item is ICart => item !== null); 
       const productIndex = cartObj.findIndex(
-        (cart: { id: string }) => cart.id === slug,
+        (cart: { slug: string }) => cart.slug === slug,
       );
       if (productIndex !== -1) {
         cartObj[productIndex].quantity += 1;
