@@ -71,6 +71,7 @@ export default function Carousel({ imageUrlList }: { imageUrlList: string[] }) {
                     md: "contain",
                   }}
                   alt=""
+                  sizes="25vw"
                   asChild
                 >
                   <NextImage src={imageUrl} fill unoptimized alt="" />
