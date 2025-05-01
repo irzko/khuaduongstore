@@ -16,16 +16,16 @@ export function CartProvider({
       const standardizedItems: ICart[] = cart
         .map((item) => {
           if (
-            typeof item === "object" && // Phải là object
-            item !== null && // Không phải là null
-            "slug" in item && // Có thuộc tính 'slug'
-            typeof (item as any).slug === "string" && // 'slug' là string
-            "quantity" in item && // Có thuộc tính 'quantity'
-            typeof (item as any).quantity === "number" // 'quantity' là number
+            typeof item === "object" &&
+            item !== null &&
+            "slug" in item &&
+            typeof (item as ICart).slug === "string" &&
+            "quantity" in item &&
+            typeof (item as ICart).quantity === "number"
           ) {
             return {
-              slug: (item as any).slug,
-              quantity: (item as any).quantity,
+              slug: (item as ICart).slug,
+              quantity: (item as ICart).quantity,
             };
           }
           return null;
