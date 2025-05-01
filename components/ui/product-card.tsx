@@ -1,7 +1,7 @@
 import { Flex, Heading, Card, Image, Badge } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import slugify from "slugify";
+import createSlug from "@/lib/createSlug";
 
 export default function ProductCard({
   product,
@@ -9,22 +9,8 @@ export default function ProductCard({
   product: IProduct;
 }>) {
   return (
-    <Card.Root
-      asChild
-      overflow="hidden"
-      rounded="2xl"
-      border="none"
-    >
-      <NextLink
-        href={`/${slugify(product.name, {
-          replacement: "-",
-          remove: undefined,
-          lower: true,
-          strict: true,
-          locale: "vi",
-          trim: true,
-        })}.html`}
-      >
+    <Card.Root asChild overflow="hidden" rounded="2xl" border="none">
+      <NextLink href={`/${createSlug(product.name)}.html`}>
         <Flex position="relative" p="0.125rem" aspectRatio={1}>
           <Image asChild alt={product.name} rounded="2xl">
             <NextImage

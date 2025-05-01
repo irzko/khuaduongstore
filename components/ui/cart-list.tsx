@@ -6,7 +6,7 @@ import { EmptyState } from "./empty-state";
 import { LuShoppingCart } from "react-icons/lu";
 import DeleteFromCartButton from "./delete-from-cart-button";
 import NextLink from "next/link";
-import slugify from "slugify";
+import createSlug from "@/lib/createSlug";
 import AdjustQuantity from "./adjust-quantity";
 import { Checkbox } from "./checkbox";
 import { Button } from "./button";
@@ -21,34 +21,13 @@ export default function CartList({ products }: { products: IProduct[] }) {
     setProductsInCart(
       products
         .filter((product) =>
-          carts.some(
-            (cart) =>
-              cart.slug ===
-              slugify(product.name, {
-                replacement: "-",
-                remove: undefined,
-                lower: true,
-                strict: true,
-                locale: "vi",
-                trim: true,
-              }),
-          ),
+          carts.some((cart) => cart.slug === createSlug(product.name)),
         )
         .map((product) => ({
           ...product,
           quantity:
-            carts.find(
-              (cart) =>
-                cart.slug ===
-                slugify(product.name, {
-                  replacement: "-",
-                  remove: undefined,
-                  lower: true,
-                  strict: true,
-                  locale: "vi",
-                  trim: true,
-                }),
-            )?.quantity || 0,
+            carts.find((cart) => cart.slug === createSlug(product.name))
+              ?.quantity || 0,
           isChecked: false,
         })),
     );
@@ -59,16 +38,7 @@ export default function CartList({ products }: { products: IProduct[] }) {
       console.log(slug);
       setProductsInCart(
         productsInCart.map((product) => {
-          if (
-            slugify(product.name, {
-              replacement: "-",
-              remove: undefined,
-              lower: true,
-              strict: true,
-              locale: "vi",
-              trim: true,
-            }) === slug
-          ) {
+          if (createSlug(product.name) === slug) {
             return { ...product, isChecked: !product.isChecked };
           }
           return product;
@@ -97,14 +67,7 @@ export default function CartList({ products }: { products: IProduct[] }) {
         {productsInCart.map((product) => (
           <Flex
             paddingY="1rem"
-            key={slugify(product.name, {
-              replacement: "-",
-              remove: undefined,
-              lower: true,
-              strict: true,
-              locale: "vi",
-              trim: true,
-            })}
+            key={createSlug(product.name)}
             justifyContent="space-between"
             alignItems="center"
           >
@@ -112,30 +75,12 @@ export default function CartList({ products }: { products: IProduct[] }) {
               <Checkbox
                 checked={product.isChecked}
                 onCheckedChange={() =>
-                  toggleProductCheck(
-                    slugify(product.name, {
-                      replacement: "-",
-                      remove: undefined,
-                      lower: true,
-                      strict: true,
-                      locale: "vi",
-                      trim: true,
-                    }),
-                  )
+                  toggleProductCheck(createSlug(product.name))
                 }
               ></Checkbox>
               <Box>
                 <Link asChild>
-                  <NextLink
-                    href={`/${slugify(product.name, {
-                      replacement: "-",
-                      remove: undefined,
-                      lower: true,
-                      strict: true,
-                      locale: "vi",
-                      trim: true,
-                    })}.html`}
-                  >
+                  <NextLink href={`/${createSlug(product.name)}.html`}>
                     <Text fontWeight="bold">{product.name}</Text>
                   </NextLink>
                 </Link>
@@ -151,26 +96,8 @@ export default function CartList({ products }: { products: IProduct[] }) {
               </Box>
             </Flex>
             <Flex alignItems="center" gap="1rem">
-              <AdjustQuantity
-                slug={slugify(product.name, {
-                  replacement: "-",
-                  remove: undefined,
-                  lower: true,
-                  strict: true,
-                  locale: "vi",
-                  trim: true,
-                })}
-              />
-              <DeleteFromCartButton
-                slug={slugify(product.name, {
-                  replacement: "-",
-                  remove: undefined,
-                  lower: true,
-                  strict: true,
-                  locale: "vi",
-                  trim: true,
-                })}
-              />
+              <AdjustQuantity slug={createSlug(product.name)} />
+              <DeleteFromCartButton slug={createSlug(product.name)} />
             </Flex>
           </Flex>
         ))}
@@ -229,14 +156,7 @@ export default function CartList({ products }: { products: IProduct[] }) {
                           productsInCart
                             .filter((product) => product.isChecked)
                             .map((product) => ({
-                              slug: slugify(product.name, {
-                                replacement: "-",
-                                remove: undefined,
-                                lower: true,
-                                strict: true,
-                                locale: "vi",
-                                trim: true,
-                              }),
+                              slug: createSlug(product.name),
                               quantity: product.quantity,
                             })),
                         ),

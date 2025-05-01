@@ -19,7 +19,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import slugify from "slugify";
+import createSlug from "@/lib/createSlug";
 
 import Image from "next/image";
 import { LuMinus, LuPlus } from "react-icons/lu";
@@ -52,14 +52,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
           Buffer.from(
             JSON.stringify([
               {
-                slug: slugify(product.name, {
-                  replacement: "-",
-                  remove: undefined,
-                  lower: true,
-                  strict: true,
-                  locale: "vi",
-                  trim: true,
-                }),
+                slug: createSlug(product.name),
                 quantity,
               },
             ]),

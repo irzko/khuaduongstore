@@ -1,6 +1,6 @@
 export const dynamic = "force-static";
 import { Grid, Container } from "@chakra-ui/react";
-import slugify from "slugify";
+import createSlug from "@/lib/createSlug";
 
 import { getAllProducts } from "@/lib/db";
 import { Metadata } from "next";
@@ -10,16 +10,7 @@ import ProductCard from "@/components/ui/product-card";
 const getProducts = async (slug: string) => {
   const products = await getAllProducts();
   return products.filter((product) => {
-    return (
-      slugify(product.category, {
-        replacement: "-",
-        remove: undefined,
-        lower: true,
-        strict: true,
-        locale: "vi",
-        trim: true,
-      }) === slug
-    );
+    return createSlug(product.category) === slug;
   });
 };
 
@@ -58,17 +49,7 @@ export default async function Page({
         gap="1rem"
       >
         {products.reverse().map((product) => (
-          <ProductCard
-            key={slugify(product.name, {
-              replacement: "-",
-              remove: undefined,
-              lower: true,
-              strict: true,
-              locale: "vi",
-              trim: true,
-            })}
-            product={product}
-          />
+          <ProductCard key={createSlug(product.name)} product={product} />
         ))}
       </Grid>
     </Container>

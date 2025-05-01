@@ -3,7 +3,7 @@ import { Flex, Text, Badge } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import slugify from "slugify";
+import createSlug from "@/lib/createSlug";
 
 interface ScrollableCategoriesProps {
   categories: string[];
@@ -68,48 +68,15 @@ export function ScrollableCategories({
       {categories.map((category) => (
         <div
           key={category}
-          ref={
-            currentSlug ===
-            slugify(category, {
-              replacement: "-",
-              remove: undefined,
-              lower: true,
-              strict: true,
-              locale: "vi",
-              trim: true,
-            })
-              ? selectedItemRef
-              : null
-          }
+          ref={currentSlug === createSlug(category) ? selectedItemRef : null}
         >
           <Badge
             asChild
             size="lg"
             rounded="full"
-            variant={
-              currentSlug ===
-              slugify(category, {
-                replacement: "-",
-                remove: undefined,
-                lower: true,
-                strict: true,
-                locale: "vi",
-                trim: true,
-              })
-                ? "solid"
-                : "plain"
-            }
+            variant={currentSlug === createSlug(category) ? "solid" : "plain"}
           >
-            <NextLink
-              href={`/danh-muc/${slugify(category, {
-                replacement: "-",
-                remove: undefined,
-                lower: true,
-                strict: true,
-                locale: "vi",
-                trim: true,
-              })}`}
-            >
+            <NextLink href={`/danh-muc/${createSlug(category)}`}>
               <Text fontWeight="semibold">{category}</Text>
             </NextLink>
           </Badge>

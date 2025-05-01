@@ -2,7 +2,7 @@ import { Grid, Container } from "@chakra-ui/react";
 import { getAllProducts } from "@/lib/db";
 import CategoryTabs from "@/components/ui/category-tabs";
 import ProductCard from "@/components/ui/product-card";
-import slugify from "slugify";
+import createSlug from "@/lib/createSlug";
 
 export default async function Home() {
   const products = await getAllProducts();
@@ -20,17 +20,7 @@ export default async function Home() {
         gap="1rem"
       >
         {products.reverse().map((product) => (
-          <ProductCard
-            key={slugify(product.name, {
-              replacement: "-",
-              remove: undefined,
-              lower: true,
-              strict: true,
-              locale: "vi",
-              trim: true,
-            })}
-            product={product}
-          />
+          <ProductCard key={createSlug(product.name)} product={product} />
         ))}
       </Grid>
     </Container>

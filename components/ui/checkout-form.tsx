@@ -21,7 +21,7 @@ import CartContext from "@/context/cart-context";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
-import slugify from "slugify";
+import createSlug from "@/lib/createSlug";
 
 const vietnamPhoneRegex =
   /^(?:(?:\+84|84|0)?(?:3[2-9]|5[2689]|7[0689]|8[1-9]|9[0-4689]))\d{7}$/;
@@ -84,15 +84,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
         .filter((product) =>
           checkoutProductSlug.some(
             (checkoutProduct) =>
-              checkoutProduct.slug ===
-              slugify(product.name, {
-                replacement: "-",
-                remove: undefined,
-                lower: true,
-                strict: true,
-                locale: "vi",
-                trim: true,
-              }),
+              checkoutProduct.slug === createSlug(product.name),
           ),
         )
         .map((product) => ({
@@ -100,15 +92,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
           quantity:
             checkoutProductSlug.find(
               (checkoutProduct) =>
-                checkoutProduct.slug ===
-                slugify(product.name, {
-                  replacement: "-",
-                  remove: undefined,
-                  lower: true,
-                  strict: true,
-                  locale: "vi",
-                  trim: true,
-                }),
+                checkoutProduct.slug === createSlug(product.name),
             )?.quantity || 0,
         })),
     );
@@ -140,15 +124,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
       const newCarts = carts.filter(
         (cart) =>
           !checkoutProductList.some(
-            (product) =>
-              slugify(product.name, {
-                replacement: "-",
-                remove: undefined,
-                lower: true,
-                strict: true,
-                locale: "vi",
-                trim: true,
-              }) === cart.slug,
+            (product) => createSlug(product.name) === cart.slug,
           ),
       );
       localStorage.setItem("cart", JSON.stringify(newCarts));
@@ -235,14 +211,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
               <Box divideY="1px">
                 {checkoutProductList.map((product) => (
                   <Flex
-                    key={slugify(product.name, {
-                      replacement: "-",
-                      remove: undefined,
-                      lower: true,
-                      strict: true,
-                      locale: "vi",
-                      trim: true,
-                    })}
+                    key={createSlug(product.name)}
                     gap="1rem"
                     paddingY="1rem"
                   >
