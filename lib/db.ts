@@ -1,3 +1,4 @@
+
 import { getGSheet } from "./getGSheet";
 
 export const getAllProducts = async (): Promise<IProduct[]> => {
@@ -21,18 +22,33 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
     "Danh mục": string;
   };
 
-  return products.map((product: Product) => ({
-    name: product["Tên sản phẩm"],
-    image: product["Hình ảnh"],
-    price: Number(product["Đơn giá"]),
-    discountedPrice: product["Giá đã giảm"],
-    tags: product["Thẻ"],
-    type: product["Loại"],
-    brand: product["Thương hiệu"],
-    description: product["Mô tả"],
-    stock: Number(product["Số lượng tồn"]),
-    category: product["Danh mục"],
-  }));
+  // Group products by name
+  const groupedProducts = products.reduce((acc: { [key: string]: IProduct }, product: Product) => {
+    const name = product["Tên sản phẩm"];
+    
+    if (!acc[name]) {
+      acc[name] = {
+        name,
+        detail: []
+      };
+    }
+
+    acc[name].detail.push({
+      type: product["Loại"],
+      price: Number(product["Đơn giá"]),
+      discountedPrice: Number(product["Giá đã giảm"]) || 0,
+      tags: product["Thẻ"],
+      brand: product["Thương hiệu"],
+      image: product["Hình ảnh"],
+      stock: Number(product["Số lượng tồn"]),
+      category: product["Danh mục"],
+      description: product["Mô tả"],
+    });
+
+    return acc;
+  }, {});
+
+  return Object.values(groupedProducts);
 };
 
 export const getAllOrders = async (): Promise<IOrder[]> => {
