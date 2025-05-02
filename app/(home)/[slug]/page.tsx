@@ -1,6 +1,8 @@
 export const dynamic = "force-static";
 import { getAllProducts } from "@/lib/db";
 import { Metadata } from "next";
+import { Breadcrumb } from "@chakra-ui/react";
+import { LiaSlashSolid } from "react-icons/lia";
 import {
   Box,
   Container,
@@ -82,23 +84,45 @@ export default async function Page({
         >
           <Flex direction="column" gap="1rem" w="full">
             <Stack spaceY="1rem">
+              <Breadcrumb.Root>
+                <Breadcrumb.List>
+                  <Breadcrumb.Item>
+                    <Breadcrumb.Link href="/">Trang chủ</Breadcrumb.Link>
+                  </Breadcrumb.Item>
+                  <Breadcrumb.Separator>
+                    <LiaSlashSolid />
+                  </Breadcrumb.Separator>
+                  <Breadcrumb.Item>
+                    <Breadcrumb.Link
+                      href={`/danh-muc/${createSlug(currentProduct.category)}`}
+                    >
+                      {currentProduct.category}
+                    </Breadcrumb.Link>
+                  </Breadcrumb.Item>
+                </Breadcrumb.List>
+              </Breadcrumb.Root>
               <Carousel imageUrlList={currentProduct.image.split("\n")} />
 
               <Flex direction="column" gap="1rem">
-                <Heading as="h1" size="2xl">
+                <Heading as="h2" size="2xl" fontWeight="bold">
                   {currentProduct.name || "(No name)"}
                 </Heading>
-                <Text>
+                <Heading as="h3" size="2xl" fontWeight="medium">
                   {Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",
                   }).format(currentProduct.price)}
-                </Text>
+                </Heading>
               </Flex>
               <Flex
                 w="full"
                 gap="1rem"
-                // backdropFilter="blur(16px) saturate(1.5)"
+                paddingY="0.5rem"
+                paddingX="1rem"
+                position="fixed"
+                insetX="0"
+                bottom="0"
+                zIndex="50"
                 backgroundColor={{
                   base: "white",
                   _dark: "black",

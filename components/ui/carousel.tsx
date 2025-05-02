@@ -49,6 +49,7 @@ export default function Carousel({ imageUrlList }: { imageUrlList: string[] }) {
           onSwiper={setThumbsSwiper}
           spaceBetween={10}
           slidesPerView={4}
+          className="mySwiper"
           freeMode={true}
           watchSlidesProgress={true}
           modules={[FreeMode, Navigation, Thumbs]}
@@ -58,8 +59,6 @@ export default function Carousel({ imageUrlList }: { imageUrlList: string[] }) {
               <Box
                 position="relative"
                 w="full"
-                rounded="lg"
-                overflow="hidden"
                 aspectRatio={{
                   base: 1 / 1,
                   md: 4 / 3,

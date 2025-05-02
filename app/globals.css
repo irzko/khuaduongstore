@@ -1,3 +1,14 @@
 * {
   --swiper-pagination-color: white;
 }
+
+
+.mySwiper .swiper-slide {
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+  border: 2px solid black;
+}
