@@ -21,6 +21,7 @@ import BuyButton from "@/components/ui/buy-button";
 import { calculateSimilarity } from "@/lib/calculateSimilarity";
 import ProductCard from "@/components/ui/product-card";
 import createSlug from "@/lib/createSlug";
+import Link from "next/link";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -58,10 +59,6 @@ export default async function Page({
     );
   }
 
-  // const productSuggetions = allProducts.filter(
-  //   (p) => p.category === product.category && p.id !== product.id
-  // );
-
   const recommendedProducts = allProducts
     .filter((item) => createSlug(item.name) !== slug)
     .map((product) => ({
@@ -93,10 +90,12 @@ export default async function Page({
                     <LiaSlashSolid />
                   </Breadcrumb.Separator>
                   <Breadcrumb.Item>
-                    <Breadcrumb.Link
-                      href={`/danh-muc/${createSlug(currentProduct.category)}`}
-                    >
-                      {currentProduct.category}
+                    <Breadcrumb.Link asChild>
+                      <Link
+                        href={`/danh-muc/${createSlug(currentProduct.category)}`}
+                      >
+                        {currentProduct.category}
+                      </Link>
                     </Breadcrumb.Link>
                   </Breadcrumb.Item>
                 </Breadcrumb.List>

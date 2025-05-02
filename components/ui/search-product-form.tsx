@@ -2,7 +2,8 @@
 import { Flex } from "@chakra-ui/react/flex";
 import { Grid, IconButton, Input, Container } from "@chakra-ui/react";
 import { InputGroup } from "@/components/ui/input-group";
-import { LuArrowLeft, LuSearch } from "react-icons/lu";
+import { LuSearch } from "react-icons/lu";
+import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import createSlug from "@/lib/createSlug";
@@ -80,7 +81,7 @@ export default function SearchProductForm({
           <Flex gap="0.5rem" alignItems="center" width="full">
             <IconButton variant="ghost" aria-label="Back" rounded="lg" asChild>
               <Link href="/">
-                <LuArrowLeft />
+                <IoIosArrowBack />
               </Link>
             </IconButton>
             <InputGroup width="full" startElement={<LuSearch />}>

@@ -10,6 +10,7 @@ import {
   // DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { LuPackageSearch } from "react-icons/lu";
 import { Button, Flex, IconButton } from "@chakra-ui/react";
 
 import { LuMenu } from "react-icons/lu";
@@ -43,7 +44,10 @@ const SideBar = async () => {
               variant="ghost"
               asChild
             >
-              <Link href="/kiem-tra-don-hang">Tra cứu đơn đặt</Link>
+              <Link href="/kiem-tra-don-hang">
+                <LuPackageSearch />
+                Tra cứu đơn đặt
+              </Link>
             </Button>
           </DrawerActionTrigger>
         </DrawerBody>
