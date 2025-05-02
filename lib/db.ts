@@ -5,13 +5,17 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
     "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
     "0",
     "force-cache",
-    { tags: ["products"] }
+    { tags: ["products"] },
   );
 
   type Product = {
     "Tên sản phẩm": string;
     "Hình ảnh": string;
     "Đơn giá": string;
+    Loại: string;
+    "Giá đã giảm": string;
+    Thẻ: string;
+    "Thương hiệu": string;
     "Mô tả": string;
     "Số lượng tồn": string;
     "Danh mục": string;
@@ -21,6 +25,10 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
     name: product["Tên sản phẩm"],
     image: product["Hình ảnh"],
     price: Number(product["Đơn giá"]),
+    discountedPrice: product["Giá đã giảm"],
+    tags: product["Thẻ"],
+    type: product["Loại"],
+    brand: product["Thương hiệu"],
     description: product["Mô tả"],
     stock: Number(product["Số lượng tồn"]),
     category: product["Danh mục"],
@@ -31,7 +39,7 @@ export const getAllOrders = async (): Promise<IOrder[]> => {
   const orders = await getGSheet(
     "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
     "1595734372",
-    "no-store"
+    "no-store",
   );
 
   type Order = {
@@ -66,7 +74,7 @@ export const getAllContacts = async (): Promise<IContact[]> => {
     "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
     "1197771900",
     "force-cache",
-    { tags: ["contacts"] }
+    { tags: ["contacts"] },
   );
 
   type Contact = {

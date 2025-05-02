@@ -5,7 +5,15 @@ interface ICart {
 
 interface IProduct {
   name: string;
+  detail: IProductDetail[];
+}
+
+interface IProductDetail {
+  type: string;
   price: number;
+  discountedPrice: number;
+  tags: string;
+  brand: string;
   image: string;
   stock: number;
   category: string;
