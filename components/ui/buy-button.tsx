@@ -47,9 +47,26 @@ export default function BuyButton({ product }: { product: IProduct }) {
   };
 
   const typeProduct = useMemo(() => {
-    const type = product.detail.map((item) => item.type);
-    // ...
-  }, [product])
+    const types = product.detail.map((item) => item.type);
+    const typeGroups: { [key: string]: string[] } = {};
+    
+    types.forEach(type => {
+      const entries = type.split('\n');
+      entries.forEach(entry => {
+        const [key, value] = entry.split(':').map(s => s.trim());
+        if (key && value) {
+          if (!typeGroups[key]) {
+            typeGroups[key] = [];
+          }
+          if (!typeGroups[key].includes(value)) {
+            typeGroups[key].push(value);
+          }
+        }
+      });
+    });
+    
+    return typeGroups;
+  }, [product]);
 
   const handleBuy = () => {
     setIsLoading(true);
