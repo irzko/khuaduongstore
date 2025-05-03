@@ -25,7 +25,7 @@ import createSlug from "@/lib/createSlug";
 
 import Image from "next/image";
 import { LuMinus, LuPlus } from "react-icons/lu";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
 export default function BuyButton({ product }: { product: IProduct }) {
@@ -46,8 +46,10 @@ export default function BuyButton({ product }: { product: IProduct }) {
     }
   };
 
-
-  const typeProduct = 
+  const typeProduct = useMemo(() => {
+    const type = product.detail.map((item) => item.type);
+    // ...
+  }, [product])
 
   const handleBuy = () => {
     setIsLoading(true);
