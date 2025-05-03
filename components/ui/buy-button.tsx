@@ -1,3 +1,4 @@
+
 "use client";
 import {
   DrawerBackdrop,
@@ -18,11 +19,9 @@ import {
   Separator,
   Stack,
   Text,
-  HStack,
   RadioCard,
 } from "@chakra-ui/react";
 import createSlug from "@/lib/createSlug";
-
 import Image from "next/image";
 import { LuMinus, LuPlus } from "react-icons/lu";
 import { useState, useMemo } from "react";
@@ -31,7 +30,6 @@ import { useRouter } from "next/navigation";
 export default function BuyButton({ product }: { product: IProduct }) {
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-
   const router = useRouter();
 
   const inscreaseQuantity = () => {
@@ -51,6 +49,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
     const typeGroups: { [key: string]: string[] } = {};
 
     types.forEach((type) => {
+      if (!type) return;
       const entries = type.split("\n");
       entries.forEach((entry) => {
         const [key, value] = entry.split(":").map((s) => s.trim());
@@ -84,6 +83,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
         ),
     );
   };
+
   return (
     <Box flexBasis="100%">
       <DrawerRoot placement="bottom">
@@ -128,17 +128,16 @@ export default function BuyButton({ product }: { product: IProduct }) {
                   <Text>Kho: {product.detail[0].stock || 0}</Text>
                 </Box>
               </Flex>
-              <Flex>
-                
-                
-                  {Object.keys(typeProduct).map((key) =>
-      <RadioCard.Root
-        orientation="horizontal"
-        align="center"
-        justify="center"
-        maxW="lg"
-        defaultValue="paypal">
-        {typeProduct[key].map((value) => (
+              <Flex direction="column" gap="1rem">
+                {Object.keys(typeProduct).map((key) => (
+                  <RadioCard.Root
+                    key={key}
+                    orientation="horizontal"
+                    align="center"
+                    justify="center"
+                    maxW="lg"
+                    defaultValue={typeProduct[key][0]}>
+                    {typeProduct[key].map((value) => (
                       <RadioCard.Item key={value} value={value}>
                         <RadioCard.ItemHiddenInput />
                         <RadioCard.ItemControl>
@@ -147,11 +146,9 @@ export default function BuyButton({ product }: { product: IProduct }) {
                           </RadioCard.ItemText>
                         </RadioCard.ItemControl>
                       </RadioCard.Item>
-                    )
-                                        ),
-        }</RadioCard.Root>,
-                  )}
-                
+                    ))}
+                  </RadioCard.Root>
+                ))}
               </Flex>
               <Separator />
               <Flex justifyContent="space-between" alignItems="center">
@@ -166,7 +163,6 @@ export default function BuyButton({ product }: { product: IProduct }) {
                   >
                     <LuMinus />
                   </IconButton>
-                  {/* <Input defaultValue={quantity} size="sm" /> */}
                   <IconButton
                     h="full"
                     variant="outline"
