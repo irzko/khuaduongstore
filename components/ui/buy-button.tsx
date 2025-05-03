@@ -18,6 +18,8 @@ import {
   Separator,
   Stack,
   Text,
+  HStack,
+  RadioCard,
 } from "@chakra-ui/react";
 import createSlug from "@/lib/createSlug";
 
@@ -33,7 +35,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
   const router = useRouter();
 
   const inscreaseQuantity = () => {
-    if (product.stock > quantity) {
+    if (product.detail[0].stock > quantity) {
       setQuantity(quantity + 1);
     }
   };
@@ -43,6 +45,9 @@ export default function BuyButton({ product }: { product: IProduct }) {
       setQuantity(quantity - 1);
     }
   };
+
+
+  const typeProduct = 
 
   const handleBuy = () => {
     setIsLoading(true);
@@ -85,7 +90,9 @@ export default function BuyButton({ product }: { product: IProduct }) {
                   w="5rem"
                 >
                   <Image
-                    src={product.image.split("\n")[0] || "/no-image.jpg"}
+                    src={
+                      product.detail[0].image.split("\n")[0] || "/no-image.jpg"
+                    }
                     alt={product.name}
                     style={{ objectFit: "cover" }}
                     unoptimized
@@ -97,10 +104,29 @@ export default function BuyButton({ product }: { product: IProduct }) {
                     {Intl.NumberFormat("vi-VN", {
                       style: "currency",
                       currency: "VND",
-                    }).format(product.price)}
+                    }).format(product.detail[0].price)}
                   </Text>
-                  <Text>Kho: {product.stock || 0}</Text>
+                  <Text>Kho: {product.detail[0].stock || 0}</Text>
                 </Box>
+              </Flex>
+              <Flex>
+                <RadioCard.Root
+                  orientation="horizontal"
+                  align="center"
+                  justify="center"
+                  maxW="lg"
+                  defaultValue="paypal"
+                >
+                  <RadioCard.Label>Payment method</RadioCard.Label>
+                  <HStack align="stretch">
+                    <RadioCard.Item>
+                      <RadioCard.ItemHiddenInput />
+                      <RadioCard.ItemControl>
+                        <RadioCard.ItemText ms="-4">h</RadioCard.ItemText>
+                      </RadioCard.ItemControl>
+                    </RadioCard.Item>
+                  </HStack>
+                </RadioCard.Root>
               </Flex>
               <Separator />
               <Flex justifyContent="space-between" alignItems="center">

@@ -11,7 +11,7 @@ interface IProduct {
 interface IProductDetail {
   type: string;
   price: number;
-  discountedPrice: number;
+  discountedPrice: number | null;
   tags: string;
   brand: string;
   image: string;

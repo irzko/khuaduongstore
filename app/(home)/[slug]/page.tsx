@@ -92,15 +92,17 @@ export default async function Page({
                   <Breadcrumb.Item>
                     <Breadcrumb.Link asChild>
                       <Link
-                        href={`/danh-muc/${createSlug(currentProduct.category)}`}
+                        href={`/danh-muc/${createSlug(currentProduct.detail[0].category)}`}
                       >
-                        {currentProduct.category}
+                        {currentProduct.detail[0].category}
                       </Link>
                     </Breadcrumb.Link>
                   </Breadcrumb.Item>
                 </Breadcrumb.List>
               </Breadcrumb.Root>
-              <Carousel imageUrlList={currentProduct.image.split("\n")} />
+              <Carousel
+                imageUrlList={currentProduct.detail[0].image.split("\n")}
+              />
 
               <Flex direction="column" gap="1rem">
                 <Heading as="h2" size="2xl" fontWeight="bold">
@@ -110,7 +112,10 @@ export default async function Page({
                   {Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",
-                  }).format(currentProduct.price)}
+                  }).format(
+                    currentProduct.detail[0].discountedPrice ||
+                      currentProduct.detail[0].price,
+                  )}
                 </Heading>
               </Flex>
               <Flex
@@ -137,7 +142,7 @@ export default async function Page({
                 Mô tả sản phẩm
               </Heading>
               <Text whiteSpace="pre-line" color="gray" fontSize="sm">
-                {currentProduct.description}
+                {currentProduct.detail[0].description}
               </Text>
             </Stack>
           </Flex>
