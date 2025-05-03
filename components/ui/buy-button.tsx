@@ -1,4 +1,3 @@
-
 "use client";
 import {
   DrawerBackdrop,
@@ -27,10 +26,21 @@ import { LuMinus, LuPlus } from "react-icons/lu";
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
+const compareTypes =
+  
 export default function BuyButton({ product }: { product: IProduct }) {
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const [selectedType, setSelectedType] = useState<Record<string, string>>(
+    product.detail[0].type.split("\n").reduce((acc, item) => {
+      const [key, value] = item.split(":").map((s) => s.trim());
+      return { ...acc, [key]: value };
+    }, {}),
+  );
+  const [selectedProduct, setSelectedProduct] = useState<IProductDetail>(
+    product.detail[0],
+  );
 
   const inscreaseQuantity = () => {
     if (product.detail[0].stock > quantity) {
@@ -77,6 +87,13 @@ export default function BuyButton({ product }: { product: IProduct }) {
               {
                 slug: createSlug(product.name),
                 quantity,
+                type: product.detail.find(
+                  (item) =>
+                    item.type ===
+                    Object.entries(selectedType)
+                      .map(([key, value]) => `${key}: ${value}`)
+                      .join("\n"),
+                ),
               },
             ]),
           ).toString("base64"),
@@ -84,6 +101,18 @@ export default function BuyButton({ product }: { product: IProduct }) {
     );
   };
 
+  const handleChangeType = (key: string, value: string) => {
+    setSelectedType((prev) => ({ ...prev, [key]: value }));
+    setSelectedProduct(
+      product.detail.find(
+        (item) =>
+          item.type ===
+          Object.entries({ ...selectedType, [key]: value })
+            .map(([key, value]) => `${key}: ${value}`)
+            .join("\n"),
+      ) || product.detail[0],
+    );
+  };
   return (
     <Box flexBasis="100%">
       <DrawerRoot placement="bottom">
@@ -119,7 +148,8 @@ export default function BuyButton({ product }: { product: IProduct }) {
                   />
                 </Box>
                 <Box>
-                  <Text fontWeight="bold" fontSize="xl">
+                  <Text fontWeight="semibold">{product.name}</Text>
+                  <Text>
                     {Intl.NumberFormat("vi-VN", {
                       style: "currency",
                       currency: "VND",
@@ -132,21 +162,33 @@ export default function BuyButton({ product }: { product: IProduct }) {
                 {Object.keys(typeProduct).map((key) => (
                   <RadioCard.Root
                     key={key}
+                    value={selectedType[key]}
+                    onChange={(e) => handleChangeType(key, e.target.value)}
                     orientation="horizontal"
                     align="center"
                     justify="center"
+                    size="sm"
                     maxW="lg"
-                    defaultValue={typeProduct[key][0]}>
-                    {typeProduct[key].map((value) => (
-                      <RadioCard.Item key={value} value={value}>
-                        <RadioCard.ItemHiddenInput />
-                        <RadioCard.ItemControl>
-                          <RadioCard.ItemText ms="-4">
-                            {value}
-                          </RadioCard.ItemText>
-                        </RadioCard.ItemControl>
-                      </RadioCard.Item>
-                    ))}
+                  >
+                    <>
+                      <RadioCard.Label>{key}</RadioCard.Label>
+                      <Flex gap="0.5rem">
+                        {typeProduct[key].map((value) => (
+                          <RadioCard.Item
+                            rounded="xl"
+                            key={value}
+                            value={value}
+                          >
+                            <RadioCard.ItemHiddenInput />
+                            <RadioCard.ItemControl>
+                              <RadioCard.ItemText ms="-4">
+                                {value}
+                              </RadioCard.ItemText>
+                            </RadioCard.ItemControl>
+                          </RadioCard.Item>
+                        ))}
+                      </Flex>
+                    </>
                   </RadioCard.Root>
                 ))}
               </Flex>
