@@ -26,7 +26,14 @@ import { LuMinus, LuPlus } from "react-icons/lu";
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
-const compareTypes =
+const compareTypes = (typeString: string, typeObject: Record<string, string>) => {
+  const stringEntries = typeString.split('\n').reduce((acc, item) => {
+    const [key, value] = item.split(':').map(s => s.trim());
+    return { ...acc, [key]: value };
+  }, {});
+
+  return JSON.stringify(stringEntries) === JSON.stringify(typeObject);
+};
   
 export default function BuyButton({ product }: { product: IProduct }) {
   const [quantity, setQuantity] = useState(1);
