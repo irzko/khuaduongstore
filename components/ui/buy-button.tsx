@@ -49,11 +49,11 @@ export default function BuyButton({ product }: { product: IProduct }) {
   const typeProduct = useMemo(() => {
     const types = product.detail.map((item) => item.type);
     const typeGroups: { [key: string]: string[] } = {};
-    
-    types.forEach(type => {
-      const entries = type.split('\n');
-      entries.forEach(entry => {
-        const [key, value] = entry.split(':').map(s => s.trim());
+
+    types.forEach((type) => {
+      const entries = type.split("\n");
+      entries.forEach((entry) => {
+        const [key, value] = entry.split(":").map((s) => s.trim());
         if (key && value) {
           if (!typeGroups[key]) {
             typeGroups[key] = [];
@@ -64,7 +64,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
         }
       });
     });
-    
+
     return typeGroups;
   }, [product]);
 
@@ -129,23 +129,29 @@ export default function BuyButton({ product }: { product: IProduct }) {
                 </Box>
               </Flex>
               <Flex>
-                <RadioCard.Root
-                  orientation="horizontal"
-                  align="center"
-                  justify="center"
-                  maxW="lg"
-                  defaultValue="paypal"
-                >
-                  <RadioCard.Label>Payment method</RadioCard.Label>
-                  <HStack align="stretch">
-                    <RadioCard.Item>
-                      <RadioCard.ItemHiddenInput />
-                      <RadioCard.ItemControl>
-                        <RadioCard.ItemText ms="-4">h</RadioCard.ItemText>
-                      </RadioCard.ItemControl>
-                    </RadioCard.Item>
-                  </HStack>
-                </RadioCard.Root>
+                
+                
+                  {Object.keys(typeProduct).map((key) =>
+      <RadioCard.Root
+        orientation="horizontal"
+        align="center"
+        justify="center"
+        maxW="lg"
+        defaultValue="paypal">
+        {typeProduct[key].map((value) => (
+                      <RadioCard.Item key={value} value={value}>
+                        <RadioCard.ItemHiddenInput />
+                        <RadioCard.ItemControl>
+                          <RadioCard.ItemText ms="-4">
+                            {value}
+                          </RadioCard.ItemText>
+                        </RadioCard.ItemControl>
+                      </RadioCard.Item>
+                    )
+                                        ),
+        }</RadioCard.Root>,
+                  )}
+                
               </Flex>
               <Separator />
               <Flex justifyContent="space-between" alignItems="center">
