@@ -81,21 +81,23 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
       : [];
 
     setCheckoutProductList(
-      // filter by slug and type
       checkoutProductSlug
-        .map((product) =>
-          products
-            .find((p) => createSlug(p.name) === product.slug)
-            ?.detail.find((d) => d.type === product.detail.type)
-              ? {
-                  ...products.find((p) => createSlug(p.name) === product.slug)!,
-                  quantity: product.quantity,
-                  detail: product.detail,
-                }
-            : null
-          ,
-             
-        
+        .map((product) => {
+          const foundProduct = products.find(
+            (p) => createSlug(p.name) === product.slug
+          );
+          if (foundProduct?.detail.find((d) => d.type === product.detail.type)) {
+            return {
+              ...foundProduct,
+              quantity: product.quantity,
+              detail: product.detail,
+            };
+          }
+          return null;
+        })
+        .filter((product): product is IProduct & { quantity: number } => 
+          product !== null
+        )
     );
   }, [products, searchParams]);
   const handleOrder = async () => {
