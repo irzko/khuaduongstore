@@ -71,6 +71,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
     const checkoutProductSlug: {
       slug: string;
       quantity: number;
+      detail: IProductDetail
     }[] = productsParam
       ? JSON.parse(
           Buffer.from(decodeURIComponent(productsParam), "base64").toString(
@@ -80,13 +81,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
       : [];
 
     setCheckoutProductList(
-      products
-        .filter((product) =>
-          checkoutProductSlug.some(
-            (checkoutProduct) =>
-              checkoutProduct.slug === createSlug(product.name),
-          ),
-        )
+      // write here
         .map((product) => ({
           ...product,
           quantity:

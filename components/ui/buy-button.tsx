@@ -26,15 +26,18 @@ import { LuMinus, LuPlus } from "react-icons/lu";
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
-const compareTypes = (typeString: string, typeObject: Record<string, string>) => {
-  const stringEntries = typeString.split('\n').reduce((acc, item) => {
-    const [key, value] = item.split(':').map(s => s.trim());
+const compareTypes = (
+  typeString: string,
+  typeObject: Record<string, string>,
+) => {
+  const stringEntries = typeString.split("\n").reduce((acc, item) => {
+    const [key, value] = item.split(":").map((s) => s.trim());
     return { ...acc, [key]: value };
   }, {});
 
   return JSON.stringify(stringEntries) === JSON.stringify(typeObject);
 };
-  
+
 export default function BuyButton({ product }: { product: IProduct }) {
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -94,13 +97,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
               {
                 slug: createSlug(product.name),
                 quantity,
-                type: product.detail.find(
-                  (item) =>
-                    item.type ===
-                    Object.entries(selectedType)
-                      .map(([key, value]) => `${key}: ${value}`)
-                      .join("\n"),
-                ),
+                detail: selectedProduct,
               },
             ]),
           ).toString("base64"),
@@ -111,12 +108,8 @@ export default function BuyButton({ product }: { product: IProduct }) {
   const handleChangeType = (key: string, value: string) => {
     setSelectedType((prev) => ({ ...prev, [key]: value }));
     setSelectedProduct(
-      product.detail.find(
-        (item) =>
-          item.type ===
-          Object.entries({ ...selectedType, [key]: value })
-            .map(([key, value]) => `${key}: ${value}`)
-            .join("\n"),
+      product.detail.find((item) =>
+        compareTypes(item.type, { ...selectedType, [key]: value }),
       ) || product.detail[0],
     );
   };
@@ -160,9 +153,11 @@ export default function BuyButton({ product }: { product: IProduct }) {
                     {Intl.NumberFormat("vi-VN", {
                       style: "currency",
                       currency: "VND",
-                    }).format(product.detail[0].price)}
+                    }).format(
+                      selectedProduct.discountedPrice || selectedProduct.price,
+                    )}
                   </Text>
-                  <Text>Kho: {product.detail[0].stock || 0}</Text>
+                  <Text>Kho: {selectedProduct.stock || 0}</Text>
                 </Box>
               </Flex>
               <Flex direction="column" gap="1rem">
