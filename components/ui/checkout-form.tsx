@@ -71,7 +71,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
     const checkoutProductSlug: {
       slug: string;
       quantity: number;
-      detail: IProductDetail
+      detail: IProductDetail;
     }[] = productsParam
       ? JSON.parse(
           Buffer.from(decodeURIComponent(productsParam), "base64").toString(
@@ -81,24 +81,21 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
       : [];
 
     setCheckoutProductList(
-      products
-        .filter((product) =>
-          checkoutProductSlug.some(
-            (checkoutProduct) =>
-              checkoutProduct.slug === createSlug(product.name) &&
-              checkoutProduct.detail
-          )
-        )
-        .map((product) => {
-          const checkoutProduct = checkoutProductSlug.find(
-            (cp) => cp.slug === createSlug(product.name)
-          );
-          return {
-            ...product,
-            ...checkoutProduct?.detail,
-            quantity: checkoutProduct?.quantity || 0,
-          };
-        })
+      // filter by slug and type
+      checkoutProductSlug
+        .map((product) =>
+          products
+            .find((p) => createSlug(p.name) === product.slug)
+            ?.detail.find((d) => d.type === product.detail.type)
+              ? {
+                  ...products.find((p) => createSlug(p.name) === product.slug)!,
+                  quantity: product.quantity,
+                  detail: product.detail,
+                }
+            : null
+          ,
+             
+        
     );
   }, [products, searchParams]);
   const handleOrder = async () => {
