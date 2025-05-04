@@ -81,15 +81,24 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
       : [];
 
     setCheckoutProductList(
-      // write here
-        .map((product) => ({
-          ...product,
-          quantity:
-            checkoutProductSlug.find(
-              (checkoutProduct) =>
-                checkoutProduct.slug === createSlug(product.name),
-            )?.quantity || 0,
-        })),
+      products
+        .filter((product) =>
+          checkoutProductSlug.some(
+            (checkoutProduct) =>
+              checkoutProduct.slug === createSlug(product.name) &&
+              checkoutProduct.detail
+          )
+        )
+        .map((product) => {
+          const checkoutProduct = checkoutProductSlug.find(
+            (cp) => cp.slug === createSlug(product.name)
+          );
+          return {
+            ...product,
+            ...checkoutProduct?.detail,
+            quantity: checkoutProduct?.quantity || 0,
+          };
+        })
     );
   }, [products, searchParams]);
   const handleOrder = async () => {
