@@ -1,11 +1,14 @@
 import leven from "leven";
 import { normalizeString } from "./normalizeString";
 
-export const calculateSimilarity = (product1: IProduct, product2: IProduct) => {
+export const calculateSimilarity = (
+  product1: IGroupedProduct,
+  product2: IGroupedProduct,
+) => {
   let score = 0;
 
   // Cùng danh mục (trọng số: 3)
-  if (product1.category === product2.category) score += 3;
+  if (product1.detail[0].category === product2.detail[0].category) score += 3;
 
   // Khoảng giá tương tự (trọng số: 2)
   // const priceDiff = Math.abs(product1.price - product2.price) / product1.price;

@@ -22,10 +22,13 @@ export function CartProvider({
             typeof (item as ICart).slug === "string" &&
             "quantity" in item &&
             typeof (item as ICart).quantity === "number"
+            && "types" in item &&
+            typeof (item as ICart).types === "string"
           ) {
             return {
               slug: (item as ICart).slug,
               quantity: (item as ICart).quantity,
+              types: (item as ICart).types
             };
           }
           return null;

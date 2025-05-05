@@ -1,12 +1,12 @@
 interface ICart {
   slug: string;
   quantity: number;
-  type: string;
+  types: string;
 }
 
 interface IProduct {
   name: string | null;
-  type: string | null;
+  types: string | null;
   price: number | null;
   discountedPrice: number | null;
   tags: string | null;
@@ -17,10 +17,15 @@ interface IProduct {
   description: string | null;
 }
 
+interface IGroupedProduct {
+  name: string;
+  detail: Omit<IProduct, "name">[];
+}
+
 interface IOrder {
   id: string;
   timestamp: string;
-  type: string;
+  types: string;
   unitPrice: number;
   totalPrice: number;
   quantity: string;

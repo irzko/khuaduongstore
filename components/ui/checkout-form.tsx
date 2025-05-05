@@ -40,7 +40,7 @@ const schema = Yup.object({
 
 export default function CheckoutForm({ products }: { products: IProduct[] }) {
   const [checkoutProductList, setCheckoutProductList] = useState<
-    Array<IProduct & { quantity: number; type: string }>
+    Array<IProduct & { quantity: number; types: string }>
   >([]);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -71,7 +71,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
     const checkoutProductSlug: {
       slug: string;
       quantity: number;
-      type: string;
+      types: string;
     }[] = productsParam
       ? JSON.parse(
           Buffer.from(decodeURIComponent(productsParam), "base64").toString(
@@ -84,19 +84,18 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
       products
         .filter((product) =>
           checkoutProductSlug.some(
-            (slug) => createSlug(product.name) === slug.slug,
+            (checkoutProduct) =>
+              checkoutProduct.slug === createSlug(product.name) &&
+              checkoutProduct.types === product.types,
           ),
         )
         .map((product) => ({
           ...product,
           quantity:
             checkoutProductSlug.find(
-              (slug) => createSlug(product.name) === slug.slug,
-            )?.quantity || 1,
-          type:
-            checkoutProductSlug.find(
-              (slug) => createSlug(product.name) === slug.slug,
-            )?.type || "",
+              (checkoutProduct) =>
+                checkoutProduct.slug === createSlug(product.name),
+            )?.quantity || 0,
         })),
     );
   }, [products, searchParams]);
@@ -113,7 +112,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
             orderId: createId(),
             productName: product.name,
             quantity: product.quantity,
-            price: product.detail.price,
+            price: product.price,
             total: product.price * product.quantity,
           })),
         }),

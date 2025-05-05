@@ -6,7 +6,7 @@ import createSlug from "@/lib/createSlug";
 export default function ProductCard({
   product,
 }: Readonly<{
-  product: IProduct;
+  product: IGroupedProduct;
 }>) {
   return (
     <Card.Root asChild overflow="hidden" rounded="2xl" border="none">
@@ -14,7 +14,7 @@ export default function ProductCard({
         <Flex position="relative" p="0.125rem" aspectRatio={1}>
           <Image asChild alt={product.name} rounded="2xl">
             <NextImage
-              src={product.detail[0].image.split("\n")[0] || "/no-image.jpg"}
+              src={product.detail[0].image?.split("\n")[0] || "/no-image.jpg"}
               alt={product.name}
               style={{ objectFit: "cover" }}
               fill
@@ -34,7 +34,7 @@ export default function ProductCard({
                   {Intl.NumberFormat("vi-VN", {
                     style: "currency",
                     currency: "VND",
-                  }).format(product.detail[0].price)}
+                  }).format(product.detail[0].price || 0)}
                 </Text>
                 <Text>
                   {Intl.NumberFormat("vi-VN", {
@@ -48,7 +48,7 @@ export default function ProductCard({
                 {Intl.NumberFormat("vi-VN", {
                   style: "currency",
                   currency: "VND",
-                }).format(product.detail[0].price)}
+                }).format(product.detail[0].price || 0)}
               </Text>
             )}
           </Flex>

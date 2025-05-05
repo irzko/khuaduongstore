@@ -1,25 +1,29 @@
 import { getGSheet } from "./getGSheet";
 
-export const getAllProducts = async (): Promise<IProduct[]> => {
-  const products = await getGSheet(
+const fetchProducts = async () => {
+  return await getGSheet(
     "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
     "0",
     "force-cache",
     { tags: ["products"] },
   );
+};
 
-  type Product = {
-    "Tên sản phẩm": string;
-    "Hình ảnh": string;
-    "Đơn giá": string;
-    Loại: string;
-    "Giá đã giảm": string | null;
-    Thẻ: string;
-    "Thương hiệu": string;
-    "Mô tả": string;
-    "Số lượng tồn": string;
-    "Danh mục": string;
-  };
+type Product = {
+  "Tên sản phẩm": string;
+  "Hình ảnh": string;
+  "Đơn giá": string;
+  Loại: string;
+  "Giá đã giảm": string | null;
+  Thẻ: string;
+  "Thương hiệu": string;
+  "Mô tả": string;
+  "Số lượng tồn": string;
+  "Danh mục": string;
+};
+
+export const getAllProducts = async (): Promise<IProduct[]> => {
+  const products = await fetchProducts();
 
   return products.map((product: Product) => ({
     name: product["Tên sản phẩm"],
@@ -37,25 +41,56 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
   }));
 };
 
+export const getGroupedProducts = async (): Promise<IGroupedProduct[]> => {
+  const products = await fetchProducts();
+  const groupedProducts = products.reduce((acc: { [key: string]: IGroupedProduct }, product: Product) => {
+    const name = product["Tên sản phẩm"];
+
+    if (!acc[name]) {
+      acc[name] = {
+        name,
+        detail: []
+      };
+    }
+
+    acc[name].detail.push({
+      types: product["Loại"],
+      price: Number(product["Đơn giá"]),
+      discountedPrice: Number(product["Giá đã giảm"]) || 0,
+      tags: product["Thẻ"],
+      brand: product["Thương hiệu"],
+      image: product["Hình ảnh"],
+      stock: Number(product["Số lượng tồn"]),
+      category: product["Danh mục"],
+      description: product["Mô tả"],
+    });
+
+    return acc;
+  }, {});
+
+  return Object.values(groupedProducts);
+  
+};
+
+type Order = {
+  "Mã đơn đặt": string;
+  "Thời gian đặt": string;
+  "Địa chỉ": string;
+  "Số điện thoại": string;
+  "Tên khách hàng": string;
+  "Mã sản phẩm": string;
+  "Đơn giá": string;
+  "Số lượng": string;
+  "Thành tiền": string;
+  "Trạng thái": string;
+};
+
 export const getAllOrders = async (): Promise<IOrder[]> => {
   const orders = await getGSheet(
     "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
     "1595734372",
     "no-store",
   );
-
-  type Order = {
-    "Mã đơn đặt": string;
-    "Thời gian đặt": string;
-    "Địa chỉ": string;
-    "Số điện thoại": string;
-    "Tên khách hàng": string;
-    "Mã sản phẩm": string;
-    "Đơn giá": string;
-    "Số lượng": string;
-    "Thành tiền": string;
-    "Trạng thái": string;
-  };
 
   return orders.map((order: Order) => ({
     id: order["Mã đơn đặt"],

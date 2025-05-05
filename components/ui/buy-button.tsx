@@ -38,22 +38,24 @@ const compareTypes = (
   return JSON.stringify(stringEntries) === JSON.stringify(typeObject);
 };
 
-export default function BuyButton({ product }: { product: IProduct }) {
+export default function BuyButton({ product }: { product: IGroupedProduct }) {
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [selectedType, setSelectedType] = useState<Record<string, string>>(
-    product.detail[0].type.split("\n").reduce((acc, item) => {
-      const [key, value] = item.split(":").map((s) => s.trim());
-      return { ...acc, [key]: value };
-    }, {}),
+    product.detail[0].type
+      ? product.detail[0].type.split("\n").reduce((acc, item) => {
+          const [key, value] = item.split(":").map((s) => s.trim());
+          return { ...acc, [key]: value };
+        }, {})
+      : {},
   );
-  const [selectedProduct, setSelectedProduct] = useState<IProductDetail>(
-    product.detail[0],
-  );
+  const [selectedProduct, setSelectedProduct] = useState<
+    Omit<IProduct, "name">
+  >(product.detail[0]);
 
   const inscreaseQuantity = () => {
-    if (product.detail[0].stock > quantity) {
+    if (product.detail[0].stock || 0 > quantity) {
       setQuantity(quantity + 1);
     }
   };
@@ -109,7 +111,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
     setSelectedType((prev) => ({ ...prev, [key]: value }));
     setSelectedProduct(
       product.detail.find((item) =>
-        compareTypes(item.type, { ...selectedType, [key]: value }),
+        compareTypes(item.type || "", { ...selectedType, [key]: value }),
       ) || product.detail[0],
     );
   };
@@ -139,7 +141,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
                 >
                   <Image
                     src={
-                      product.detail[0].image.split("\n")[0] || "/no-image.jpg"
+                      product.detail[0].image?.split("\n")[0] || "/no-image.jpg"
                     }
                     alt={product.name}
                     style={{ objectFit: "cover" }}
@@ -150,12 +152,17 @@ export default function BuyButton({ product }: { product: IProduct }) {
                 <Box>
                   <Text fontWeight="semibold">{product.name}</Text>
                   <Text>
-                    {Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    }).format(
-                      selectedProduct.discountedPrice || selectedProduct.price,
-                    )}
+                    {selectedProduct.discountedPrice
+                      ? Intl.NumberFormat("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        }).format(selectedProduct.discountedPrice)
+                      : selectedProduct.price
+                        ? Intl.NumberFormat("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          }).format(selectedProduct.price)
+                        : "Giá không xác định"}
                   </Text>
                   <Text>Kho: {selectedProduct.stock || 0}</Text>
                 </Box>

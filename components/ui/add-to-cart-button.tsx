@@ -6,7 +6,13 @@ import CartContext from "@/context/cart-context";
 import { toaster } from "@/components/ui/toaster";
 import { BsBagPlus } from "react-icons/bs";
 
-export default function AddToCartButton({ slug }: { slug: string }) {
+export default function AddToCartButton({
+  slug,
+  types,
+}: {
+  slug: string;
+  types: string;
+}) {
   const { setCarts } = useContext(CartContext);
   const handleClick = () => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]") as ICart[];
@@ -19,23 +25,26 @@ export default function AddToCartButton({ slug }: { slug: string }) {
             "slug" in item &&
             typeof (item as ICart).slug === "string" &&
             "quantity" in item &&
-            typeof (item as ICart).quantity === "number"
+            typeof (item as ICart).quantity === "number" &&
+            "types" in item &&
+            typeof (item as ICart).types === "string"
           ) {
             return {
               slug: (item as ICart).slug,
               quantity: (item as ICart).quantity,
+              types: (item as ICart).types,
             };
           }
           return null;
         })
-        .filter((item): item is ICart => item !== null); 
+        .filter((item): item is ICart => item !== null);
       const productIndex = cartObj.findIndex(
         (cart: { slug: string }) => cart.slug === slug,
       );
       if (productIndex !== -1) {
         cartObj[productIndex].quantity += 1;
       } else {
-        cartObj.push({ slug: slug, quantity: 1 });
+        cartObj.push({ slug, quantity: 1, types });
       }
       localStorage.setItem("cart", JSON.stringify(cartObj));
     } else {

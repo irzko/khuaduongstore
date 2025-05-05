@@ -1,5 +1,5 @@
 export const dynamic = "force-static";
-import { getAllProducts } from "@/lib/db";
+import { getGroupedProducts } from "@/lib/db";
 import { Metadata } from "next";
 import { Breadcrumb } from "@chakra-ui/react";
 import { LiaSlashSolid } from "react-icons/lia";
@@ -30,7 +30,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = (await params).slug.split(".")[0];
-  const data = await getAllProducts();
+  const data = await getGroupedProducts();
   const product = data.find((item) => createSlug(item.name) === slug);
 
   return {
@@ -45,7 +45,7 @@ export default async function Page({
 }) {
   const slug = (await params).slug.split(".")[0];
 
-  const allProducts = await getAllProducts();
+  const allProducts = await getGroupedProducts();
   const currentProduct = allProducts.find(
     (item) => createSlug(item.name) === slug,
   );
@@ -92,7 +92,7 @@ export default async function Page({
                   <Breadcrumb.Item>
                     <Breadcrumb.Link asChild>
                       <Link
-                        href={`/danh-muc/${createSlug(currentProduct.detail[0].category)}`}
+                        href={`/danh-muc/${createSlug(currentProduct.detail[0].category || "")}`}
                       >
                         {currentProduct.detail[0].category}
                       </Link>
@@ -100,22 +100,26 @@ export default async function Page({
                   </Breadcrumb.Item>
                 </Breadcrumb.List>
               </Breadcrumb.Root>
-              <Carousel
-                imageUrlList={currentProduct.detail[0].image.split("\n")}
-              />
+              {currentProduct.detail[0].image && (
+                <Carousel
+                  imageUrlList={currentProduct.detail[0].image?.split("\n")}
+                />
+              )}
 
               <Flex direction="column" gap="1rem">
                 <Heading as="h2" size="2xl" fontWeight="bold">
                   {currentProduct.name || "(No name)"}
                 </Heading>
                 <Heading as="h3" size="2xl" fontWeight="medium">
-                  {Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  }).format(
-                    currentProduct.detail[0].discountedPrice ||
-                      currentProduct.detail[0].price,
-                  )}
+                  {currentProduct.detail[0].price
+                    ? Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }).format(
+                        currentProduct.detail[0].discountedPrice ||
+                          currentProduct.detail[0].price,
+                      )
+                    : "Giá không xác định"}
                 </Heading>
               </Flex>
               <Flex
@@ -133,7 +137,10 @@ export default async function Page({
                 }}
               >
                 <BuyButton product={currentProduct} />
-                <AddToCartButton slug={createSlug(currentProduct.name)} />
+                <AddToCartButton
+                  slug={createSlug(currentProduct.name)}
+                  types={currentProduct.detail[0].types || ""}
+                />
               </Flex>
 
               <Separator />

@@ -2,15 +2,15 @@ export const dynamic = "force-static";
 import { Grid, Container } from "@chakra-ui/react";
 import createSlug from "@/lib/createSlug";
 
-import { getAllProducts } from "@/lib/db";
+import { getGroupedProducts } from "@/lib/db";
 import { Metadata } from "next";
 import CategoryTabs from "@/components/ui/category-tabs";
 import ProductCard from "@/components/ui/product-card";
 
 const getProducts = async (slug: string) => {
-  const products = await getAllProducts();
+  const products = await getGroupedProducts();
   return products.filter((product) => {
-    return createSlug(product.category) === slug;
+    return createSlug(product.detail[0].category || "Khác") === slug;
   });
 };
 
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const products = await getProducts(slug.replace(".html", ""));
 
   return {
-    title: products ? products[0].category : "No Name",
+    title: products ? products[0].detail[0].category : "(Không có tên sản phẩm)",
   };
 }
 
