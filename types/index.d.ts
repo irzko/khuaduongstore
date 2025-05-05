@@ -1,28 +1,26 @@
 interface ICart {
   slug: string;
   quantity: number;
+  type: string;
 }
 
 interface IProduct {
-  name: string;
-  detail: IProductDetail[];
-}
-
-interface IProductDetail {
-  type: string;
-  price: number;
+  name: string | null;
+  type: string | null;
+  price: number | null;
   discountedPrice: number | null;
-  tags: string;
-  brand: string;
-  image: string;
-  stock: number;
-  category: string;
-  description: string;
+  tags: string | null;
+  brand: string | null;
+  image: string | null;
+  stock: number | null;
+  category: string | null;
+  description: string | null;
 }
 
 interface IOrder {
   id: string;
   timestamp: string;
+  type: string;
   unitPrice: number;
   totalPrice: number;
   quantity: string;

@@ -40,7 +40,7 @@ const schema = Yup.object({
 
 export default function CheckoutForm({ products }: { products: IProduct[] }) {
   const [checkoutProductList, setCheckoutProductList] = useState<
-    Array<IProduct & { quantity: number }>
+    Array<IProduct & { quantity: number; type: string }>
   >([]);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -71,7 +71,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
     const checkoutProductSlug: {
       slug: string;
       quantity: number;
-      detail: IProductDetail;
+      type: string;
     }[] = productsParam
       ? JSON.parse(
           Buffer.from(decodeURIComponent(productsParam), "base64").toString(
@@ -81,23 +81,23 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
       : [];
 
     setCheckoutProductList(
-      checkoutProductSlug
-        .map((product) => {
-          const foundProduct = products.find(
-            (p) => createSlug(p.name) === product.slug
-          );
-          if (foundProduct?.detail.find((d) => d.type === product.detail.type)) {
-            return {
-              ...foundProduct,
-              quantity: product.quantity,
-              detail: product.detail,
-            };
-          }
-          return null;
-        })
-        .filter((product): product is IProduct & { quantity: number } => 
-          product !== null
+      products
+        .filter((product) =>
+          checkoutProductSlug.some(
+            (slug) => createSlug(product.name) === slug.slug,
+          ),
         )
+        .map((product) => ({
+          ...product,
+          quantity:
+            checkoutProductSlug.find(
+              (slug) => createSlug(product.name) === slug.slug,
+            )?.quantity || 1,
+          type:
+            checkoutProductSlug.find(
+              (slug) => createSlug(product.name) === slug.slug,
+            )?.type || "",
+        })),
     );
   }, [products, searchParams]);
   const handleOrder = async () => {
@@ -113,7 +113,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
             orderId: createId(),
             productName: product.name,
             quantity: product.quantity,
-            price: product.price,
+            price: product.detail.price,
             total: product.price * product.quantity,
           })),
         }),

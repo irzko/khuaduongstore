@@ -4,8 +4,13 @@ import CategoryTabs from "@/components/ui/category-tabs";
 import ProductCard from "@/components/ui/product-card";
 import createSlug from "@/lib/createSlug";
 
+
 export default async function Home() {
   const products = await getAllProducts();
+  const groupedProducts =
+
+
+
 
   return (
     <Container maxW="5xl" padding="1rem" spaceY="1rem">

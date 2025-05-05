@@ -97,7 +97,7 @@ export default function BuyButton({ product }: { product: IProduct }) {
               {
                 slug: createSlug(product.name),
                 quantity,
-                detail: selectedProduct,
+                type: selectedProduct.type,
               },
             ]),
           ).toString("base64"),

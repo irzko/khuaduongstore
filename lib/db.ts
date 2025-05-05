@@ -21,36 +21,20 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
     "Danh mục": string;
   };
 
-  // Group products by name
-  const groupedProducts = products.reduce(
-    (acc: { [key: string]: IProduct }, product: Product) => {
-      const name = product["Tên sản phẩm"];
-
-      if (!acc[name]) {
-        acc[name] = {
-          name,
-          detail: [],
-        };
-      }
-
-      acc[name].detail.push({
-        type: product["Loại"],
-        price: Number(product["Đơn giá"]),
-        discountedPrice: Number(product["Giá đã giảm"]),
-        tags: product["Thẻ"] || "",
-        brand: product["Thương hiệu"] || "",
-        image: product["Hình ảnh"],
-        stock: Number(product["Số lượng tồn"]),
-        category: product["Danh mục"],
-        description: product["Mô tả"],
-      });
-
-      return acc;
-    },
-    {},
-  );
-
-  return Object.values(groupedProducts);
+  return products.map((product: Product) => ({
+    name: product["Tên sản phẩm"],
+    tags: product["Thẻ"],
+    brand: product["Thương hiệu"],
+    image: product["Hình ảnh"],
+    stock: Number(product["Số lượng tồn"]),
+    category: product["Danh mục"],
+    description: product["Mô tả"],
+    type: product["Loại"],
+    price: Number(product["Đơn giá"]),
+    discountedPrice: product["Giá đã giảm"]
+      ? Number(product["Giá đã giảm"])
+      : null,
+  }));
 };
 
 export const getAllOrders = async (): Promise<IOrder[]> => {
