@@ -59,6 +59,17 @@ export default async function Page({
     );
   }
 
+  const imageUrlList = () => {
+    const list = [];
+    for (let i = 0; i < currentProduct.detail.length; i++) {
+      const images = currentProduct.detail[i].image.split("\n");
+      for (let j = 0; j < images.length; j++) {
+        list.push(images[j]);
+      }
+    }
+    return list;
+  };
+
   const recommendedProducts = allProducts
     .filter((item) => createSlug(item.name) !== slug)
     .map((product) => ({
@@ -100,11 +111,8 @@ export default async function Page({
                   </Breadcrumb.Item>
                 </Breadcrumb.List>
               </Breadcrumb.Root>
-              {currentProduct.detail[0].image && (
-                <Carousel
-                  imageUrlList={currentProduct.detail[0].image.split("\n")}
-                />
-              )}
+
+              <Carousel imageUrlList={imageUrlList()} />
 
               <Flex direction="column" gap="1rem">
                 <Heading as="h2" size="2xl" fontWeight="bold">
