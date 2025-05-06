@@ -85,22 +85,21 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
         .filter((product) =>
           checkoutProductSlug.some(
             (checkoutProduct) =>
-              checkoutProduct.slug === createSlug(product.name),
+              checkoutProduct.slug === createSlug(product.name) &&
+              checkoutProduct.types === product.types,
           ),
         )
-        .map((product) => {
-          const matchingProduct = checkoutProductSlug.find(
-            (checkoutProduct) =>
-              checkoutProduct.slug === createSlug(product.name)
-          );
-          return {
-            ...product,
-            quantity: matchingProduct?.quantity || 0,
-            types: matchingProduct?.types || product.types
-          };
-        }),
+        .map((product) => ({
+          ...product,
+          quantity:
+            checkoutProductSlug.find(
+              (checkoutProduct) =>
+                checkoutProduct.slug === createSlug(product.name),
+            )?.quantity || 0,
+        })) as Array<IProduct & { quantity: number; types: string }>,
     );
   }, [products, searchParams]);
+
   const handleOrder = async () => {
     setIsLoading(true);
     const response = await fetch(
@@ -128,7 +127,9 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
       const newCarts = carts.filter(
         (cart) =>
           !checkoutProductList.some(
-            (product) => createSlug(product.name) === cart.slug,
+            (product) =>
+              createSlug(product.name) === cart.slug &&
+              product.types === cart.types,
           ),
       );
       localStorage.setItem("cart", JSON.stringify(newCarts));
@@ -215,7 +216,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
               <Box divideY="1px">
                 {checkoutProductList.map((product) => (
                   <Flex
-                    key={createSlug(product.name)}
+                    key={createSlug(product.name + product.types)}
                     gap="1rem"
                     paddingY="1rem"
                   >

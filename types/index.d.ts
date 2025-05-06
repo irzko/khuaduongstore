@@ -5,16 +5,16 @@ interface ICart {
 }
 
 interface IProduct {
-  name: string | null;
-  types: string | null;
-  price: number | null;
-  discountedPrice: number | null;
-  tags: string | null;
-  brand: string | null;
-  image: string | null;
-  stock: number | null;
-  category: string | null;
-  description: string | null;
+  name: string;
+  types: string;
+  price: number;
+  discountedPrice: number;
+  tags: string;
+  brand: string;
+  image: string;
+  stock: number;
+  category: string;
+  description: string;
 }
 
 interface IGroupedProduct {

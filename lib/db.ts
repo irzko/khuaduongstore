@@ -30,10 +30,10 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
     tags: product["Thẻ"],
     brand: product["Thương hiệu"],
     image: product["Hình ảnh"],
-    stock: Number(product["Số lượng tồn"]),
+    stock: Number(product["Số lượng tồn"]) || 0,
     category: product["Danh mục"],
     description: product["Mô tả"],
-    type: product["Loại"],
+    types: product["Loại"],
     price: Number(product["Đơn giá"]),
     discountedPrice: product["Giá đã giảm"]
       ? Number(product["Giá đã giảm"])
@@ -43,33 +43,35 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
 
 export const getGroupedProducts = async (): Promise<IGroupedProduct[]> => {
   const products = await fetchProducts();
-  const groupedProducts = products.reduce((acc: { [key: string]: IGroupedProduct }, product: Product) => {
-    const name = product["Tên sản phẩm"];
+  const groupedProducts = products.reduce(
+    (acc: { [key: string]: IGroupedProduct }, product: Product) => {
+      const name = product["Tên sản phẩm"];
 
-    if (!acc[name]) {
-      acc[name] = {
-        name,
-        detail: []
-      };
-    }
+      if (!acc[name]) {
+        acc[name] = {
+          name,
+          detail: [],
+        };
+      }
 
-    acc[name].detail.push({
-      types: product["Loại"],
-      price: Number(product["Đơn giá"]),
-      discountedPrice: Number(product["Giá đã giảm"]) || 0,
-      tags: product["Thẻ"],
-      brand: product["Thương hiệu"],
-      image: product["Hình ảnh"],
-      stock: Number(product["Số lượng tồn"]),
-      category: product["Danh mục"],
-      description: product["Mô tả"],
-    });
+      acc[name].detail.push({
+        types: product["Loại"],
+        price: Number(product["Đơn giá"]),
+        discountedPrice: Number(product["Giá đã giảm"]) || 0,
+        tags: product["Thẻ"],
+        brand: product["Thương hiệu"],
+        image: product["Hình ảnh"],
+        stock: Number(product["Số lượng tồn"]) || 0,
+        category: product["Danh mục"],
+        description: product["Mô tả"],
+      });
 
-    return acc;
-  }, {});
+      return acc;
+    },
+    {},
+  );
 
   return Object.values(groupedProducts);
-  
 };
 
 type Order = {

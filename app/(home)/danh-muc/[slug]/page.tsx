@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const products = await getProducts(slug.replace(".html", ""));
 
   return {
-    title: products ? products[0].detail[0].category : "(Không có tên sản phẩm)",
+    title: products ? products[0].detail[0].category : "Khác",
   };
 }
 

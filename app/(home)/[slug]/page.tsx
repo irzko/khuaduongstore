@@ -92,7 +92,7 @@ export default async function Page({
                   <Breadcrumb.Item>
                     <Breadcrumb.Link asChild>
                       <Link
-                        href={`/danh-muc/${createSlug(currentProduct.detail[0].category || "")}`}
+                        href={`/danh-muc/${createSlug(currentProduct.detail[0].category || "Khác")}`}
                       >
                         {currentProduct.detail[0].category}
                       </Link>
@@ -102,13 +102,13 @@ export default async function Page({
               </Breadcrumb.Root>
               {currentProduct.detail[0].image && (
                 <Carousel
-                  imageUrlList={currentProduct.detail[0].image?.split("\n")}
+                  imageUrlList={currentProduct.detail[0].image.split("\n")}
                 />
               )}
 
               <Flex direction="column" gap="1rem">
                 <Heading as="h2" size="2xl" fontWeight="bold">
-                  {currentProduct.name || "(No name)"}
+                  {currentProduct.name || "Sản phẩm không có tên"}
                 </Heading>
                 <Heading as="h3" size="2xl" fontWeight="medium">
                   {currentProduct.detail[0].price
@@ -126,9 +126,7 @@ export default async function Page({
                 w="full"
                 gap="1rem"
                 paddingY="0.5rem"
-                paddingX="1rem"
-                position="fixed"
-                insetX="0"
+                position="sticky"
                 bottom="0"
                 zIndex="50"
                 backgroundColor={{
@@ -137,10 +135,7 @@ export default async function Page({
                 }}
               >
                 <BuyButton product={currentProduct} />
-                <AddToCartButton
-                  slug={createSlug(currentProduct.name)}
-                  types={currentProduct.detail[0].types || ""}
-                />
+                <AddToCartButton product={currentProduct} />
               </Flex>
 
               <Separator />

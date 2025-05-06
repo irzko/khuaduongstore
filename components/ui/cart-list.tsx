@@ -21,7 +21,11 @@ export default function CartList({ products }: { products: IProduct[] }) {
     setProductsInCart(
       products
         .filter((product) =>
-          carts.some((cart) => cart.slug === createSlug(product.name)),
+          carts.some(
+            (cart) =>
+              cart.slug === createSlug(product.name) &&
+              cart.types === product.types,
+          ),
         )
         .map((product) => ({
           ...product,
@@ -35,7 +39,6 @@ export default function CartList({ products }: { products: IProduct[] }) {
 
   const toggleProductCheck = useCallback(
     (slug: string) => {
-      console.log(slug);
       setProductsInCart(
         productsInCart.map((product) => {
           if (createSlug(product.name) === slug) {
@@ -67,7 +70,7 @@ export default function CartList({ products }: { products: IProduct[] }) {
         {productsInCart.map((product) => (
           <Flex
             paddingY="1rem"
-            key={createSlug(product.name)}
+            key={createSlug(product.name + product.types)}
             justifyContent="space-between"
             alignItems="center"
           >
@@ -97,7 +100,10 @@ export default function CartList({ products }: { products: IProduct[] }) {
             </Flex>
             <Flex alignItems="center" gap="1rem">
               <AdjustQuantity slug={createSlug(product.name)} />
-              <DeleteFromCartButton slug={createSlug(product.name)} />
+              <DeleteFromCartButton
+                slug={createSlug(product.name)}
+                types={product.types}
+              />
             </Flex>
           </Flex>
         ))}

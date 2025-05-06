@@ -43,8 +43,8 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [selectedType, setSelectedType] = useState<Record<string, string>>(
-    product.detail[0].type
-      ? product.detail[0].type.split("\n").reduce((acc, item) => {
+    product.detail[0].types
+      ? product.detail[0].types.split("\n").reduce((acc, item) => {
           const [key, value] = item.split(":").map((s) => s.trim());
           return { ...acc, [key]: value };
         }, {})
@@ -55,7 +55,7 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
   >(product.detail[0]);
 
   const inscreaseQuantity = () => {
-    if (product.detail[0].stock || 0 > quantity) {
+    if (product.detail[0].stock> quantity) {
       setQuantity(quantity + 1);
     }
   };
@@ -67,7 +67,7 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
   };
 
   const typeProduct = useMemo(() => {
-    const types = product.detail.map((item) => item.type);
+    const types = product.detail.map((item) => item.types);
     const typeGroups: { [key: string]: string[] } = {};
 
     types.forEach((type) => {
@@ -99,7 +99,7 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
               {
                 slug: createSlug(product.name),
                 quantity,
-                type: selectedProduct.type,
+                types: selectedProduct.types,
               },
             ]),
           ).toString("base64"),
@@ -111,7 +111,7 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
     setSelectedType((prev) => ({ ...prev, [key]: value }));
     setSelectedProduct(
       product.detail.find((item) =>
-        compareTypes(item.type || "", { ...selectedType, [key]: value }),
+        compareTypes(item.types, { ...selectedType, [key]: value }),
       ) || product.detail[0],
     );
   };
@@ -141,7 +141,7 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
                 >
                   <Image
                     src={
-                      product.detail[0].image?.split("\n")[0] || "/no-image.jpg"
+                      product.detail[0].image.split("\n")[0] || "/no-image.jpg"
                     }
                     alt={product.name}
                     style={{ objectFit: "cover" }}
@@ -164,7 +164,7 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
                           }).format(selectedProduct.price)
                         : "Giá không xác định"}
                   </Text>
-                  <Text>Kho: {selectedProduct.stock || 0}</Text>
+                  <Text>Kho: {selectedProduct.stock}</Text>
                 </Box>
               </Flex>
               <Flex direction="column" gap="1rem">
@@ -172,7 +172,7 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
                   <RadioCard.Root
                     key={key}
                     value={selectedType[key]}
-                    onChange={(e) => handleChangeType(key, e.target.value)}
+                    onValueChange={(e) => handleChangeType(key, e.value)}
                     orientation="horizontal"
                     align="center"
                     justify="center"

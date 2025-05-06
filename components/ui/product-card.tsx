@@ -14,7 +14,7 @@ export default function ProductCard({
         <Flex position="relative" p="0.125rem" aspectRatio={1}>
           <Image asChild alt={product.name} rounded="2xl">
             <NextImage
-              src={product.detail[0].image?.split("\n")[0] || "/no-image.jpg"}
+              src={product.detail[0].image.split("\n")[0] || "/no-image.jpg"}
               alt={product.name}
               style={{ objectFit: "cover" }}
               fill

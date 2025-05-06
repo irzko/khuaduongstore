@@ -6,7 +6,6 @@ import createSlug from "@/lib/createSlug";
 
 export default async function Home() {
   const products = await getGroupedProducts();
-  
 
   return (
     <Container maxW="5xl" padding="1rem" spaceY="1rem">

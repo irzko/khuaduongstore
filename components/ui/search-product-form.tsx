@@ -15,7 +15,7 @@ import { normalizeString } from "@/lib/normalizeString";
 import ProductCard from "./product-card";
 
 const options = {
-  extract: function (el: IProduct) {
+  extract: function (el: IGroupedProduct) {
     return normalizeString(el.name);
   },
 };
@@ -23,9 +23,11 @@ const options = {
 export default function SearchProductForm({
   products,
 }: {
-  products: IProduct[];
+  products: IGroupedProduct[];
 }) {
-  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<IGroupedProduct[]>(
+    [],
+  );
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
