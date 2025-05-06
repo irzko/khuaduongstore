@@ -114,6 +114,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
           products: checkoutProductList.map((product) => ({
             orderId: createId(),
             productName: product.name,
+            types: product.types,
             quantity: product.quantity,
             price: product.price,
             total: product.price * product.quantity,
