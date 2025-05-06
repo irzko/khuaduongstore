@@ -1,6 +1,14 @@
 "use client";
 import CartContext from "@/context/cart-context";
-import { Box, Container, Flex, Text, Link, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Flex,
+  Text,
+  Link,
+  Heading,
+  Badge,
+} from "@chakra-ui/react";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { EmptyState } from "./empty-state";
 import { LuShoppingCart } from "react-icons/lu";
@@ -87,6 +95,14 @@ export default function CartList({ products }: { products: IProduct[] }) {
                     <Text fontWeight="bold">{product.name}</Text>
                   </NextLink>
                 </Link>
+                <Flex gap="0.5rem">
+                  {product.types &&
+                    product.types.split("\n").map((type) => (
+                      <Badge size="sm" key={type}>
+                        {type.split(":")[1]}
+                      </Badge>
+                    ))}
+                </Flex>
                 <Text fontSize="sm" color="gray.500">
                   Số lượng: {product.quantity}
                 </Text>
@@ -164,6 +180,7 @@ export default function CartList({ products }: { products: IProduct[] }) {
                             .map((product) => ({
                               slug: createSlug(product.name),
                               quantity: product.quantity,
+                              types: product.types,
                             })),
                         ),
                       ).toString("base64"),

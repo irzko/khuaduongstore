@@ -55,7 +55,7 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
   >(product.detail[0]);
 
   const inscreaseQuantity = () => {
-    if (product.detail[0].stock> quantity) {
+    if (selectedProduct.stock > quantity) {
       setQuantity(quantity + 1);
     }
   };
@@ -141,7 +141,7 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
                 >
                   <Image
                     src={
-                      product.detail[0].image.split("\n")[0] || "/no-image.jpg"
+                      selectedProduct.image.split("\n")[0] || "/no-image.jpg"
                     }
                     alt={product.name}
                     style={{ objectFit: "cover" }}

@@ -128,7 +128,7 @@ export default async function Page({
                 paddingY="0.5rem"
                 position="sticky"
                 bottom="0"
-                zIndex="50"
+                zIndex="30"
                 backgroundColor={{
                   base: "white",
                   _dark: "black",

@@ -47,6 +47,7 @@ export default function AddToCartButton({
 }: {
   product: IGroupedProduct;
 }) {
+  const [open, setOpen] = useState(false);
   const { setCarts } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1);
   const [selectedType, setSelectedType] = useState<Record<string, string>>(
@@ -63,7 +64,7 @@ export default function AddToCartButton({
   >(product.detail[0]);
 
   const inscreaseQuantity = () => {
-    if (selectedType.stock > quantity) {
+    if (selectedProduct.stock > quantity) {
       setQuantity(quantity + 1);
     }
   };
@@ -164,6 +165,7 @@ export default function AddToCartButton({
         }),
       ),
     );
+    setOpen(false);
     toaster.create({
       title: "Thêm vào giỏ hàng thành công",
       type: "success",
@@ -172,7 +174,7 @@ export default function AddToCartButton({
 
   return (
     <>
-      {!selectedType ? (
+      {selectedType === "" ? (
         <IconButton
           variant="outline"
           onClick={handleClick}
@@ -182,7 +184,11 @@ export default function AddToCartButton({
           <BsBagPlus />
         </IconButton>
       ) : (
-        <DrawerRoot placement="bottom">
+        <DrawerRoot
+          placement="bottom"
+          open={open}
+          onOpenChange={(e) => setOpen(e.open)}
+        >
           <DrawerBackdrop />
           <DrawerTrigger asChild>
             <IconButton variant="outline" rounded="xl" size="xl">
@@ -206,8 +212,7 @@ export default function AddToCartButton({
                   >
                     <Image
                       src={
-                        product.detail[0].image.split("\n")[0] ||
-                        "/no-image.jpg"
+                        selectedProduct.image.split("\n")[0] || "/no-image.jpg"
                       }
                       alt={product.name}
                       style={{ objectFit: "cover" }}

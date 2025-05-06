@@ -80,6 +80,8 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
         )
       : [];
 
+    console.log(checkoutProductSlug);
+
     setCheckoutProductList(
       products
         .filter((product) =>
