@@ -174,7 +174,7 @@ export default function AddToCartButton({
 
   return (
     <>
-      {selectedType === "" ? (
+      {selectedProduct.types === "" ? (
         <IconButton
           variant="outline"
           onClick={handleClick}
