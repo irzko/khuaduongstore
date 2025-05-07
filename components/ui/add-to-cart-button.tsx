@@ -100,6 +100,7 @@ export default function AddToCartButton({
 
   const handleChangeType = (key: string, value: string) => {
     setSelectedType((prev) => ({ ...prev, [key]: value }));
+
     setSelectedProduct(
       product.detail.find((item) =>
         compareTypes(item.types, { ...selectedType, [key]: value }),
@@ -258,6 +259,17 @@ export default function AddToCartButton({
                               rounded="xl"
                               key={value}
                               value={value}
+                              disabled={
+                                product.detail.find(
+                                  (item) =>
+                                    compareTypes(item.types, {
+                                      ...selectedType,
+                                      [key]: value,
+                                    }) && item.stock > 0,
+                                )
+                                  ? false
+                                  : true
+                              }
                             >
                               <RadioCard.ItemHiddenInput />
                               <RadioCard.ItemControl>
@@ -296,7 +308,7 @@ export default function AddToCartButton({
                     </IconButton>
                   </Group>
                 </Flex>
-                <Button onClick={handleClick} rounded="xl">
+                <Button onClick={handleClick} rounded="xl" size="xl">
                   Thêm vào giỏ hàng
                 </Button>
               </Stack>

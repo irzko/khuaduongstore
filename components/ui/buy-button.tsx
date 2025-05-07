@@ -187,6 +187,17 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
                             rounded="xl"
                             key={value}
                             value={value}
+                            disabled={
+                              product.detail.find(
+                                (item) =>
+                                  compareTypes(item.types, {
+                                    ...selectedType,
+                                    [key]: value,
+                                  }) && item.stock > 0,
+                              )
+                                ? false
+                                : true
+                            }
                           >
                             <RadioCard.ItemHiddenInput />
                             <RadioCard.ItemControl>

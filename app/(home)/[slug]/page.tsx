@@ -64,6 +64,7 @@ export default async function Page({
     for (let i = 0; i < currentProduct.detail.length; i++) {
       const images = currentProduct.detail[i].image.split("\n");
       for (let j = 0; j < images.length; j++) {
+        if (images[j] === "") continue;
         list.push(images[j]);
       }
     }
