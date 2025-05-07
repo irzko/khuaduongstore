@@ -81,7 +81,14 @@ export default async function Page({
 
   return (
     <>
-      <Container maxW="5xl" padding="1rem">
+      <Container
+        maxW="5xl"
+        padding="1rem"
+        paddingBottom={{
+          base: "4rem",
+          md: "1rem",
+        }}
+      >
         <Flex
           direction={{
             base: "column",
@@ -134,9 +141,14 @@ export default async function Page({
                 w="full"
                 gap="1rem"
                 paddingY="0.5rem"
-                position="sticky"
+                paddingX="1rem"
+                position={{
+                  base: "fixed",
+                  md: "static",
+                }}
+                insetX="0"
                 bottom="0"
-                zIndex="30"
+                zIndex="50"
                 backgroundColor={{
                   base: "white",
                   _dark: "black",
