@@ -236,7 +236,7 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
                   </IconButton>
                 </Group>
               </Flex>
-              <Button loading={isLoading} onClick={handleBuy} rounded="xl">
+              <Button loading={isLoading} onClick={handleBuy} rounded="xl" size="xl">
                 Mua ngay
               </Button>
             </Stack>

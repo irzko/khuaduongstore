@@ -2,6 +2,7 @@ import { Flex, Heading, Card, Image, Text } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import createSlug from "@/lib/createSlug";
+import { FormatNumber } from "@chakra-ui/react";
 
 export default function ProductCard({
   product,
@@ -24,32 +25,28 @@ export default function ProductCard({
         </Flex>
         <Card.Body paddingX="0rem" paddingY="1rem" gap="0.5rem" direction="col">
           <Flex>
-            {product.detail[0].discountedPrice ? (
-              <Flex>
-                <Text
-                  style={{
-                    textDecoration: "line-through",
-                  }}
-                >
-                  {Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  }).format(product.detail[0].price || 0)}
-                </Text>
-                <Text>
-                  {Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  }).format(product.detail[0].discountedPrice)}
+            {product.detail[0].discountedPrice !== 0 ? (
+              <Flex alignItems="center" gap="0.5rem">
+                <FormatNumber
+                  value={product.detail[0].discountedPrice}
+                  style="currency"
+                  currency="VND"
+                />
+
+                <Text fontSize="sm" textDecoration="line-through">
+                  <FormatNumber
+                  value={product.detail[0].price || 0}
+                  style="currency"
+                  currency="VND"
+                />
                 </Text>
               </Flex>
             ) : (
-              <Text>
-                {Intl.NumberFormat("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                }).format(product.detail[0].price || 0)}
-              </Text>
+              <FormatNumber
+                value={product.detail[0].price}
+                style="currency"
+                currency="VND"
+              />
             )}
           </Flex>
           <Heading lineClamp={2} size="sm">
