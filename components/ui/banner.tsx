@@ -1,23 +1,28 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Swiper as SwiperType } from "swiper";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import NextImage from "next/image";
 import { Box, Image } from "@chakra-ui/react";
-import { useState } from "react";
 
 export default function Banner({ imageUrlList }: { imageUrlList: string[] }) {
-  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>();
   return (
     <>
       <Box rounded="2xl" overflow="hidden" w="full" maxWidth="md" mx="auto">
         <Swiper
-          pagination={true}
-          thumbs={{ swiper: thumbsSwiper }}
-          modules={[FreeMode, Navigation, Thumbs]}
+          centeredSlides={true}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          navigation={true}
+          modules={[Autoplay, Pagination, Navigation]}
         >
           {imageUrlList.map((imageUrl, index) => (
             <SwiperSlide key={index}>
