@@ -172,7 +172,7 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
                   <RadioCard.Root
                     key={key}
                     value={selectedType[key]}
-                    onValueChange={(e) => handleChangeType(key, e.value)}
+                    onValueChange={(e) => handleChangeType(key, e.value!)}
                     orientation="horizontal"
                     align="center"
                     justify="center"
@@ -236,7 +236,12 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
                   </IconButton>
                 </Group>
               </Flex>
-              <Button loading={isLoading} onClick={handleBuy} rounded="xl" size="xl">
+              <Button
+                loading={isLoading}
+                onClick={handleBuy}
+                rounded="xl"
+                size="xl"
+              >
                 Mua ngay
               </Button>
             </Stack>
