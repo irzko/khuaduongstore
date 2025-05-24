@@ -244,7 +244,7 @@ export default function AddToCartButton({
                     <RadioCard.Root
                       key={key}
                       value={selectedType[key]}
-                      onValueChange={(e) => handleChangeType(key, e.value)}
+                      onValueChange={(e) => handleChangeType(key, e.value!)}
                       orientation="horizontal"
                       align="center"
                       justify="center"
