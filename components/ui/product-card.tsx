@@ -18,6 +18,7 @@ export default function ProductCard({
               src={product.detail[0].image.split("\n")[0] || "/no-image.jpg"}
               alt={product.name}
               style={{ objectFit: "cover" }}
+              quality={25}
               fill
               unoptimized
             />
@@ -35,10 +36,10 @@ export default function ProductCard({
 
                 <Text fontSize="sm" textDecoration="line-through">
                   <FormatNumber
-                  value={product.detail[0].price || 0}
-                  style="currency"
-                  currency="VND"
-                />
+                    value={product.detail[0].price || 0}
+                    style="currency"
+                    currency="VND"
+                  />
                 </Text>
               </Flex>
             ) : (

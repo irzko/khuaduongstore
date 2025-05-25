@@ -75,12 +75,10 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
     }[] = productsParam
       ? JSON.parse(
           Buffer.from(decodeURIComponent(productsParam), "base64").toString(
-            "utf8",
-          ),
+            "utf8"
+          )
         )
       : [];
-
-    console.log(checkoutProductSlug);
 
     setCheckoutProductList(
       products
@@ -88,17 +86,17 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
           checkoutProductSlug.some(
             (checkoutProduct) =>
               checkoutProduct.slug === createSlug(product.name) &&
-              checkoutProduct.types === product.types,
-          ),
+              checkoutProduct.types === product.types
+          )
         )
         .map((product) => ({
           ...product,
           quantity:
             checkoutProductSlug.find(
               (checkoutProduct) =>
-                checkoutProduct.slug === createSlug(product.name),
+                checkoutProduct.slug === createSlug(product.name)
             )?.quantity || 0,
-        })) as Array<IProduct & { quantity: number; types: string }>,
+        })) as Array<IProduct & { quantity: number; types: string }>
     );
   }, [products, searchParams]);
 
@@ -124,7 +122,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
         headers: {
           "Content-Type": "text/plain;charset=utf-8",
         },
-      },
+      }
     );
     if (response.ok) {
       const newCarts = carts.filter(
@@ -132,8 +130,8 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
           !checkoutProductList.some(
             (product) =>
               createSlug(product.name) === cart.slug &&
-              product.types === cart.types,
-          ),
+              product.types === cart.types
+          )
       );
       localStorage.setItem("cart", JSON.stringify(newCarts));
       setCarts(newCarts);
@@ -264,8 +262,8 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
                     checkoutProductList.reduce(
                       (total, product) =>
                         total + product.price * product.quantity,
-                      0,
-                    ),
+                      0
+                    )
                   )}
                 </Text>
               </Flex>
@@ -300,7 +298,7 @@ export default function CheckoutForm({ products }: { products: IProduct[] }) {
                   onClick={() => {
                     setOpen(false);
                     router.push(
-                      "/kiem-tra-don-hang?phone=" + shippingInfo.phone,
+                      "/kiem-tra-don-hang?phone=" + shippingInfo.phone
                     );
                   }}
                 >

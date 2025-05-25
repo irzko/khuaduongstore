@@ -29,7 +29,7 @@ export default function DeleteFromCartButton({
     if (cart) {
       const cartObj = JSON.parse(cart) as ICart[];
       const newCart = cartObj.filter(
-        (cart) => cart.slug !== slug && cart.types !== types,
+        (cart) => cart.slug !== slug || cart.types !== types
       );
       localStorage.setItem("cart", JSON.stringify(newCart));
       setCarts(newCart);
