@@ -1,20 +1,15 @@
+"use client";
 import ProductCard from "@/components/ui/product-card";
 import createSlug from "@/lib/createSlug";
 import { Grid } from "@chakra-ui/react";
 import PaginationBar from "./pagination";
 import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
-const ProductPagination = async ({
-  products,
-  searchParams,
-}: {
-  products: IGroupedProduct[];
-  searchParams?: Promise<{
-    page?: string;
-  }>;
-}) => {
-  const allSearchParams = await searchParams;
-  const currentPage = Number(allSearchParams?.page) || 1;
+const ProductPagination = (props: { products: IGroupedProduct[] }) => {
+  const searchParams = useSearchParams();
+
+  const currentPage = Number(searchParams.get("page")) || 1;
   return (
     <Suspense key={currentPage}>
       <Grid
@@ -26,17 +21,17 @@ const ProductPagination = async ({
         ]}
         gap="1rem"
       >
-        {products
-          .slice((currentPage - 1) * 12, currentPage * 12)
+        {props.products
           .reverse()
+          .slice(
+            (currentPage - 1) * 12,
+            Math.min(currentPage * 12, props.products.length),
+          )
           .map((product) => (
             <ProductCard key={createSlug(product.name)} product={product} />
           ))}
       </Grid>
-      <PaginationBar
-        currentPage={currentPage}
-        count={Math.ceil(products.length / 12)}
-      />
+      <PaginationBar currentPage={currentPage} count={props.products.length} />
     </Suspense>
   );
 };

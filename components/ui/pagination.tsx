@@ -36,7 +36,7 @@ const PaginationBar = ({
 }) => {
   return (
     <div>
-      <Pagination.Root count={count} pageSize={2} page={currentPage}>
+      <Pagination.Root count={count} pageSize={12} page={currentPage}>
         <ButtonGroup variant="ghost">
           <PaginationLink page="prev">
             <HiChevronLeft />
