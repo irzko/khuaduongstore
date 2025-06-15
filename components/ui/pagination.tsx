@@ -21,7 +21,7 @@ const PaginationLink = (
     return page;
   };
   return (
-    <IconButton asChild {...rest}>
+    <IconButton rounded="full" asChild {...rest}>
       <Link href={`?page=${pageValue()}`}>{props.children}</Link>
     </IconButton>
   );
@@ -46,7 +46,7 @@ const PaginationBar = ({
             render={(page) => (
               <PaginationLink
                 page={page.value}
-                variant={{ base: "ghost", _selected: "outline" }}
+                variant={{ base: "ghost", _selected: "solid" }}
               >
                 {page.value}
               </PaginationLink>

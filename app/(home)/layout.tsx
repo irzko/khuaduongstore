@@ -71,16 +71,16 @@ export default function Layout({
         >
           <Button
             variant="subtle"
-            rounded="lg"
+            rounded="full"
             maxWidth={{
               base: "full",
               md: "20rem",
             }}
             w="full"
-            size={{ base: "sm", md: "md" }}
+            size={{ base: "md", md: "lg" }}
             justifyContent="flex-start"
-            color="gray.500"
             // hideBelow="md"
+            color="gray.500"
             asChild
           >
             <Link href="/tim-kiem">

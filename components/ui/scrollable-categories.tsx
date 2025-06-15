@@ -51,12 +51,14 @@ export function ScrollableCategories({
       scrollbar="hidden"
       overflowX="auto"
       paddingY="0.5rem"
+      gap="0.5rem"
     >
       <div ref={currentSlug === "/" ? selectedItemRef : null}>
         <Badge
-          variant={currentSlug === "/" ? "solid" : "plain"}
+          variant={currentSlug === "/" ? "solid" : "subtle"}
           size="lg"
           rounded="full"
+          backgroundColor={currentSlug === "/" ? "#50C878" : ""}
           asChild
         >
           <NextLink href="/">
@@ -74,7 +76,10 @@ export function ScrollableCategories({
             asChild
             size="lg"
             rounded="full"
-            variant={currentSlug === createSlug(category) ? "solid" : "plain"}
+            variant={currentSlug === createSlug(category) ? "solid" : "subtle"}
+            backgroundColor={
+              currentSlug === createSlug(category) ? "#50C878" : ""
+            }
           >
             <NextLink href={`/danh-muc/${createSlug(category)}`}>
               <Text fontWeight="semibold">{category}</Text>

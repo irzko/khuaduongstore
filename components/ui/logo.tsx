@@ -10,6 +10,7 @@ export default function Logo() {
   return (
     <Text
       lineHeight={0}
+      color="#50C878"
       whiteSpace="nowrap"
       fontSize="xl"
       textTransform="uppercase"

@@ -120,7 +120,7 @@ export default function BuyButton({ product }: { product: IGroupedProduct }) {
       <DrawerRoot placement="bottom">
         <DrawerBackdrop />
         <DrawerTrigger asChild w="full">
-          <Button rounded="xl" size="xl">
+          <Button rounded="xl" size="xl" backgroundColor="#50C878">
             Mua ngay
           </Button>
         </DrawerTrigger>
