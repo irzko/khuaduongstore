@@ -20,7 +20,7 @@ const ProductPagination = (props: { products: IGroupedProduct[] }) => {
           "repeat(6, 1fr)",
           "repeat(6, 1fr)",
         ]}
-        gap="1rem"
+        gap="0.5rem"
       >
         {props.products
           .reverse()

@@ -6,6 +6,7 @@ import {
   type IconButtonProps,
   Pagination,
   usePaginationContext,
+  Box,
 } from "@chakra-ui/react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import Link from "next/link";
@@ -35,8 +36,13 @@ const PaginationBar = ({
   currentPage: number;
 }) => {
   return (
-    <div>
-      <Pagination.Root count={count} pageSize={12} page={currentPage}>
+    <Box>
+      <Pagination.Root
+        count={count}
+        pageSize={12}
+        page={currentPage}
+      
+      >
         <ButtonGroup variant="ghost">
           <PaginationLink page="prev">
             <HiChevronLeft />
@@ -58,7 +64,7 @@ const PaginationBar = ({
           </PaginationLink>
         </ButtonGroup>
       </Pagination.Root>
-    </div>
+    </Box>
   );
 };
 

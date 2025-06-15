@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, Box } from "@chakra-ui/react";
 import SideBar from "@/components/sidebar";
 import CartButton from "@/components/ui/cart-button";
 import { LuSearch } from "react-icons/lu";
@@ -90,6 +90,7 @@ export default function Layout({
         </Flex>
       </Flex>
       {children}
+      <Box paddingY="2rem" />
     </>
   );
 }
