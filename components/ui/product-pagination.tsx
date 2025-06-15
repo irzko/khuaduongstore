@@ -35,11 +35,7 @@ const ProductPagination = async ({
       </Grid>
       <PaginationBar
         currentPage={currentPage}
-        count={
-          products.length % 12 === 0
-            ? products.length / 12
-            : products.length / 12 + 1
-        }
+        count={Math.ceil(products.length / 12)}
       />
     </Suspense>
   );
