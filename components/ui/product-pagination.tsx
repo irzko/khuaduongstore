@@ -13,6 +13,7 @@ const ProductPagination = (props: { products: IGroupedProduct[] }) => {
   return (
     <Suspense key={currentPage}>
       <Grid
+        paddingX="1rem"
         templateColumns={[
           "repeat(2, 1fr)",
           "repeat(4, 1fr)",

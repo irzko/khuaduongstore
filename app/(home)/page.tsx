@@ -7,7 +7,7 @@ export default async function Home() {
   const products = await getGroupedProducts();
 
   return (
-    <Container maxW="5xl" padding="1rem" spaceY="1rem">
+    <Container maxW="5xl" spaceY="1rem" padding="0">
       <CategoryTabs slug="/" />
       <ProductPagination products={products} />
     </Container>

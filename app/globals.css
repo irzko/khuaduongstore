@@ -12,3 +12,7 @@
 .mySwiper .swiper-slide-thumb-active {
   border: 2px solid black;
 }
+
+body {
+  background-color: #f5f5f5;
+}

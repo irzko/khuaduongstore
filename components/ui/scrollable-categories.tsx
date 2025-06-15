@@ -47,9 +47,11 @@ export function ScrollableCategories({
       // position="sticky"
       // top="3.5rem"
       zIndex={10}
+      backgroundColor="#fff"
       whiteSpace="nowrap"
       scrollbar="hidden"
       overflowX="auto"
+      paddingX="1rem"
       paddingY="0.5rem"
       gap="0.5rem"
     >
