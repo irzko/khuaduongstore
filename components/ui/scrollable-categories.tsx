@@ -44,15 +44,15 @@ export function ScrollableCategories({
   return (
     <Flex
       ref={scrollContainerRef}
-      // position="sticky"
-      // top="3.5rem"
+      position="sticky"
+      top="0rem"
       zIndex={10}
       backgroundColor="#fff"
       whiteSpace="nowrap"
       scrollbar="hidden"
       overflowX="auto"
       paddingX="1rem"
-      paddingY="0.5rem"
+      paddingY="1rem"
       gap="0.5rem"
     >
       <div ref={currentSlug === "/" ? selectedItemRef : null}>
