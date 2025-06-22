@@ -20,7 +20,7 @@ import ContactInfomation from "./ui/contact-infomation";
 
 const SideBar = async () => {
   return (
-    <DrawerRoot size="xs" placement="start">
+    <DrawerRoot size="xs" placement="end">
       <DrawerBackdrop />
       <DrawerTrigger asChild>
         <IconButton rounded="lg" variant="ghost">

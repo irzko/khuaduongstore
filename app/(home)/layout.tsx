@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button, Flex, Box } from "@chakra-ui/react";
+import { IconButton, Flex, Box } from "@chakra-ui/react";
 import SideBar from "@/components/sidebar";
 import CartButton from "@/components/ui/cart-button";
 import { LuSearch } from "react-icons/lu";
@@ -40,6 +40,11 @@ export default function Layout({
             </Link>
 
             <Flex>
+              <IconButton variant="ghost" asChild>
+                <Link href="/tim-kiem">
+                  <LuSearch />
+                </Link>
+              </IconButton>
               <Flex alignItems="center">
                 <CartButton />
               </Flex>
