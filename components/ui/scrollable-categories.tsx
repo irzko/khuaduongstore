@@ -1,5 +1,5 @@
 "use client";
-import { Flex, Text, Badge } from "@chakra-ui/react";
+import { Flex, Text, Button, Box } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
@@ -53,20 +53,35 @@ export function ScrollableCategories({
       overflowX="auto"
       paddingX="1rem"
       paddingY="1rem"
-      gap="0.5rem"
     >
       <div ref={currentSlug === "/" ? selectedItemRef : null}>
-        <Badge
-          variant={currentSlug === "/" ? "solid" : "subtle"}
-          size="lg"
+        <Button
+          variant="ghost"
+          size="sm"
           rounded="full"
-          backgroundColor={currentSlug === "/" ? "#50C878" : ""}
+          paddingX="0.5rem"
+          height="1.5rem"
           asChild
         >
-          <NextLink href="/">
-            <Text fontWeight="semibold">Tất cả</Text>
-          </NextLink>
-        </Badge>
+          <div>
+            <NextLink href="/">
+              <Text
+                fontWeight="bold"
+                color={currentSlug === "/" ? "#000" : "gray.500"}
+              >
+                Tất cả
+              </Text>
+            </NextLink>
+            <Box
+              position="absolute"
+              bottom="-0.25rem"
+              insetX="0.5rem"
+              height="2.5px"
+              rounded="full"
+              bgColor={currentSlug === "/" ? "#000" : "transparent"}
+            ></Box>
+          </div>
+        </Button>
       </div>
 
       {categories.map((category) => (
@@ -74,19 +89,38 @@ export function ScrollableCategories({
           key={category}
           ref={currentSlug === createSlug(category) ? selectedItemRef : null}
         >
-          <Badge
+          <Button
             asChild
-            size="lg"
+            size="sm"
+            position="relative"
             rounded="full"
-            variant={currentSlug === createSlug(category) ? "solid" : "subtle"}
-            backgroundColor={
-              currentSlug === createSlug(category) ? "#50C878" : ""
-            }
+            variant="ghost"
+            paddingX="0.5rem"
+            height="1.5rem"
           >
-            <NextLink href={`/danh-muc/${createSlug(category)}`}>
-              <Text fontWeight="semibold">{category}</Text>
-            </NextLink>
-          </Badge>
+            <div>
+              <NextLink href={`/danh-muc/${createSlug(category)}`}>
+                <Text
+                  fontWeight="bold"
+                  color={
+                    currentSlug === createSlug(category) ? "#000" : "gray.500"
+                  }
+                >
+                  {category}
+                </Text>
+              </NextLink>
+              <Box
+                position="absolute"
+                bottom="-0.25rem"
+                insetX="0.5rem"
+                height="2.5px"
+                rounded="full"
+                bgColor={
+                  currentSlug === createSlug(category) ? "#000" : "transparent"
+                }
+              ></Box>
+            </div>
+          </Button>
         </div>
       ))}
     </Flex>
