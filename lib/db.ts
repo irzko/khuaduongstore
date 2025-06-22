@@ -130,3 +130,20 @@ export const getAllContacts = async (): Promise<IContact[]> => {
     value: contact["Hiển thị"],
   }));
 };
+
+type Banner = {
+  imageUrl: string;
+};
+
+export const getAllBanners = async (): Promise<IBanner[]> => {
+  const banners = await getGSheet(
+    "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
+    "1599871924",
+    "no-store",
+  );
+  return banners.map((banner: Banner) => {
+    return {
+      imageUrl: banner.imageUrl,
+    };
+  });
+};

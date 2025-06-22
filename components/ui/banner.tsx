@@ -1,6 +1,6 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -11,7 +11,7 @@ import { Box, Image } from "@chakra-ui/react";
 export default function Banner({ imageUrlList }: { imageUrlList: string[] }) {
   return (
     <>
-      <Box rounded="2xl" overflow="hidden" w="full" maxWidth="md" mx="auto">
+      <Box overflow="hidden" w="full" maxWidth="md" mx="auto">
         <Swiper
           centeredSlides={true}
           autoplay={{

@@ -42,3 +42,7 @@ interface IContact {
   href: string;
   value: string;
 }
+
+interface IBanner {
+  imageUrl: string;
+}
