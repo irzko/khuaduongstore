@@ -21,20 +21,12 @@ export default function Banner({ imageUrlList }: { imageUrlList: string[] }) {
           pagination={{
             clickable: true,
           }}
-          navigation={true}
-          modules={[Autoplay, Pagination, Navigation]}
+          modules={[Autoplay, Pagination]}
         >
           {imageUrlList.map((imageUrl, index) => (
             <SwiperSlide key={index}>
-              <Box position="relative" w="full" aspectRatio="4/3">
-                <Image
-                  fit={{
-                    base: "cover",
-                    md: "contain",
-                  }}
-                  alt=""
-                  asChild
-                >
+              <Box position="relative" w="full" aspectRatio="16/9">
+                <Image fit="cover" alt="" asChild>
                   <NextImage
                     src={imageUrl || "/image-break.jpg"}
                     fill
