@@ -51,7 +51,7 @@ export function ScrollableCategories({
       whiteSpace="nowrap"
       scrollbar="hidden"
       overflowX="auto"
-      paddingX="1rem"
+      paddingX="0.5rem"
       paddingY="1rem"
     >
       <div ref={currentSlug === "/" ? selectedItemRef : null}>
