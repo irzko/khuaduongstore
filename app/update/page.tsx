@@ -15,6 +15,13 @@ export default function UpdatePage() {
     revalidateTag("contacts");
     redirect("/");
   }
+
+  // update banners
+  async function updateBanners() {
+    "use server";
+    revalidateTag("banners");
+    redirect("/");
+  }
   return (
     <>
       <form action={updateData} autoComplete="off">
@@ -22,6 +29,9 @@ export default function UpdatePage() {
       </form>
       <form action={updateContact} autoComplete="off">
         <Button type="submit">Cập nhật thông tin liên hệ</Button>
+      </form>
+      <form action={updateBanners} autoComplete="off">
+        <Button type="submit">Cập nhật banner</Button>
       </form>
     </>
   );

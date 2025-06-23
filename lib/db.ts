@@ -139,7 +139,8 @@ export const getAllBanners = async (): Promise<IBanner[]> => {
   const banners = await getGSheet(
     "1m4aKkR43kNsNPmB1GUa1g5LI3l8SzK5iaBDH9uDERFY",
     "1599871924",
-    "no-store",
+    "force-cache",
+    { tags: ["banners"] },
   );
   return banners.map((banner: Banner) => {
     return {
