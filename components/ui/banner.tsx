@@ -26,7 +26,7 @@ export default function Banner({ imageUrlList }: { imageUrlList: string[] }) {
           {imageUrlList.map((imageUrl, index) => (
             <SwiperSlide key={index}>
               <Box position="relative" w="full" aspectRatio="16/9">
-                <Image fit="cover" alt="" asChild>
+                <Image fit="contain" alt="" asChild>
                   <NextImage
                     src={imageUrl || "/image-break.jpg"}
                     fill
