@@ -20,20 +20,15 @@ export function ScrollableCategories({
   const pathname = usePathname();
   const [isAtTop, setIsAtTop] = useState(true);
 
-  // Handle scroll event to change background color
+  // Handle window scroll event to change background color
   useEffect(() => {
     const handleScroll = () => {
-      if (scrollContainerRef.current) {
-        const scrollTop = scrollContainerRef.current.scrollTop;
-        setIsAtTop(scrollTop === 0);
-      }
+      const scrollTop = window.scrollY;
+      setIsAtTop(scrollTop === 0);
     };
 
-    const container = scrollContainerRef.current;
-    if (container) {
-      container.addEventListener("scroll", handleScroll);
-      return () => container.removeEventListener("scroll", handleScroll);
-    }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Xử lý scroll event
