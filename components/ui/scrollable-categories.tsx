@@ -1,7 +1,8 @@
+
 "use client";
 import { Flex, Text, Button, Box } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import createSlug from "@/lib/createSlug";
 
@@ -17,6 +18,23 @@ export function ScrollableCategories({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const selectedItemRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const [isAtTop, setIsAtTop] = useState(true);
+
+  // Handle scroll event to change background color
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollContainerRef.current) {
+        const scrollTop = scrollContainerRef.current.scrollTop;
+        setIsAtTop(scrollTop === 0);
+      }
+    };
+
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+      return () => container.removeEventListener("scroll", handleScroll);
+    }
+  }, []);
 
   // Xử lý scroll event
   const scrollSelectedToCenter = () => {
@@ -47,13 +65,14 @@ export function ScrollableCategories({
       position="sticky"
       top="0rem"
       zIndex={10}
-      backgroundColor="#fff"
+      backgroundColor={isAtTop ? "#fff" : "transparent"}
       whiteSpace="nowrap"
       scrollbar="hidden"
       overflowX="auto"
       alignItems="center"
       paddingX="0.5rem"
       h="3rem"
+      transition="background-color 0.2s ease"
     >
       <div ref={currentSlug === "/" ? selectedItemRef : null}>
         <Button
