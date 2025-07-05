@@ -24,10 +24,10 @@ export default function Layout({
         <Flex
           paddingX="1rem"
           paddingY="0.5rem"
-          backgroundColor={{
-            base: "#fff",
-            _dark: "#000",
-          }}
+          // backgroundColor={{
+          //  base: "#fff",
+          //  _dark: "#000",
+          // }}
           direction="column"
           width="full"
           gap="0.5rem"

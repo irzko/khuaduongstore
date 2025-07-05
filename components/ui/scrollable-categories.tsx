@@ -51,8 +51,9 @@ export function ScrollableCategories({
       whiteSpace="nowrap"
       scrollbar="hidden"
       overflowX="auto"
+      alignItems="center"
       paddingX="0.5rem"
-      paddingY="1rem"
+      h="3rem"
     >
       <div ref={currentSlug === "/" ? selectedItemRef : null}>
         <Button
@@ -74,11 +75,11 @@ export function ScrollableCategories({
             </NextLink>
             <Box
               position="absolute"
-              bottom="-0.25rem"
+              bottom="-0.75rem"
               insetX="0.5rem"
               height="2.5px"
               rounded="full"
-              bgColor={currentSlug === "/" ? "#000" : "transparent"}
+              bgColor={currentSlug === "/" ? "#ff923f" : "transparent"}
             ></Box>
           </div>
         </Button>
@@ -111,12 +112,14 @@ export function ScrollableCategories({
               </NextLink>
               <Box
                 position="absolute"
-                bottom="-0.25rem"
+                bottom="-0.75rem"
                 insetX="0.5rem"
                 height="2.5px"
                 rounded="full"
                 bgColor={
-                  currentSlug === createSlug(category) ? "#000" : "transparent"
+                  currentSlug === createSlug(category)
+                    ? "#ff923f"
+                    : "transparent"
                 }
               ></Box>
             </div>

@@ -15,14 +15,16 @@ const PaginationLink = (
   props: IconButtonProps & { page?: "prev" | "next" | number },
 ) => {
   const { page, ...rest } = props;
+
   const pagination = usePaginationContext();
   const pageValue = () => {
     if (page === "prev") return pagination.previousPage;
     if (page === "next") return pagination.nextPage;
     return page;
   };
+
   return (
-    <IconButton rounded="full" asChild {...rest}>
+    <IconButton rounded="full" colorPalette="orange" asChild {...rest}>
       <Link href={`?page=${pageValue()}`}>{props.children}</Link>
     </IconButton>
   );
@@ -37,12 +39,7 @@ const PaginationBar = ({
 }) => {
   return (
     <Box>
-      <Pagination.Root
-        count={count}
-        pageSize={12}
-        page={currentPage}
-      
-      >
+      <Pagination.Root count={count} pageSize={12} page={currentPage}>
         <ButtonGroup variant="ghost">
           <PaginationLink page="prev">
             <HiChevronLeft />
