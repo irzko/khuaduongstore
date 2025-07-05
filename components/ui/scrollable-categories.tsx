@@ -24,11 +24,11 @@ export function ScrollableCategories({
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      setIsAtTop(scrollTop <= 5); // Small threshold to account for fractional values
+      setIsAtTop(scrollTop <= 200); // Small threshold to account for fractional values
     };
 
     // Set initial state
-    setIsAtTop(window.scrollY <= 5);
+    setIsAtTop(window.scrollY <= 200);
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
