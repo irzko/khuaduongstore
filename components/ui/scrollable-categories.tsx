@@ -1,4 +1,3 @@
-
 "use client";
 import { Flex, Text, Button, Box } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -18,17 +17,17 @@ export function ScrollableCategories({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const selectedItemRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const [isAtTop, setIsAtTop] = useState(true);
+  const [isAtTop, setIsAtTop] = useState(false);
 
   // Handle window scroll event to change background color
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      setIsAtTop(scrollTop <= 200); // Small threshold to account for fractional values
+      setIsAtTop(scrollTop <= 48); // Small threshold to account for fractional values
     };
 
     // Set initial state
-    setIsAtTop(window.scrollY <= 200);
+    setIsAtTop(window.scrollY <= 48);
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
