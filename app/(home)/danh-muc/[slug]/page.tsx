@@ -1,11 +1,10 @@
 export const dynamic = "force-static";
-import { Container } from "@chakra-ui/react";
 import createSlug from "@/lib/createSlug";
+import ProductCard from "@/components/ui/product-card";
+import { Grid } from "@chakra-ui/react";
 
 import { getGroupedProducts } from "@/lib/db";
 import { Metadata } from "next";
-import CategoryTabs from "@/components/ui/category-tabs";
-import ProductPagination from "@/components/ui/product-pagination";
 
 const getProducts = async (slug: string) => {
   const products = await getGroupedProducts();
@@ -37,9 +36,24 @@ export default async function Page({
   const products = await getProducts(slug.replace(".html", ""));
 
   return (
-    <Container maxW="5xl" spaceY="1rem" paddingX="0">
-      <CategoryTabs slug={slug} />
-      <ProductPagination products={products} />
-    </Container>
+    <>
+      <Grid
+        paddingX="1rem"
+        templateColumns={[
+          "repeat(2, 1fr)",
+          "repeat(4, 1fr)",
+          "repeat(6, 1fr)",
+          "repeat(6, 1fr)",
+        ]}
+        gap="1rem"
+      >
+        {products
+          .reverse()
+          .slice(0, Math.min(12, products.length))
+          .map((product) => (
+            <ProductCard key={createSlug(product.name)} product={product} />
+          ))}
+      </Grid>
+    </>
   );
 }
