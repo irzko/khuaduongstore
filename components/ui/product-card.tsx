@@ -10,7 +10,7 @@ export default function ProductCard({
   product: IGroupedProduct;
 }>) {
   return (
-    <Card.Root asChild overflow="hidden" shadow="none" border="none" rounded="2xl">
+    <Card.Root asChild overflow="hidden" bg="white" variant="subtle" rounded="2xl">
       <NextLink href={`/${createSlug(product.name)}.html`}>
         <Flex position="relative" p="0.125rem" aspectRatio={1}>
           <Image asChild alt={product.name}>

@@ -24,8 +24,8 @@ const PaginationLink = (
   };
 
   return (
-    <IconButton rounded="full" colorPalette="orange" asChild {...rest}>
-      <Link href={`?page=${pageValue()}`}>{props.children}</Link>
+    <IconButton rounded="full" asChild {...rest}>
+      <Link href={`/trang/${pageValue()}`}>{props.children}</Link>
     </IconButton>
   );
 };

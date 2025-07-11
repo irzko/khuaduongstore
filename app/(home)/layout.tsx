@@ -1,15 +1,19 @@
 import Link from "next/link";
-import { IconButton, Flex, Box } from "@chakra-ui/react";
+import { IconButton, Flex, Box, Container } from "@chakra-ui/react";
 import SideBar from "@/components/sidebar";
 import CartButton from "@/components/ui/cart-button";
 import { LuSearch } from "react-icons/lu";
 import Logo from "@/components/ui/logo";
+import { getAllBanners } from "@/lib/db";
+import CategoryTabs from "@/components/ui/category-tabs";
+import Banner from "@/components/ui/banner";
 
-export default function Layout({
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const bannerImageUrlList = await getAllBanners();
   return (
     <>
       <Flex
@@ -53,8 +57,16 @@ export default function Layout({
           </Flex>
         </Flex>
       </Flex>
+      <Container maxW="5xl" spaceY="0.5rem" padding="0">
+        <Banner
+          imageUrlList={
+            bannerImageUrlList.map((banner) => banner.imageUrl) || []
+          }
+        />
+        <CategoryTabs slug="/" />
+        {children}
+      </Container>
 
-      {children}
       <Box paddingY="2rem" />
     </>
   );

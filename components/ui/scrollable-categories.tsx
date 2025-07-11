@@ -17,21 +17,6 @@ export function ScrollableCategories({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const selectedItemRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const [isAtTop, setIsAtTop] = useState(false);
-
-  // Handle window scroll event to change background color
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      setIsAtTop(scrollTop <= 48); // Small threshold to account for fractional values
-    };
-
-    // Set initial state
-    setIsAtTop(window.scrollY <= 48);
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Xử lý scroll event
   const scrollSelectedToCenter = () => {
@@ -62,14 +47,13 @@ export function ScrollableCategories({
       position="sticky"
       top="0rem"
       zIndex={10}
-      backgroundColor={isAtTop ? "#fff" : "transparent"}
+      backgroundColor="#fff"
       whiteSpace="nowrap"
       scrollbar="hidden"
       overflowX="auto"
       alignItems="center"
       paddingX="0.5rem"
       h="3rem"
-      transition="background-color 0.2s ease"
     >
       <div ref={currentSlug === "/" ? selectedItemRef : null}>
         <Button

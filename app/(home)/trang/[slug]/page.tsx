@@ -1,12 +1,18 @@
-import { getGroupedProducts } from "@/lib/db";
-import CategoryTabs from "@/components/ui/category-tabs";
+export const dynamic = "force-static";
 import ProductCard from "@/components/ui/product-card";
 import createSlug from "@/lib/createSlug";
 import { Grid } from "@chakra-ui/react";
+import { getGroupedProducts } from "@/lib/db";
 import PaginationBar from "@/components/ui/pagination";
 
-export default async function Home() {
-  const products = await getGroupedProducts();
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const slug = await params;
+  const currentPage = Number(slug.slug) || 1;
+  const allProducts = await getGroupedProducts();
 
   return (
     <>
@@ -20,14 +26,17 @@ export default async function Home() {
         ]}
         gap="1rem"
       >
-        {products
+        {allProducts
           .reverse()
-          .slice(0, Math.min(12, products.length))
+          .slice(
+            (currentPage - 1) * 12,
+            Math.min(currentPage * 12, allProducts.length),
+          )
           .map((product) => (
             <ProductCard key={createSlug(product.name)} product={product} />
           ))}
       </Grid>
-      <PaginationBar currentPage={1} count={products.length} />
+      <PaginationBar currentPage={currentPage} count={allProducts.length} />
     </>
   );
 }
