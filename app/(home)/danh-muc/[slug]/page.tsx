@@ -2,6 +2,7 @@ export const dynamic = "force-static";
 import createSlug from "@/lib/createSlug";
 import ProductCard from "@/components/ui/product-card";
 import { Grid } from "@chakra-ui/react";
+import CategoryTabs from "@/components/ui/category-tabs";
 
 import { getGroupedProducts } from "@/lib/db";
 import { Metadata } from "next";
@@ -37,6 +38,7 @@ export default async function Page({
 
   return (
     <>
+      <CategoryTabs slug={slug} />
       <Grid
         paddingX="1rem"
         templateColumns={[
