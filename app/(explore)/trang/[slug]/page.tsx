@@ -4,6 +4,7 @@ import createSlug from "@/lib/createSlug";
 import { Grid } from "@chakra-ui/react";
 import { getGroupedProducts } from "@/lib/db";
 import PaginationBar from "@/components/ui/pagination";
+import CategoryTabs from "@/components/ui/category-tabs";
 
 export default async function Page({
   params,
@@ -16,6 +17,7 @@ export default async function Page({
 
   return (
     <>
+      <CategoryTabs slug="/" />
       <Grid
         paddingX="1rem"
         templateColumns={[
