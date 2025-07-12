@@ -4,18 +4,12 @@ import ProductCard from "@/components/ui/product-card";
 import createSlug from "@/lib/createSlug";
 import { Grid } from "@chakra-ui/react";
 import PaginationBar from "@/components/ui/pagination";
-import { getAllBanners } from "@/lib/db";
-import Banner from "@/components/ui/banner";
 
 export default async function Home() {
   const products = await getGroupedProducts();
-  const bannerImageUrlList = await getAllBanners();
 
   return (
     <>
-      <Banner
-        imageUrlList={bannerImageUrlList.map((banner) => banner.imageUrl) || []}
-      />
       <CategoryTabs slug="/" />
       <Grid
         paddingX="1rem"
